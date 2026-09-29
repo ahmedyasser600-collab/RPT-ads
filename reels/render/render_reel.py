@@ -56,6 +56,9 @@ IMPIANTI = load("impianti.png")
 POSA = load("posa.png")
 VETRO = load("vetro.png")
 DOPO = load("dopo.png")
+DOCCIA = load("doccia.png")
+LAVABO = load("lavabo.png")
+SANITARI = load("sanitari.png")
 DETTAGLIO = load("dettaglio.png")
 
 
@@ -205,13 +208,19 @@ def scene_before(frame, t):  # 1: 0.0-4.6
     headline(frame, "Bagno piccolo?\nDatato? Scomodo?", t, 0.3)
 
 
-# Push-ins on the 'before' photo (max zoom 1.35 keeps it at or above native resolution).
-CROPS = [(4.6, 0.55, 0.52), (6.0, 0.28, 0.62), (7.4, 0.72, 0.72)]  # doccia, lavabo, sanitari
+# Three real close-ups of the old bathroom, cut on the beat with a short crossfade.
+SHOTS = [(4.6, DOCCIA), (6.0, LAVABO), (7.4, SANITARI)]
 
 
 def scene_disagi(frame, t):  # 2: 4.6-8.8
-    start, cx, cy = [c for c in CROPS if c[0] <= t][-1]
-    photo(frame, cool(frame_of(BEFORE, cx, cy, 1.28 + 0.05 * (t - start))))
+    idx = max(i for i, (s0, _) in enumerate(SHOTS) if s0 <= t)
+    start, img = SHOTS[idx]
+    cur = cool(frame_of(img, zoom=1.0 + 0.03 * (t - start) / 1.4))
+    if idx > 0 and t - start < 0.2:
+        prev_start, prev = SHOTS[idx - 1]
+        old = cool(frame_of(prev, zoom=1.0 + 0.03 * (t - prev_start) / 1.4))
+        cur = Image.blend(old, cur, (t - start) / 0.2)
+    photo(frame, cur)
     headline(frame, "Ogni giorno,\ngli stessi disagi.", t, 4.8)
 
 

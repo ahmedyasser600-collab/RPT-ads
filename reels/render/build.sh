@@ -19,6 +19,9 @@ fetch hf_20260929_155300_1813edf9-f7a0-4a4e-866a-02d30ca58dbf.png "$WORK/assets/
 fetch hf_20260929_154023_7519e592-d86c-4382-8e10-84fba6bd0c37.png "$WORK/assets/vetro.png"
 fetch hf_20260929_154010_8abfb419-ad36-422f-8282-672418d3e3ed.png "$WORK/assets/dopo.png"
 fetch hf_20260929_154118_27d9b4bb-4f3d-4989-8438-e1e167787901.png "$WORK/assets/dettaglio.png"
+fetch hf_20260929_162639_376e96ed-74b4-443b-98bf-cf83e7d696aa.png "$WORK/assets/doccia.png"
+fetch hf_20260929_162612_79b40d59-6705-4e93-bf2c-2c308cce6cdc.png "$WORK/assets/lavabo.png"
+fetch hf_20260929_162843_4720583d-df14-44e1-9fee-6dca5454c26a.png "$WORK/assets/sanitari.png"
 cp "$HERE/../assets/logo.webp" "$WORK/assets/logo.webp"
 
 # Voice-over, Elena, one clip per scene.
