@@ -272,53 +272,52 @@ def scene_risultato(frame, t):  # 7: 28.4-33.6
     headline(frame, "Pratico.\nLuminoso.\nSu misura per te.", t, 28.8)
 
 
-END_THUMB = None
-THUMB_Y, THUMB_H = 1180, 300
+PANEL_Y, PANEL_H = 880, 560
+F_CTA_END = font(800, 58)
+F_URL_END = font(800, 50)
+LOGO_PANEL = logo_at(360)
 
 
-def scene_cta(frame, t):  # 8: 33.6-40.0 (brand end card)
-    global END_THUMB
-    p = ease((t - 33.6) / 0.5)
-    lg = LOGO_BIG.copy()
-    lg.putalpha(lg.getchannel("A").point(lambda a: int(a * p)))
-    frame.alpha_composite(lg, ((W - lg.width) // 2, 230 + int((1 - p) * 20)))
+def scene_cta(frame, t):  # 8: 33.6-40.0 (end card on the finished bathroom)
+    # The whole finished bathroom, clean and full-screen, slowly pulling back.
+    frame.alpha_composite(frame_of(DOPO, zoom=1.08 - 0.08 * ease((t - 33.6) / 6.4)))
 
+    # Brand panel slides up with logo, CTA, URL and area, all left-aligned like the key visual.
+    q = ease((t - 33.6) / 0.45)
     layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
+    py = PANEL_Y + int((1 - q) * 60)
+    d.rounded_rectangle((60, py, W - 60, py + PANEL_H), 36, fill=GREY + (int(245 * q),))
+    x = 110
+    lg = LOGO_PANEL.copy()
+    lg.putalpha(lg.getchannel("A").point(lambda v: int(v * q)))
+    layer.alpha_composite(lg, (x, py + 40))
     if t >= 34.2:
-        q = ease((t - 34.2) / 0.35)
-        y, a = 640 + int((1 - q) * 20), int(255 * q)
-        lines = ["Raccontaci il", "tuo progetto."]
-        for i, line in enumerate(lines):
-            draw_tight(d, (60, y + i * 78), line, F_CTA, BLACK + (a,))
-        # Arrow after the last line, as in "Parliamo del tuo bagno ->".
-        ax = 60 + int(tight_len(lines[-1], F_CTA)) + 28
-        ay = y + 78 + 46
-        d.rectangle((ax, ay - 4, ax + 52, ay + 4), fill=BLACK + (a,))
-        d.polygon([(ax + 60, ay), (ax + 36, ay - 22), (ax + 36, ay + 22)], fill=BLACK + (a,))
+        a = int(255 * ease((t - 34.2) / 0.35))
+        y = py + 240
+        line = "Raccontaci il tuo progetto."
+        draw_tight(d, (x, y), line, F_CTA_END, BLACK + (a,))
+        # Arrow after the line, as in "Parliamo del tuo bagno ->".
+        ax = x + int(tight_len(line, F_CTA_END)) + 24
+        ay = y + 38
+        d.rectangle((ax, ay - 4, ax + 44, ay + 4), fill=BLACK + (a,))
+        d.polygon([(ax + 52, ay), (ax + 30, ay - 19), (ax + 30, ay + 19)], fill=BLACK + (a,))
         lp = ease((t - 34.4) / 0.4)
-        d.rectangle((60, y + 182, 60 + int(360 * lp), y + 192), fill=YELLOW + (255,))
+        d.rectangle((x, y + 90, x + int(300 * lp), y + 99), fill=YELLOW + (255,))
     if t >= 36.2:  # URL on "Ristrutturare Per Te"
-        q = int(255 * ease((t - 36.2) / 0.3))
+        a = int(255 * ease((t - 36.2) / 0.3))
         url = "rpt-1.netlify.app"
-        d.rounded_rectangle((60, 900, 60 + F_URL.getlength(url) + 64, 1000), 20, fill=YELLOW + (q,))
-        d.text((92, 918), url, font=F_URL, fill=BLACK + (q,))
+        uy = py + 370
+        d.rounded_rectangle((x, uy, x + F_URL_END.getlength(url) + 56, uy + 86), 18, fill=YELLOW + (a,))
+        d.text((x + 28, uy + 16), url, font=F_URL_END, fill=BLACK + (a,))
     if t >= 37.8:  # pin on "Padova e provincia"
         a = int(255 * ease((t - 37.8) / 0.3))
-        x, y = 60, 1060
+        y = py + 488
         d.ellipse((x, y, x + 34, y + 34), fill=YELLOW + (a,))
         d.polygon([(x + 3, y + 24), (x + 31, y + 24), (x + 17, y + 50)], fill=YELLOW + (a,))
         d.ellipse((x + 11, y + 11, x + 23, y + 23), fill=GREY + (a,))
         d.text((x + 56, y + 6), " ".join("PADOVA E PROVINCIA"), font=F_LABEL, fill=BLACK + (a,))
     frame.alpha_composite(layer)
-
-    if END_THUMB is None:
-        END_THUMB = frame_of(DOPO, 0.5, 0.62, 1.0, W - 120, THUMB_H)
-        mask = Image.new("L", END_THUMB.size, 0)
-        ImageDraw.Draw(mask).rounded_rectangle((0, 0, END_THUMB.width - 1, THUMB_H - 1), 36, fill=255)
-        END_THUMB.putalpha(mask)
-    frame.alpha_composite(END_THUMB, (60, THUMB_Y))
-    disclaimer(frame, THUMB_Y + THUMB_H + 16)
 
 
 SCENES = [(0.0, scene_before), (4.6, scene_disagi), (8.8, scene_piastrelle), (12.6, scene_esigenze),
@@ -332,8 +331,8 @@ def render(t):
     if fn is not scene_cta:
         # Logo always on screen, fixed top-right (same position as the key visual).
         frame.alpha_composite(LOGO_SMALL, (W - 60 - LOGO_SMALL.width, 230))
-        if fn is not scene_esigenze:
-            disclaimer(frame)
+    if fn is not scene_esigenze:
+        disclaimer(frame, PANEL_Y + PANEL_H + 24 if fn is scene_cta else 1500)
     # Short dip on each scene change.
     k = min(t - start, 0.12) / 0.12
     if k < 1 and start > 0:
@@ -358,9 +357,9 @@ def mix_audio(video, out):
     if ARGS.music:
         inputs += ["-i", ARGS.music]
         filters.append("[vo]asplit[vo1][vokey]")
-        filters.append(f"[9:a]aresample=48000,atrim=0:{DUR},volume=-12dB,"
+        filters.append(f"[9:a]aresample=48000,atrim=0:{DUR},volume=-5dB,"
                        f"afade=t=out:st={DUR - 1.2}:d=1.2[mu]")
-        filters.append("[mu][vokey]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[duck]")
+        filters.append("[mu][vokey]sidechaincompress=threshold=0.05:ratio=4:attack=30:release=500[duck]")
         filters.append("[vo1][duck]amix=inputs=2:normalize=0[aout]")
         out_label = "[aout]"
     else:

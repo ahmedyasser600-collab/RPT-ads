@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Download the generated photos + voice-over clips from Higgsfield and render the final Reel.
 # Needs outbound access to d8j0ntlcm91z4.cloudfront.net, plus pip (imageio-ffmpeg, pillow) and npm.
-# Usage: reels/render/build.sh [music.mp3]
+# Usage: reels/render/build.sh [music.mp3]   (without an argument the score is composed by compose_music.py)
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 WORK="${WORK:-$HERE/.build}"
@@ -37,8 +37,8 @@ if [ ! -d "$WORK/fonts/package" ]; then
 fi
 
 pip install -q imageio-ffmpeg pillow
-MUSIC=()
-[ $# -ge 1 ] && MUSIC=(--music "$1")
+pip install -q numpy scipy
+if [ $# -ge 1 ]; then MUSIC="$1"; else MUSIC="$WORK/music.wav"; python3 "$HERE/compose_music.py" "$MUSIC"; fi
 python3 "$HERE/render_reel.py" "$WORK/assets" "$WORK/fonts/package/files" \
-  "$HERE/../video/reel-40s-rpt.mp4" --vo "$WORK/vo" "${MUSIC[@]}"
+  "$HERE/../video/reel-40s-rpt.mp4" --vo "$WORK/vo" --music "$MUSIC"
 echo "Done: reels/video/reel-40s-rpt.mp4"
