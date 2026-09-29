@@ -243,7 +243,7 @@ def scene_esigenze(frame, t):  # 4: 12.6-17.4 (brand graphic)
 
 def scene_misura(frame, t):  # 5: 17.4-22.0
     photo(frame, frame_of(SOPRALLUOGO, zoom=1.0 + 0.05 * (t - 17.4) / 4.6))
-    headline(frame, "Prima ascoltiamo.\nPoi misuriamo.", t, 17.6)
+    headline(frame, "Prima\nascoltiamo.\nPoi misuriamo.", t, 17.6)
 
 
 PHASES = [(22.0, IMPIANTI, "IMPIANTI"), (23.4, POSA, "POSA"), (25.0, VETRO, "FINITURE")]
@@ -269,7 +269,7 @@ def scene_risultato(frame, t):  # 7: 28.4-33.6
     else:
         img = frame_of(DETTAGLIO, zoom=1.0 + 0.04 * (t - 30.8) / 2.8)
     photo(frame, img)
-    headline(frame, "Pratico. Luminoso.\nSu misura per te.", t, 28.8)
+    headline(frame, "Pratico.\nLuminoso.\nSu misura per te.", t, 28.8)
 
 
 END_THUMB = None

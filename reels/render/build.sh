@@ -15,7 +15,7 @@ fetch hf_20260929_153921_6fc3ab3b-2a74-4476-9688-d83d52c0de95.png "$WORK/assets/
 fetch hf_20260929_154050_29eea8b2-bdfb-4b0f-ad56-86fcbf955fcf.png "$WORK/assets/sopralluogo.png"
 fetch hf_20260929_154119_26ba49fc-a3c0-4e9d-bf21-a251b1c22f11.png "$WORK/assets/campioni.png"
 fetch hf_20260929_154009_658fd15d-96e1-4eb2-b28e-3945f11950fb.png "$WORK/assets/impianti.png"
-fetch hf_20260929_154009_1542c4b7-6c9a-460e-8349-9e79539985a5.png "$WORK/assets/posa.png"
+fetch hf_20260929_155300_1813edf9-f7a0-4a4e-866a-02d30ca58dbf.png "$WORK/assets/posa.png"
 fetch hf_20260929_154023_7519e592-d86c-4382-8e10-84fba6bd0c37.png "$WORK/assets/vetro.png"
 fetch hf_20260929_154010_8abfb419-ad36-422f-8282-672418d3e3ed.png "$WORK/assets/dopo.png"
 fetch hf_20260929_154118_27d9b4bb-4f3d-4989-8438-e1e167787901.png "$WORK/assets/dettaglio.png"
