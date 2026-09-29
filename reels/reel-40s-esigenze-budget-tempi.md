@@ -130,7 +130,7 @@ Le durate delle scene sono state ritoccate sulle durate reali delle clip (totale
 | # | Testo | Durata | File |
 |---|---|---|---|
 | VO1 | Il tuo bagno è piccolo, datato… o semplicemente scomodo? | 4,16" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_152711_e155f3da-b335-46f2-8122-b8410808d128.mp3) |
-| VO2 | Spazi stretti. Una vasca che non usi più. | 3,76" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_152711_a9018e75-7085-4544-b40d-ae4cc9c5d2b3.mp3) |
+| VO2 | Spazi stretti. Una doccia scomoda. | ~3" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_153203_735c7492-ba24-42a9-86aa-1da4754f9f86.mp3) |
 | VO3 | Ma un bagno nuovo… non comincia dalle piastrelle. | 3,28" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_152703_300f0ecb-47d3-4195-9f6f-ea7d6aa9ea98.mp3) |
 | VO4 | Comincia dalle tue esigenze, dal tuo budget, e dai tuoi tempi. | 4,16" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_152724_d92a27cd-03ef-4d60-ae91-dc3270091c6f.mp3) |
 | VO5 | Prima ti ascoltiamo. Poi misuriamo ogni centimetro. | 4,08" | [mp3](https://d8j0ntlcm91z4.cloudfront.net/user_2z8UpgX5wtqTzSukvLalup3RaQk/hf_20260929_152724_0eaecdc7-67d3-4acb-bb72-b51f329822ad.mp3) |
@@ -162,3 +162,15 @@ Regole di sincronizzazione:
 - Musica: −18 dB sotto la voce, −12 dB nelle pause (ducking automatico in CapCut/Premiere), +3 dB sull'accordo della scena 7.
 - SFX: bassi e realistici, mai più forti della voce.
 - Brano: piano caldo e minimale, ~80 BPM, senza voce, con licenza per uso commerciale (Meta Sound Collection o libreria commerciale di CapCut; cercare "warm piano", "calm home", "minimal inspiring").
+
+---
+
+## Video (v5)
+
+File: `reels/video/reel-40s-rpt-silent.mp4` — 1080×1920, 30 fps, 40,0", **senza audio**: voce (VO1–VO8) e musica si aggiungono nell'editor ai tempi della timeline qui sopra.
+Rigenerabile con `python3 reels/render/render_reel.py <cartella_foto> <cartella_font> <out.mp4>` (font: Plus Jakarta Sans da `@fontsource/plus-jakarta-sans`).
+
+Modifiche rispetto allo storyboard, dovute alle foto arrivate:
+- R6 = foto del bagno "prima" (ha una doccia, non una vasca) → VO2 cambiata in "Spazi stretti. Una doccia scomoda."
+- Foto campioni (R7) e sopralluogo (R8) non disponibili: scena 3 diventa una grafica di campioni di piastrelle che escono dal riquadro; scena 5 usa la foto del bagno demolito (R9) con una linea di misura gialla animata.
+- Layout "a scheda" come il key visual statico: sfondo grigio, titolo a sinistra, logo in alto a destra, foto in un riquadro arrotondato (le foto sorgente sono ~460 px, a tutto schermo sarebbero sgranate).
