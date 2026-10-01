@@ -21,17 +21,17 @@ OUT = os.path.join(HERE, "stage.blend")
 # (collection, root location, root Z rotation in degrees)
 LAYOUT = {
     "RPT_12_room_shell": ((0.0, 0.0, 0.0), 0),
-    "RPT_05_shower_tray": ((-0.50, 0.90, 0.0), 0),
-    "RPT_07_rain_shower": ((-0.60, 1.33, 0.0), 0),
-    "RPT_06_glass_screen": ((0.10, 0.89, 0.0), 90),
-    "RPT_02_vanity": ((0.58, 1.095, 0.0), 0),
-    "RPT_03_basin": ((0.58, 1.07, 0.831), 0),
-    "RPT_04_faucet": ((0.58, 1.31, 0.831), 0),
-    "RPT_08_mirror": ((0.58, 1.33, 1.12), 0),
-    "RPT_10_plumbing": ((0.58, 1.26, 0.0), 0),
-    "RPT_01_toilet": ((-0.793, -0.45, 0.0), -90),
-    "RPT_11_floor_layers": ((-0.50, 0.90, -0.40), 0),   # parked below the floor for the cutaway
-    "RPT_09_tiles": ((0.62, 1.338, 1.0), 0),            # spare panel, used in the assembly shot
+    "RPT_05_shower_tray": ((-0.65, 0.75, 0.0), 90),     # 0.90 wide x 1.20 deep walk-in
+    "RPT_07_rain_shower": ((-0.65, 1.33, 0.0), 0),
+    "RPT_06_glass_screen": ((-0.176, 0.89, 0.0), 90),    # on the tray edge, open at the front
+    "RPT_02_vanity": ((0.40, 1.095, 0.0), 0),         # x -0.115..0.915: clear of glass and walls
+    "RPT_03_basin": ((0.40, 1.07, 0.831), 0),
+    "RPT_04_faucet": ((0.40, 1.31, 0.831), 0),
+    "RPT_08_mirror": ((0.40, 1.33, 1.12), 0),
+    "RPT_10_plumbing": ((0.40, 1.26, 0.0), 0),
+    "RPT_01_toilet": ((-0.82, -0.45, 0.0), -90),
+    "RPT_11_floor_layers": ((-0.65, 0.75, -0.40), 0),   # parked below the floor for the cutaway
+    "RPT_09_tiles": ((0.40, 1.338, 1.0), 0),            # spare panel, used in the assembly shot
 }
 
 

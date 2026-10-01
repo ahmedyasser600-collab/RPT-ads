@@ -153,16 +153,16 @@ def aim(cam, frame, loc, target, interp="BEZIER"):
                 kp.interpolation = interp
 
 
-VANITY = (0.58, 1.25, 1.15)
+VANITY = (0.40, 1.25, 1.15)
 ROOM = (0.0, 0.6, 1.0)
 
 c1 = camera("Cam_S1_Doorway", 22)
 aim(c1, 1, (0.55, -3.7, 1.45), VANITY)
 aim(c1, 120, (0.45, -1.05, 1.42), VANITY)
 
-c2 = camera("Cam_S2_Cutaway", 28)
-aim(c2, 121, (1.85, -1.70, 2.50), (0.02, 0.95, 0.40))
-aim(c2, 270, (1.65, -1.45, 2.30), (0.00, 0.98, 0.38))
+c2 = camera("Cam_S2_Cutaway", 24)
+aim(c2, 121, (1.60, -1.80, 2.50), (-0.15, 0.90, 0.38))
+aim(c2, 270, (1.40, -1.55, 2.30), (-0.17, 0.93, 0.36))
 
 c3 = camera("Cam_S3_Assembly", 24)
 aim(c3, 271, (2.10, -2.60, 2.30), (0.05, 0.70, 0.75))
@@ -173,8 +173,8 @@ aim(c4, 481, (0.25, -2.75, 1.40), (0.15, 0.6, 1.0))
 aim(c4, 690, (0.55, -2.50, 1.35), (0.15, 0.6, 1.0))
 
 c5 = camera("Cam_S5_Hero", 28)
-aim(c5, 691, (0.30, -2.40, 1.30), (0.40, 1.1, 1.05))
-aim(c5, 780, (0.32, -2.15, 1.28), (0.40, 1.1, 1.05))
+aim(c5, 691, (0.10, -2.40, 1.30), (0.22, 1.1, 1.05))
+aim(c5, 780, (0.12, -2.15, 1.28), (0.22, 1.1, 1.05))
 
 for frame, cam in ((1, c1), (121, c2), (271, c3), (481, c4), (691, c5)):
     m = scene.timeline_markers.new(cam.name, frame=frame)
@@ -209,7 +209,7 @@ for t in tiles:
 
 floor = O["RPT_11_floor_layers_ROOT"]
 bpy.data.collections["RPT_11_floor_layers"].hide_render = False
-floor.location = (-0.50, 0.90, -0.226)          # finish sits 3 mm proud of the room floor
+floor.location = (-0.65, 0.75, -0.226)          # finish sits 3 mm proud of the room floor
 visible(floor, 1, False)
 visible(floor, 121, True)
 visible(floor, 271, False)
@@ -238,7 +238,7 @@ move_in(O["RPT_05_shower_tray_ROOT"], 330, 352, (0, 0, 0.55))
 visible(O["RPT_05_shower_tray_ROOT"], 330, True)
 move_in(O["RPT_07_rain_shower_ROOT"], 345, 368, (0, -0.45, 0))
 visible(O["RPT_07_rain_shower_ROOT"], 345, True)
-move_in(O["RPT_06_glass_screen_ROOT"], 360, 390, (0, -0.95, 0))      # glass slides along the tray edge
+move_in(O["RPT_06_glass_screen_ROOT"], 360, 390, (0, -0.55, 0))      # glass slides along the tray edge
 visible(O["RPT_06_glass_screen_ROOT"], 360, True)
 move_in(O["RPT_02_vanity_ROOT"], 380, 404, (0.0, -0.55, 0))
 visible(O["RPT_02_vanity_ROOT"], 380, True)
