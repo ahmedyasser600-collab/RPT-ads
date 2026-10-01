@@ -30,7 +30,7 @@ ap.add_argument("--music")
 ap.add_argument("--sfx")
 ap.add_argument("--srt")
 ap.add_argument("--review", action="store_true")
-ap.add_argument("--fonts", default=os.path.join(REPO, "reels/render/.build/fonts/package/files"))
+ap.add_argument("--fonts", default=os.path.join(HERE, "fonts"))
 ARGS = ap.parse_args()
 
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
