@@ -1,0 +1,650 @@
+{
+  "version": "1.0",
+  "blender": "4.5.9 LTS",
+  "coordinates": {
+    "source": "X right, -Y front, Z up",
+    "glb": "glTF Y-up conversion",
+    "unit": "metre"
+  },
+  "palette": {
+    "yellow": "#F5BB1D",
+    "status": "sampled from raster; not an official color specification"
+  },
+  "assets": [
+    {
+      "id": "01_toilet",
+      "title": "Wall-hung toilet",
+      "blend": "assets/01_toilet.blend",
+      "glb": "exports/01_toilet.glb",
+      "preview": "previews/01_toilet.png",
+      "collection": "RPT_01_toilet",
+      "root": "RPT_01_toilet_ROOT",
+      "objects": [
+        "RPT_01_toilet_ROOT",
+        "WC_Bowl",
+        "WC_Rear_Mount",
+        "WC_Seat_Hinge",
+        "WC_Seat",
+        "WC_Lid_Hinge",
+        "WC_Lid",
+        "WC_Hinge_Metal",
+        "WC_Hinge_Metal.001",
+        "WC_Flush_Plate",
+        "WC_Flush_Button",
+        "WC_Flush_Button.001"
+      ],
+      "movable_parts": [
+        {
+          "name": "WC_Seat_Hinge",
+          "axis": "X rotation radians",
+          "range": [
+            -1.65,
+            0.0
+          ]
+        },
+        {
+          "name": "WC_Lid_Hinge",
+          "axis": "X rotation radians",
+          "range": [
+            -1.75,
+            0.0
+          ]
+        }
+      ],
+      "dimensions_m": [
+        0.38,
+        0.587,
+        0.925
+      ],
+      "uses": "Fixture reveal; opening lid and seat"
+    },
+    {
+      "id": "02_vanity",
+      "title": "Fluted oak vanity",
+      "blend": "assets/02_vanity.blend",
+      "glb": "exports/02_vanity.glb",
+      "preview": "previews/02_vanity.png",
+      "collection": "RPT_02_vanity",
+      "root": "RPT_02_vanity_ROOT",
+      "objects": [
+        "RPT_02_vanity_ROOT",
+        "Vanity_Side",
+        "Vanity_Side.001",
+        "Vanity_Back",
+        "Vanity_Panel",
+        "Vanity_Panel.001",
+        "Vanity_Drawer_1",
+        "Drawer_1_Base",
+        "Drawer_1_Front",
+        "Drawer_1_Side",
+        "Drawer_1_Side.001",
+        "Drawer_1_Back",
+        "Drawer_1_Flute_00",
+        "Drawer_1_Flute_01",
+        "Drawer_1_Flute_02",
+        "Drawer_1_Flute_03",
+        "Drawer_1_Flute_04",
+        "Drawer_1_Flute_05",
+        "Drawer_1_Flute_06",
+        "Drawer_1_Flute_07",
+        "Drawer_1_Flute_08",
+        "Drawer_1_Flute_09",
+        "Drawer_1_Flute_10",
+        "Drawer_1_Flute_11",
+        "Drawer_1_Flute_12",
+        "Drawer_1_Flute_13",
+        "Drawer_1_Flute_14",
+        "Drawer_1_Flute_15",
+        "Drawer_1_Flute_16",
+        "Drawer_1_Flute_17",
+        "Drawer_1_Flute_18",
+        "Drawer_1_Flute_19",
+        "Drawer_1_Flute_20",
+        "Drawer_1_Flute_21",
+        "Drawer_1_Flute_22",
+        "Drawer_1_Flute_23",
+        "Drawer_1_Flute_24",
+        "Drawer_1_Flute_25",
+        "Drawer_1_Flute_26",
+        "Drawer_1_Flute_27",
+        "Drawer_1_Flute_28",
+        "Drawer_1_Flute_29",
+        "Drawer_1_Flute_30",
+        "Drawer_1_Flute_31",
+        "Drawer_1_Flute_32",
+        "Drawer_1_Flute_33",
+        "Drawer_1_Flute_34",
+        "Drawer_1_Flute_35",
+        "Drawer_1_Flute_36",
+        "Drawer_1_Flute_37",
+        "Drawer_1_Flute_38",
+        "Drawer_1_Flute_39",
+        "Drawer_1_Flute_40",
+        "Drawer_1_Flute_41",
+        "Drawer_1_Flute_42",
+        "Drawer_1_Flute_43",
+        "Drawer_1_Flute_44",
+        "Drawer_1_Flute_45",
+        "Drawer_1_Flute_46",
+        "Drawer_1_Flute_47",
+        "Drawer_1_Flute_48",
+        "Drawer_1_Flute_49",
+        "Drawer_1_Flute_50",
+        "Drawer_1_Flute_51",
+        "Drawer_1_Flute_52",
+        "Drawer_1_Flute_53",
+        "Drawer_1_Flute_54",
+        "Drawer_1_Flute_55",
+        "Drawer_1_Flute_56",
+        "Drawer_1_Flute_57",
+        "Drawer_1_Flute_58",
+        "Drawer_1_Flute_59",
+        "Drawer_1_Flute_60",
+        "Vanity_Drawer_2",
+        "Drawer_2_Base",
+        "Drawer_2_Front",
+        "Drawer_2_Side",
+        "Drawer_2_Side.001",
+        "Drawer_2_Back",
+        "Drawer_2_Flute_00",
+        "Drawer_2_Flute_01",
+        "Drawer_2_Flute_02",
+        "Drawer_2_Flute_03",
+        "Drawer_2_Flute_04",
+        "Drawer_2_Flute_05",
+        "Drawer_2_Flute_06",
+        "Drawer_2_Flute_07",
+        "Drawer_2_Flute_08",
+        "Drawer_2_Flute_09",
+        "Drawer_2_Flute_10",
+        "Drawer_2_Flute_11",
+        "Drawer_2_Flute_12",
+        "Drawer_2_Flute_13",
+        "Drawer_2_Flute_14",
+        "Drawer_2_Flute_15",
+        "Drawer_2_Flute_16",
+        "Drawer_2_Flute_17",
+        "Drawer_2_Flute_18",
+        "Drawer_2_Flute_19",
+        "Drawer_2_Flute_20",
+        "Drawer_2_Flute_21",
+        "Drawer_2_Flute_22",
+        "Drawer_2_Flute_23",
+        "Drawer_2_Flute_24",
+        "Drawer_2_Flute_25",
+        "Drawer_2_Flute_26",
+        "Drawer_2_Flute_27",
+        "Drawer_2_Flute_28",
+        "Drawer_2_Flute_29",
+        "Drawer_2_Flute_30",
+        "Drawer_2_Flute_31",
+        "Drawer_2_Flute_32",
+        "Drawer_2_Flute_33",
+        "Drawer_2_Flute_34",
+        "Drawer_2_Flute_35",
+        "Drawer_2_Flute_36",
+        "Drawer_2_Flute_37",
+        "Drawer_2_Flute_38",
+        "Drawer_2_Flute_39",
+        "Drawer_2_Flute_40",
+        "Drawer_2_Flute_41",
+        "Drawer_2_Flute_42",
+        "Drawer_2_Flute_43",
+        "Drawer_2_Flute_44",
+        "Drawer_2_Flute_45",
+        "Drawer_2_Flute_46",
+        "Drawer_2_Flute_47",
+        "Drawer_2_Flute_48",
+        "Drawer_2_Flute_49",
+        "Drawer_2_Flute_50",
+        "Drawer_2_Flute_51",
+        "Drawer_2_Flute_52",
+        "Drawer_2_Flute_53",
+        "Drawer_2_Flute_54",
+        "Drawer_2_Flute_55",
+        "Drawer_2_Flute_56",
+        "Drawer_2_Flute_57",
+        "Drawer_2_Flute_58",
+        "Drawer_2_Flute_59",
+        "Drawer_2_Flute_60",
+        "Vanity_Top"
+      ],
+      "movable_parts": [
+        {
+          "name": "Vanity_Drawer_1",
+          "axis": "Y translation metres",
+          "range": [
+            -0.32,
+            0.0
+          ]
+        },
+        {
+          "name": "Vanity_Drawer_2",
+          "axis": "Y translation metres",
+          "range": [
+            -0.32,
+            0.0
+          ]
+        }
+      ],
+      "dimensions_m": [
+        1.03,
+        0.527,
+        0.531
+      ],
+      "uses": "Storage reveal; opening drawers"
+    },
+    {
+      "id": "03_basin",
+      "title": "Countertop basin",
+      "blend": "assets/03_basin.blend",
+      "glb": "exports/03_basin.glb",
+      "preview": "previews/03_basin.png",
+      "collection": "RPT_03_basin",
+      "root": "RPT_03_basin_ROOT",
+      "objects": [
+        "RPT_03_basin_ROOT",
+        "Basin_Ceramic",
+        "Basin_Drain"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.534,
+        0.38,
+        0.131
+      ],
+      "uses": "Ceramic and drain details"
+    },
+    {
+      "id": "04_faucet",
+      "title": "Mixer tap",
+      "blend": "assets/04_faucet.blend",
+      "glb": "exports/04_faucet.glb",
+      "preview": "previews/04_faucet.png",
+      "collection": "RPT_04_faucet",
+      "root": "RPT_04_faucet_ROOT",
+      "objects": [
+        "RPT_04_faucet_ROOT",
+        "Tap_Base",
+        "Tap_Body",
+        "Tap_Spout",
+        "Tap_Aerator",
+        "Tap_Lever_Pivot",
+        "Tap_Lever"
+      ],
+      "movable_parts": [
+        {
+          "name": "Tap_Lever_Pivot",
+          "axis": "X rotation radians",
+          "range": [
+            -0.35,
+            0.0
+          ]
+        }
+      ],
+      "dimensions_m": [
+        0.064,
+        0.198,
+        0.2485
+      ],
+      "uses": "Finish comparison; lever motion"
+    },
+    {
+      "id": "05_shower_tray",
+      "title": "Low-profile shower tray",
+      "blend": "assets/05_shower_tray.blend",
+      "glb": "exports/05_shower_tray.glb",
+      "preview": "previews/05_shower_tray.png",
+      "collection": "RPT_05_shower_tray",
+      "root": "RPT_05_shower_tray_ROOT",
+      "objects": [
+        "RPT_05_shower_tray_ROOT",
+        "Tray_Solid",
+        "Tray_Drain_Channel",
+        "Tray_Drain_Slot_00",
+        "Tray_Drain_Slot_01",
+        "Tray_Drain_Slot_02",
+        "Tray_Drain_Slot_03",
+        "Tray_Drain_Slot_04",
+        "Tray_Drain_Slot_05",
+        "Tray_Drain_Slot_06",
+        "Tray_Drain_Slot_07",
+        "Tray_Drain_Slot_08",
+        "Tray_Drain_Slot_09",
+        "Tray_Drain_Slot_10",
+        "Tray_Drain_Slot_11"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        1.2,
+        0.9,
+        0.045
+      ],
+      "uses": "Walk-in shower assembly"
+    },
+    {
+      "id": "06_glass_screen",
+      "title": "Glass shower screen",
+      "blend": "assets/06_glass_screen.blend",
+      "glb": "exports/06_glass_screen.glb",
+      "preview": "previews/06_glass_screen.png",
+      "collection": "RPT_06_glass_screen",
+      "root": "RPT_06_glass_screen_ROOT",
+      "objects": [
+        "RPT_06_glass_screen_ROOT",
+        "Screen_Glass",
+        "Screen_Wall_Profile",
+        "Screen_Floor_Clamp",
+        "Screen_Floor_Clamp.001",
+        "Screen_Brace"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.919,
+        0.6725,
+        2.05
+      ],
+      "uses": "Shower division and space planning"
+    },
+    {
+      "id": "07_rain_shower",
+      "title": "Rain shower set",
+      "blend": "assets/07_rain_shower.blend",
+      "glb": "exports/07_rain_shower.glb",
+      "preview": "previews/07_rain_shower.png",
+      "collection": "RPT_07_rain_shower",
+      "root": "RPT_07_rain_shower_ROOT",
+      "objects": [
+        "RPT_07_rain_shower_ROOT",
+        "Shower_Riser",
+        "Shower_Rain_Head",
+        "Shower_Rain_Face",
+        "Shower_Nozzle",
+        "Shower_Nozzle.001",
+        "Shower_Nozzle.002",
+        "Shower_Nozzle.003",
+        "Shower_Nozzle.004",
+        "Shower_Nozzle.005",
+        "Shower_Nozzle.006",
+        "Shower_Nozzle.007",
+        "Shower_Nozzle.008",
+        "Shower_Nozzle.009",
+        "Shower_Nozzle.010",
+        "Shower_Nozzle.011",
+        "Shower_Nozzle.012",
+        "Shower_Nozzle.013",
+        "Shower_Nozzle.014",
+        "Shower_Nozzle.015",
+        "Shower_Nozzle.016",
+        "Shower_Nozzle.017",
+        "Shower_Nozzle.018",
+        "Shower_Nozzle.019",
+        "Shower_Nozzle.020",
+        "Shower_Nozzle.021",
+        "Shower_Nozzle.022",
+        "Shower_Nozzle.023",
+        "Shower_Nozzle.024",
+        "Shower_Nozzle.025",
+        "Shower_Nozzle.026",
+        "Shower_Nozzle.027",
+        "Shower_Nozzle.028",
+        "Shower_Nozzle.029",
+        "Shower_Nozzle.030",
+        "Shower_Nozzle.031",
+        "Shower_Nozzle.032",
+        "Shower_Nozzle.033",
+        "Shower_Nozzle.034",
+        "Shower_Nozzle.035",
+        "Shower_Nozzle.036",
+        "Shower_Nozzle.037",
+        "Shower_Nozzle.038",
+        "Shower_Nozzle.039",
+        "Shower_Mixer",
+        "Shower_Control",
+        "Shower_Control.001",
+        "Shower_Hose",
+        "Shower_Handset",
+        "Shower_Handset_Head",
+        "Shower_Wall_Mount",
+        "Shower_Wall_Mount.001"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.5359,
+        0.5175,
+        1.8365
+      ],
+      "uses": "Shower feature reveal"
+    },
+    {
+      "id": "08_mirror",
+      "title": "Illuminated round mirror",
+      "blend": "assets/08_mirror.blend",
+      "glb": "exports/08_mirror.glb",
+      "preview": "previews/08_mirror.png",
+      "collection": "RPT_08_mirror",
+      "root": "RPT_08_mirror_ROOT",
+      "objects": [
+        "RPT_08_mirror_ROOT",
+        "Mirror_Frame",
+        "Mirror_Face",
+        "Mirror_LED_Ring"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.84,
+        0.0485,
+        0.84
+      ],
+      "uses": "Lighting and preparation area"
+    },
+    {
+      "id": "09_tiles",
+      "title": "Modular tile panel",
+      "blend": "assets/09_tiles.blend",
+      "glb": "exports/09_tiles.glb",
+      "preview": "previews/09_tiles.png",
+      "collection": "RPT_09_tiles",
+      "root": "RPT_09_tiles_ROOT",
+      "objects": [
+        "RPT_09_tiles_ROOT",
+        "Tiles_Grout",
+        "Tile_00_00",
+        "Tile_00_01",
+        "Tile_00_02",
+        "Tile_00_03",
+        "Tile_01_00",
+        "Tile_01_01",
+        "Tile_01_02",
+        "Tile_01_03",
+        "Tile_02_00",
+        "Tile_02_01",
+        "Tile_02_02",
+        "Tile_02_03",
+        "Tile_03_00",
+        "Tile_03_01",
+        "Tile_03_02",
+        "Tile_03_03",
+        "Tile_04_00",
+        "Tile_04_01",
+        "Tile_04_02",
+        "Tile_04_03"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.805,
+        0.039,
+        1.01
+      ],
+      "uses": "Finish swaps and tile assembly"
+    },
+    {
+      "id": "10_plumbing",
+      "title": "Supply and waste kit",
+      "blend": "assets/10_plumbing.blend",
+      "glb": "exports/10_plumbing.glb",
+      "preview": "previews/10_plumbing.png",
+      "collection": "RPT_10_plumbing",
+      "root": "RPT_10_plumbing_ROOT",
+      "objects": [
+        "RPT_10_plumbing_ROOT",
+        "Supply_Hot",
+        "Pipe_Clip",
+        "Pipe_Clip.001",
+        "Isolation_Valve",
+        "Supply_Cold",
+        "Pipe_Clip.002",
+        "Pipe_Clip.003",
+        "Isolation_Valve.001",
+        "Waste_Trap",
+        "Waste_Collar",
+        "Waste_Collar.001"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        0.314,
+        0.3993,
+        0.747
+      ],
+      "uses": "Hidden services explainer"
+    },
+    {
+      "id": "11_floor_layers",
+      "title": "Layered floor section",
+      "blend": "assets/11_floor_layers.blend",
+      "glb": "exports/11_floor_layers.glb",
+      "preview": "previews/11_floor_layers.png",
+      "collection": "RPT_11_floor_layers",
+      "root": "RPT_11_floor_layers_ROOT",
+      "objects": [
+        "RPT_11_floor_layers_ROOT",
+        "Floor_00_Structure",
+        "Floor_Structure_Mesh",
+        "Floor_01_Screed",
+        "Floor_Screed_Mesh",
+        "Floor_02_Membrane",
+        "Floor_Membrane_Mesh",
+        "Floor_03_Adhesive",
+        "Floor_Adhesive_Mesh",
+        "Floor_04_Finish",
+        "Floor_Tile",
+        "Floor_Tile.001",
+        "Floor_Tile.002",
+        "Floor_Tile.003"
+      ],
+      "movable_parts": [
+        {
+          "name": "Floor_00_Structure",
+          "axis": "Z translation metres",
+          "range": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Floor_01_Screed",
+          "axis": "Z translation metres",
+          "range": [
+            0.0,
+            0.17
+          ]
+        },
+        {
+          "name": "Floor_02_Membrane",
+          "axis": "Z translation metres",
+          "range": [
+            0.0,
+            0.34
+          ]
+        },
+        {
+          "name": "Floor_03_Adhesive",
+          "axis": "Z translation metres",
+          "range": [
+            0.0,
+            0.51
+          ]
+        },
+        {
+          "name": "Floor_04_Finish",
+          "axis": "Z translation metres",
+          "range": [
+            0.0,
+            0.68
+          ]
+        }
+      ],
+      "dimensions_m": [
+        1.0,
+        1.0,
+        0.229
+      ],
+      "uses": "Illustrative renovation layers"
+    },
+    {
+      "id": "12_room_shell",
+      "title": "Cutaway room shell",
+      "blend": "assets/12_room_shell.blend",
+      "glb": "exports/12_room_shell.glb",
+      "preview": "previews/12_room_shell.png",
+      "collection": "RPT_12_room_shell",
+      "root": "RPT_12_room_shell_ROOT",
+      "objects": [
+        "RPT_12_room_shell_ROOT",
+        "Room_Floor",
+        "Room_Rear",
+        "Room_Left",
+        "Room_Right_Cutaway",
+        "Room_Sage_Tile",
+        "Room_Sage_Tile.001",
+        "Room_Sage_Tile.002",
+        "Room_Sage_Tile.003",
+        "Room_Sage_Tile.004",
+        "Room_Sage_Tile.005",
+        "Room_Sage_Tile.006",
+        "Room_Sage_Tile.007",
+        "Room_Sage_Tile.008",
+        "Room_Sage_Tile.009",
+        "Room_Sage_Tile.010",
+        "Room_Sage_Tile.011",
+        "Room_Sage_Tile.012",
+        "Room_Sage_Tile.013",
+        "Room_Sage_Tile.014",
+        "Room_Sage_Tile.015",
+        "Room_Sage_Tile.016",
+        "Room_Sage_Tile.017",
+        "Room_Sage_Tile.018",
+        "Room_Sage_Tile.019",
+        "Room_Sage_Tile.020",
+        "Room_Sage_Tile.021",
+        "Room_Sage_Tile.022",
+        "Room_Sage_Tile.023",
+        "Room_Sage_Tile.024",
+        "Room_Sage_Tile.025",
+        "Room_Sage_Tile.026",
+        "Room_Sage_Tile.027",
+        "Room_Sage_Tile.028",
+        "Room_Sage_Tile.029",
+        "Room_Sage_Tile.030",
+        "Room_Sage_Tile.031",
+        "Room_Sage_Tile.032",
+        "Room_Sage_Tile.033",
+        "Room_Sage_Tile.034",
+        "Room_Sage_Tile.035",
+        "Room_Sage_Tile.036",
+        "Room_Sage_Tile.037",
+        "Room_Sage_Tile.038",
+        "Room_Sage_Tile.039",
+        "Room_Sage_Tile.040",
+        "Room_Sage_Tile.041"
+      ],
+      "movable_parts": [],
+      "dimensions_m": [
+        2.52,
+        2.92,
+        2.64
+      ],
+      "uses": "Space planning and scene staging"
+    }
+  ]
+}
