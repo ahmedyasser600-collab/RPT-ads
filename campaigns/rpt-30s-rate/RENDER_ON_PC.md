@@ -26,15 +26,19 @@ $BL = "C:\Program Files\Blender Foundation\Blender 4.5\blender.exe"
 # 4. Full render: frames 1-780 at 1080x1920, 128 samples, GPU. Resumable: run again if stopped.
 & $BL -b --python render_frames.py -- 1 780 ..\.work\final 100 128 gpu
 
-# 5. Composite text, logo, subtitles, music and SFX into the MP4
+# 5. Composite text, logo, subtitles, voiceover, music and SFX into the MP4
 cd ..
 python compose_film.py --frames .work\final --out review\RPT_30s_REVIEW_full.mp4 `
-  --music audio\music.wav --sfx audio\sfx.wav --srt subtitles.srt --review
+  --vo audio\vo.wav --music audio\music.wav --sfx audio\sfx.wav --srt subtitles.srt
 ```
 
-When the voiceover WAV is available, add `--vo path\to\voiceover.wav` (the subtitles in
-`compose_film.py` must then be re-timed to the recording). Remove `--review` only after the
-financing provider's approved wording and legal notes have been added to the panel.
+Audio is made in code from files in `audio\` (no step needed unless you change them):
+`python audio\compose_music.py` (score), `python audio\place_vo.py` (places the Higgsfield
+voiceover takes `vo_raw*.wav` on the shots; `SUBTITLES` in `compose_film.py` is timed to it).
+`--review` adds a "REVIEW" tag and a legal-note placeholder; the client approved the panel
+wording "Più modi per pagare, anche a rate." without extra details, so it is no longer used.
+On this PC (Intel Arc iGPU, not detected by Cycles) the reel was rendered on the CPU at
+32 samples into `.work\final32` (~35-45 s per frame).
 
 ## Notes
 

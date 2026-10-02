@@ -85,18 +85,17 @@ HEADLINES = [  # (text, in s, out s)
     ("Ogni dettaglio\nconta.", 4.3, 8.75),
     ("Spazi pensati\nper te.", 9.3, 15.75),
 ]
-# Subtitles follow the narration draft; re-time to the delivered WAV.
+# Subtitles are timed to audio/vo.wav (speech spans printed by audio/place_vo.py).
 SUBTITLES = [
-    (0.5, 3.9, "Il bagno che desideri parte\nda un progetto pensato per te."),
-    (4.3, 7.0, "Spazi più pratici,\nmateriali scelti con cura"),
-    (7.0, 9.4, "e dettagli che fanno\nla differenza."),
-    (10.2, 14.2, "Con Ristrutturare per Te puoi\nrinnovare il tuo bagno,"),
-    (16.2, 19.6, "anche con pagamento a rate\nfino a dieci anni."),
-    (20.3, 22.7, "Lavoriamo a Padova\ne provincia."),
-    (23.4, 25.6, "Visita ristrutturareperte.it"),
-    (25.6, 28.2, "e raccontaci il tuo progetto."),
+    (0.4, 4.15, "Il bagno che desideri parte\nda un progetto pensato per te."),
+    (4.3, 7.65, "Spazi più pratici,\nmateriali scelti con cura"),
+    (7.65, 9.75, "e dettagli che fanno\nla differenza."),
+    (10.0, 13.95, "Con Ristrutturare per Te puoi\nrinnovare il tuo bagno,"),
+    (16.5, 19.75, "con pagamenti facili e flessibili,\nanche a rate."),
+    (20.3, 22.5, "Lavoriamo a Padova\ne provincia."),
+    (23.0, 25.95, "Visita ristrutturareperte.it"),   # the rest is spoken over the end card
 ]
-RATE_IN, RATE_OUT = 16.2, 22.85
+RATE_IN, RATE_OUT = 16.45, 22.85    # enters after the S3->S4 whip has landed
 DISCLOSURE_PLACEHOLDER = "[NOTE LEGALI DEL FINANZIAMENTO: DA FORNIRE]"
 
 
@@ -162,7 +161,7 @@ def subtitle(layer, t):
     d = ImageDraw.Draw(layer)
     for a, b, text in SUBTITLES:
         p = fade(t, a, b, 0.12)
-        if p <= 0:
+        if p <= 0 or a >= WIPE_IN:  # a line starting under the end wipe would only flash
             continue
         lines = text.split("\n")
         w = max(F_SUB.getlength(l) for l in lines)
@@ -178,44 +177,84 @@ def rate_panel(layer, t):
         return
     d = ImageDraw.Draw(layer)
     dy = int((1 - ease((t - RATE_IN) / 0.45)) * 50)
-    x0, y0, x1, y1 = 60, 250 + dy, 760, 590 + dy   # top-left block, clear of the right-side app controls
+    x0, y0, x1, y1 = 60, 250 + dy, 760, (590 if ARGS.review else 530) + dy   # top-left block, clear of the right-side app controls
     d.rounded_rectangle((x0, y0, x1, y1), 30, fill=YELLOW + (int(250 * p),))
     a = int(255 * p)
-    d.text((x0 + 44, y0 + 44), "Pagamento a rate", font=F_RATE1, fill=BLACK + (a,))
-    draw_tight(d, (x0 + 44, y0 + 130), "fino a 10 anni", F_RATE2, BLACK + (a,))
+    draw_tight(d, (x0 + 44, y0 + 44), "Più modi per pagare,", F_RATE1, BLACK + (a,))
+    draw_tight(d, (x0 + 44, y0 + 130), "anche a rate.", F_RATE2, BLACK + (a,))
     if ARGS.review:
         d.text((x0 + 44, y0 + 280), DISCLOSURE_PLACEHOLDER, font=F_TAG, fill=RED + (a,))
+
+
+# End transition: a paper panel wipes up over the still-moving hero shot (25.6-26.0 s)
+# while the corner logo flies into the end-card logo position (25.6-26.35 s).
+WIPE_IN, WIPE_DUR = 25.6, 0.4
+LOGO_FLY_DUR = 0.75
+LOGO_FROM = (W - 60 - LOGO_S.width, 230, LOGO_S.width)
+LOGO_TO = ((W - LOGO_L.width) // 2, 300, LOGO_L.width)
+
+
+def ease_io(x):
+    x = max(0.0, min(1.0, x))
+    return 4 * x ** 3 if x < 0.5 else 1 - (-2 * x + 2) ** 3 / 2
+
+
+def wipe_panel(frame, t):
+    p = ease_io((t - WIPE_IN) / WIPE_DUR)
+    if p <= 0:
+        return
+    top = int(H * (1 - p))
+    frame.paste(PAPER + (255,), (0, top, W, H))
+    if p < 1:
+        frame.paste(YELLOW + (255,), (0, max(0, top - 12), W, top))
+
+
+def logo_pose(t):
+    p = ease_io((t - WIPE_IN) / LOGO_FLY_DUR)
+    (x0, y0, w0), (x1, y1, w1) = LOGO_FROM, LOGO_TO
+    w = round(w0 + (w1 - w0) * p)
+    # interpolate the centre so the logo grows about its own middle
+    cx = x0 + w0 / 2 + ((x1 + w1 / 2) - (x0 + w0 / 2)) * p
+    cy = y0 + LOGO_S.height / 2 + ((y1 + LOGO_L.height / 2) - (y0 + LOGO_S.height / 2)) * p
+    lg = LOGO_L if w == w1 else logo_w(w)
+    return lg, (round(cx - lg.width / 2), round(cy - lg.height / 2))
+
+
+def rise(t, t0, dur=0.4, dist=28):
+    """Alpha (0-255) and upward offset for an element entering at t0."""
+    a = ease((t - t0) / dur)
+    return int(255 * a), int((1 - a) * dist)
 
 
 def end_card(t):
     frame = Image.new("RGBA", (W, H), PAPER + (255,))
     d = ImageDraw.Draw(frame)
-    p = ease((t - 26.0) / 0.5)
-    lg = LOGO_L.copy()
-    lg.putalpha(lg.getchannel("A").point(lambda v: int(v * p)))
-    frame.alpha_composite(lg, ((W - lg.width) // 2, 300 + int((1 - p) * 20)))
-    if t >= 26.4:
-        a = int(255 * ease((t - 26.4) / 0.35))
-        lines = ["Parliamo del tuo", "nuovo bagno."]
-        for i, line in enumerate(lines):
-            draw_tight(d, (60, 760 + i * 84), line, F_CTA, BLACK + (a,))
-        ax = 60 + int(tight_len(lines[-1], F_CTA)) + 26
+    lines = ["Parliamo del tuo", "nuovo bagno."]
+    for i, line in enumerate(lines):
+        a, dy = rise(t, 26.35 + i * 0.1)
+        if a:
+            draw_tight(d, (60, 760 + i * 84 + dy), line, F_CTA, BLACK + (a,))
+    a, dy = rise(t, 26.45)
+    if a:
+        ax = 60 + int(tight_len(lines[-1], F_CTA)) + 26 + int(dy * 0.6)
         ay = 760 + 84 + 46
         d.rectangle((ax, ay - 4, ax + 52, ay + 4), fill=BLACK + (a,))
         d.polygon([(ax + 60, ay), (ax + 36, ay - 22), (ax + 36, ay + 22)], fill=BLACK + (a,))
-        d.rectangle((60, 960, 60 + int(360 * ease((t - 26.6) / 0.4)), 970), fill=YELLOW)
-    if t >= 26.8:
-        a = int(255 * ease((t - 26.8) / 0.3))
-        x, y = 60, 1010
+    uw = int(360 * ease_io((t - 26.6) / 0.45))
+    if uw:
+        d.rectangle((60, 960, 60 + uw, 970), fill=YELLOW)
+    a, dy = rise(t, 26.8)
+    if a:
+        x, y = 60, 1010 + dy
         d.ellipse((x, y, x + 34, y + 34), fill=YELLOW + (a,))
         d.polygon([(x + 3, y + 24), (x + 31, y + 24), (x + 17, y + 50)], fill=YELLOW + (a,))
         d.ellipse((x + 11, y + 11, x + 23, y + 23), fill=PAPER + (a,))
         d.text((x + 56, y + 6), " ".join("PADOVA E PROVINCIA"), font=F_LABEL, fill=BLACK + (a,))
-    if t >= 27.0:
-        a = int(255 * ease((t - 27.0) / 0.3))
+    a, dy = rise(t, 27.0)
+    if a:
         url = "ristrutturareperte.it"
-        d.rounded_rectangle((60, 1100, 60 + F_URL.getlength(url) + 64, 1196), 20, fill=YELLOW + (a,))
-        d.text((92, 1118), url, font=F_URL, fill=BLACK + (a,))
+        d.rounded_rectangle((60, 1100 + dy, 60 + F_URL.getlength(url) + 64, 1196 + dy), 20, fill=YELLOW + (a,))
+        d.text((92, 1118 + dy), url, font=F_URL, fill=BLACK + (a,))
     return frame
 
 
@@ -233,23 +272,57 @@ def frame_3d(n):
     return img.resize((W, H), Image.LANCZOS) if img.size != (W, H) else img
 
 
+# S3 -> S4 (frame 480 -> 481) is two near-identical views of the finished bathroom, which reads
+# as a jump cut. Hide it with a short whip-pan: both shots slide left as one strip, with
+# horizontal motion blur that follows the speed of the slide.
+WHIP_CUT, WHIP_HALF = 481, 4                       # frames 477-484
+
+
+def hblur(img, length):
+    import numpy as np
+    length = int(length)
+    if length < 2:
+        return img
+    a = np.asarray(img, dtype=np.float32)
+    pad = np.pad(a, ((0, 0), (length // 2, length - length // 2), (0, 0)), mode="edge")
+    c = np.cumsum(pad, axis=1)
+    c = np.concatenate([np.zeros_like(c[:, :1]), c], axis=1)
+    out = (c[:, length:length + a.shape[1]] - c[:, :a.shape[1]]) / length
+    return Image.fromarray(out.clip(0, 255).astype("uint8"), img.mode)
+
+
+def whip(n):
+    span = 2 * WHIP_HALF
+    p = (n - (WHIP_CUT - WHIP_HALF) + 0.5) / span          # 0..1 across the whip
+    off = W * ease_io(p)
+    speed = W * (ease_io(p + 0.5 / span) - ease_io(p - 0.5 / span))
+    a, b = frame_3d(min(n, WHIP_CUT - 1)), frame_3d(max(n, WHIP_CUT))
+    strip = Image.new("RGBA", (2 * W, H))
+    strip.paste(a, (0, 0))
+    strip.paste(b, (W, 0))
+    x = int(round(off))
+    return hblur(strip.crop((max(0, x - 200), 0, min(2 * W, x + W + 200), H)), speed * 0.9).crop(
+        (x - max(0, x - 200), 0, x - max(0, x - 200) + W, H))
+
+
 def render(n):
     t = t_of(n)
     if n >= END_CARD:
-        frame = end_card(t)
-        if n < END_CARD + 9:  # 0.3 s crossfade from the hero shot
-            frame = Image.blend(frame_3d(END_CARD - 1), frame, (n - END_CARD + 1) / 9)
+        frame = end_card(t)            # subtitles stay off the end card (the CTA carries the line)
     else:
-        frame = frame_3d(n)
+        frame = whip(n) if abs(n - WHIP_CUT + 0.5) < WHIP_HALF else frame_3d(n)
         frame.alpha_composite(TOP_SCRIM)
         layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         headline(layer, t)
         rate_panel(layer, t)
+        subtitle(layer, t)
         frame.alpha_composite(layer)
+        wipe_panel(frame, t)
+    if t < WIPE_IN:
         frame.alpha_composite(LOGO_S, (W - 60 - LOGO_S.width, 230))
-    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    subtitle(layer, t)
-    frame.alpha_composite(layer)
+    else:
+        lg, pos = logo_pose(t)
+        frame.alpha_composite(lg, pos)
     if ARGS.review:
         d = ImageDraw.Draw(frame)
         d.rounded_rectangle((60, 150, 520, 194), 12, fill=RED)
@@ -262,7 +335,7 @@ def mix(video, out):
     idx = 1
     if ARGS.vo:
         inputs += ["-i", ARGS.vo]
-        chains.append(f"[{idx}:a]aresample=48000,loudnorm=I=-15:TP=-1.5:LRA=7,asplit[vo][key]")
+        chains.append(f"[{idx}:a]aresample=48000,loudnorm=I=-15:TP=-1.5:LRA=7,aresample=48000,apad,asplit[vo][key]")
         idx += 1
     for name, path, gain in (("mu", ARGS.music, -2), ("fx", ARGS.sfx, -4)):
         if path:
@@ -277,7 +350,7 @@ def mix(video, out):
         chains.append("[vo][duck]amix=inputs=2:normalize=0,alimiter=limit=0.89[aout]")
     else:
         chains.append("[bed]alimiter=limit=0.89[aout]")
-    subprocess.run([FFMPEG, "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(chains),
+    subprocess.run([FFMPEG, "-nostdin", "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(chains),
                     "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
                     "-ar", "48000", "-ac", "2", "-t", str(TOTAL / FPS), "-movflags", "+faststart", out], check=True)
 

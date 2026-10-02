@@ -5,7 +5,9 @@ external music licence applies. ~100 BPM feel (eighth-note arpeggio = 0.3 s), wa
 + soft pad, chord change exactly on every cut. SFX are placed on the animation keyframes
 of blender/build_film.py (frame n -> (n-1)/30 s).
 
-Writes music.wav (score only) and sfx.wav (effects only), 48 kHz stereo.
+Writes sfx.wav (effects only), 48 kHz stereo. The score now comes from compose_music.py;
+the piano score below is kept only because it draws from the same random stream as the
+SFX, so removing it would change sfx.wav.
 Usage: python3 compose_score.py <out_dir>
 """
 import os
@@ -64,28 +66,29 @@ SECTIONS = [
     (9.0, 11.4, "C2", ["C3", "E3", "G3"], ["G4", "C5", "E5", "C5"], 0.3, 0.18),       # S3 assembly builds
     (11.4, 13.8, "B1", ["G3", "B3", "D4"], ["D5", "G4", "B4", "G4"], 0.3, 0.20),
     (13.8, 16.0, "A1", ["A3", "C4", "E4"], ["E5", "A4", "C5", "A4"], 0.3, 0.22),
-    (16.0, 23.0, "F2", ["F3", "A3", "C4", "G4"], ["C5", "A4", "G5", "A4"], 0.6, 0.20),  # S4 financing: warm, open
+    (16.0, 23.0, "F2", ["F3", "A3", "C4", "G4"], ["C5", "A4", "G5", "A4"], 0.3, 0.13),  # S4 financing: warm, keeps the pulse
     (23.0, 26.0, "G2", ["G3", "B3", "D4"], ["D5", "B4", "G4", "B4"], 0.6, 0.18),       # S5 hero
     (26.0, 30.0, "C2", ["C3", "G3", "E4", "G4"], ["G4", "C5", "E5"], 0.9, 0.15),        # end card: resolve
 ]
 
 music = np.zeros(N)
 for start, end, bass, pads, arp, step, vel in SECTIONS:
-    add(music, piano(hz(bass), min(end - start + 0.5, 3.5), 0.5), start)
-    for n in pads[:3]:
-        add(music, piano(hz(n), min(end - start + 0.5, 3.5), 0.18), start + 0.02)
+    soft = 0.55 if start in (16.0, 26.0) else 1.0        # financing panel + end card land gently, not as a stab
+    add(music, piano(hz(bass), min(end - start + 0.5, 3.5), 0.5 * soft), start)
+    for k, n in enumerate(pads[:3]):
+        add(music, piano(hz(n), min(end - start + 0.5, 3.5), 0.18 * soft), start + 0.02 + (0.06 * k if soft < 1 else 0))
     add(music, pad([hz(n) for n in pads], end - start + 0.7, 0.11), max(0.0, start - 0.25))
     t, i = start + step, 0
     while t < end - 0.08:
         add(music, piano(hz(arp[i % len(arp)]), 1.4, vel), t)
         t, i = t + step, i + 1
-for n in ["C3", "G3", "C4", "E4", "G4", "C5"]:          # final chord under the CTA
-    add(music, piano(hz(n), 2.6, 0.22), 27.0)
+for k, n in enumerate(["C4", "E4", "G4", "C5"]):        # final chord under the CTA, rolled and quiet
+    add(music, piano(hz(n), 2.6, 0.07), 27.0 + 0.09 * k)
 
-# Low pulse under the assembly (S3), one per beat.
-for t0 in np.arange(9.0, 16.0, 0.6):
+# Low pulse under the assembly (S3), one per beat; it carries on, softer, under S4.
+for t0 in np.arange(9.0, 23.0, 0.6):
     tt = np.arange(int(SR * 0.22)) / SR
-    add(music, np.sin(2 * np.pi * 58 * tt) * np.exp(-tt * 18) * 0.14, t0)
+    add(music, np.sin(2 * np.pi * 58 * tt) * np.exp(-tt * 18) * (0.14 if t0 < 16.0 else 0.07), t0)
 
 # ------------------------------------------------------------- SFX on animation keyframes
 sfx = np.zeros(N)
@@ -143,6 +146,6 @@ def finish(sig, peak, reverb_mix):
 
 out = sys.argv[1]
 os.makedirs(out, exist_ok=True)
-wavfile.write(os.path.join(out, "music.wav"), SR, (finish(music, 0.5, 0.5) * 32767).astype(np.int16))
+finish(music, 0.5, 0.5)  # not written any more; keeps the random stream (SFX reverb) unchanged
 wavfile.write(os.path.join(out, "sfx.wav"), SR, (finish(sfx, 0.35, 0.25) * 32767).astype(np.int16))
-print("wrote music.wav and sfx.wav")
+print("wrote sfx.wav")
