@@ -1,0 +1,28 @@
+1
+00:00:00,450 --> 00:00:04,230
+UAE e-invoicing is coming! Is your business ready?
+
+2
+00:00:04,267 --> 00:00:08,427
+Selling to other businesses? Your deadline is July 2027!
+
+3
+00:00:08,367 --> 00:00:11,797
+And you must appoint an accredited provider by the end of March!
+
+4
+00:00:11,767 --> 00:00:17,407
+No more PDF invoices. Every invoice goes out as structured data, through your provider.
+
+5
+00:00:17,600 --> 00:00:21,230
+Still invoicing from Excel or Word? That won't cut it!
+
+6
+00:00:21,433 --> 00:00:27,033
+Get your sales, VAT and invoices into one system now, and be ready early!
+
+7
+00:00:27,100 --> 00:00:32,190
+With Odoo, or software built around your business. Book your discovery call today!
+

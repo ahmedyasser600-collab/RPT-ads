@@ -14,8 +14,11 @@ of the same code). It keeps every video on one brand, one layout and one lead CT
 Series rules baked in:
 - **The goal is leads.** Every video ends with "Move beyond X, with Odoo or software built around your business",
   then "Book a 30-minute discovery call · tolx.ae/contact · WhatsApp +971 50 986 0063".
-- **Voice:** Marcus (Higgsfield TTS V2, ElevenLabs engine). Synthetic, so it's never presented as a human recording.
-  The narration doesn't say "TOLX" until the pronunciation is confirmed.
+- **Style from video 03 on (approved):** slam-in hook in Poppins Black italic with gold extrusion, screen-shake and flash
+  (`extruded`, `slam`, `shake`, `flash`); a 124 BPM groove from frame 0 (`build_music(dur, 0.0, 0.3, end, bpm=124)`);
+  **Gia** voice (Higgsfield TTS V2, ElevenLabs preset) with short exclamatory lines, `place_vo(..., base_tempo=1.06, fx=ENERGY_FX)`.
+  The voice is synthetic, so it's never presented as a human recording. The narration doesn't say "TOLX" until the pronunciation is confirmed.
+  (Videos 01–02 still use the earlier Marcus / calm treatment.)
 - Scenarios are illustrative and labelled on screen. No invented client results, prices, savings or integrations.
 - To change the CTA (for example, if the call is free) edit `CTA_URL`, `PHONE`, `CALL_LENGTH` and `draw_end_card()` here,
   then re-render each video.

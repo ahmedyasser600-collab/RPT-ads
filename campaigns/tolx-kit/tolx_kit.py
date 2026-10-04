@@ -539,3 +539,45 @@ def run(args, render, captions, picks, cover_frame):
     if has_audio:
         mux_audio(args, video, args.out)
         os.remove(video)
+
+
+# ---------------------------------------------------------------- slam-in hook (series style from video 03)
+DEEP_GOLD = (120, 88, 22)
+
+
+@lru_cache(None)
+def tight(text, fkey, size, color):
+    sp = text_sprite(text, fkey, size, color)
+    return sp.crop(sp.getchannel("A").getbbox())
+
+
+@lru_cache(None)
+def extruded(text, fkey, size, face, depth):
+    """Heavy title: darker copies stacked down-right under the face colour (3D extrusion)."""
+    top = tight(text, fkey, size, face)
+    side = tight(text, fkey, size, DEEP_GOLD)
+    im = Image.new("RGBA", (top.width + depth, top.height + depth), (0, 0, 0, 0))
+    for k in range(depth, 0, -1):
+        im.alpha_composite(side, (k, k))
+    im.alpha_composite(top, (0, 0))
+    return im
+
+
+def slam(n, f, dur=8):
+    """(scale, alpha) for a word slamming in at frame f: big -> slight undershoot -> 1."""
+    return 2.2 - 1.2 * back(lin(n, f, f + dur), 2.6), ease(lin(n, f, f + 3))
+
+
+def shake(n, hits):
+    """Screen-shake offset after each (frame, amplitude) hit, decaying over 9 frames."""
+    sh = 0.0
+    for f, amp in hits:
+        if f <= n < f + 9:
+            sh += amp * (1 - (n - f) / 9) * math.sin((n - f) * 2.7)
+    return sh, -sh * 0.6
+
+
+def flash(frame, n, f, dur=7, strength=110):
+    """Warm full-canvas flash starting at frame f (covers the whole 9:16 canvas too)."""
+    if f <= n < f + dur:
+        put(frame, Image.new("RGBA", (W, H), (255, 236, 190, int(strength * (1 - (n - f) / dur)))), 0, -OY, "tl")

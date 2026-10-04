@@ -1,0 +1,28 @@
+1
+00:00:00,133 --> 00:00:04,167
+UAE e-invoicing: July 2027. Is your business ready?
+
+2
+00:00:04,167 --> 00:00:11,667
+The deadlines: pilot 1 Jul 2026; revenue AED 50M+ live 1 Jan 2027; under AED 50M appoint an accredited provider by 31 Mar 2027 and go live 1 Jul 2027.
+
+3
+00:00:11,667 --> 00:00:17,500
+No more PDF invoices: structured e-invoices go through your accredited provider to the buyer and the FTA (simplified).
+
+4
+00:00:17,500 --> 00:00:21,333
+Invoicing from Excel or Word? Not e-invoice ready.
+
+5
+00:00:21,333 --> 00:00:27,000
+Get ready before the deadline: customer TRNs, VAT on every line, all invoices from one system, ready to connect to your provider.
+
+6
+00:00:27,000 --> 00:00:29,333
+Get e-invoice ready with TOLX: Odoo, or custom software built around exactly how you work.
+
+7
+00:00:29,333 --> 00:00:34,000
+Book a 30-minute discovery call: tolx.ae/contact or WhatsApp +971 50 986 0063
+
