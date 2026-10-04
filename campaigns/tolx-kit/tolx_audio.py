@@ -16,10 +16,10 @@ from scipy.signal import butter, sosfilt
 SR = 48000
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
-# Brand pronunciation (confirmed by the client, 4 Oct 2026): TOLX is said "Tool-ex".
-# Always write it this way in TTS prompts, e.g. "Book your discovery call with Tool-ex today!".
+# Brand pronunciation (chosen by the client from samples, 4 Oct 2026; sample B in tolx-kit/pronunciation/):
+# TOLX is said "Tol-x". Write it "Tolex" in TTS prompts, e.g. "Book your discovery call with Tolex today!".
 # On screen and in captions/SRT the brand stays "TOLX".
-BRAND_SPOKEN = "Tool-ex"
+BRAND_SPOKEN = "Tolex"
 NOTE = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
 rng = np.random.default_rng(42)
 

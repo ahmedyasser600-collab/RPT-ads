@@ -50,7 +50,7 @@ LINES = [  # (text = generation prompt, window start s, window end s). Takes: vo
      s(TL.ACCOUNT) + 0.1, s(TL.OFFLINE)),
     ("Internet down at the kiosk? No problem! Your point of sale keeps selling.", s(TL.OFFLINE) + 0.1, s(TL.ONE)),
     ("One system for your whole business. With AI built in!", s(TL.ONE) + 0.1, s(TL.OFFER)),
-    ("Ready to move to Odoo 20? Book your discovery call with Tool-ex today!", s(TL.OFFER) + 0.1, DUR - 0.8),
+    ("Ready to move to Odoo 20? Book your discovery call with Tolex today!", s(TL.OFFER) + 0.1, DUR - 0.8),
 ]
 A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "g", os.path.join(HERE, "vo_gia.wav"), DUR,
            base_tempo=1.06, fx=A.ENERGY_FX)

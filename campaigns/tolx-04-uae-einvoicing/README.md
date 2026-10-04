@@ -28,7 +28,7 @@ Both files: H.264 + AAC, 30 fps, 1020 frames, 34.0 s, about -14.1 LUFS.
 | 17.5–21.3 s | "Invoicing from Excel or Word?" Docx and xlsx invoices, then the stamp **NOT E-INVOICE READY** | Still invoicing from Excel or Word? That won't cut it! |
 | 21.3–27 s | "Get ready before the deadline." Checklist ticks: customer TRNs · VAT on every line · all invoices from one system · ready to connect to your provider | Get your sales, VAT and invoices into one system now, and be ready early! |
 | 27–29.3 s | "Get e-invoice ready with TOLX." **Odoo** or **Custom software** | With Odoo, or software built around your business. |
-| 29.3–34 s | End card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with TOLX ("Tool-ex") today! |
+| 29.3–34 s | End card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with TOLX ("Tol-x") today! |
 
 ## Fact basis (checked 4 Oct 2026)
 UAE Ministry of Finance **Ministerial Decisions No. 243 and 244 of 2025**, with the large-business provider
@@ -95,7 +95,7 @@ UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_ca
 ## v2 changes (4 Oct 2026 feedback)
 - **Title entrance:** a smooth staggered reveal with a gold underline sweep. The slam, screen-shake and flash are gone. The heavy Poppins Black italic font stays.
 - **Music:** replaced the plucky 124 BPM groove with the calm `build_music_smooth()` bed. Sound effects are cut down to a few soft chimes and swishes.
-- **Brand:** the closing line now says "Book your discovery call **with TOLX** today!", spoken "Tool-ex" (new Gia take `g6.mp3`).
+- **Brand:** the closing line now says "Book your discovery call **with TOLX** today!", spoken "Tol-x" (prompt spelling "Tolex") (new Gia take `g6.mp3`).
 - The "NOT E-INVOICE READY" stamp also uses the smooth reveal instead of a slam.
 
 ## Render

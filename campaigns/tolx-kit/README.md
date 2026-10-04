@@ -22,7 +22,7 @@ Series rules baked in:
   - **Voice:** **Gia** (Higgsfield TTS V2, ElevenLabs preset), short punchy lines, `place_vo(..., base_tempo=1.06, fx=ENERGY_FX)`.
     Synthetic, so it's never presented as a human recording.
   - **Brand in the CTA (required):** the last line says "**Book your discovery call with TOLX today!**".
-  - **Pronunciation: TOLX is said "Tool-ex"** (confirmed by the client). In TTS prompts always write `Tool-ex`
+  - **Pronunciation: TOLX is said "Tol-x"**, chosen by the client from samples (`pronunciation/B_Tolex.mp3`). In TTS prompts always write `Tolex`
     (`tolx_audio.BRAND_SPOKEN`). On screen and in captions it stays "TOLX", and `place_vo` converts the SRT text automatically.
   - The older `extruded/slam/shake/flash` and `build_music()` helpers remain for reference only.
   - Videos 01–02 still use the earlier Marcus / calm treatment and don't say the brand yet.
