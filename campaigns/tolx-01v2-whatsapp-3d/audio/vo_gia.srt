@@ -1,0 +1,28 @@
+1
+00:00:00,400 --> 00:00:02,010
+Taking orders on WhatsApp?
+
+2
+00:00:03,450 --> 00:00:06,980
+Then somewhere in that chat, an order is getting buried.
+
+3
+00:00:07,650 --> 00:00:10,060
+Who's handling it? Did anyone follow up?
+
+4
+00:00:10,983 --> 00:00:14,733
+In one system, every order gets an owner and a status.
+
+5
+00:00:15,383 --> 00:00:17,823
+And every follow-up comes with a reminder.
+
+6
+00:00:18,783 --> 00:00:21,233
+It's time. Shift to Odoo now!
+
+7
+00:00:22,833 --> 00:00:25,763
+Book your discovery call with TOLX today!
+

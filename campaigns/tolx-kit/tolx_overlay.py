@@ -158,6 +158,19 @@ def _icon(d, kind, x0, y0, s):
         d.rectangle((x0 + s * .14, y0 + s * .42, x0 + s * .86, y0 + s * .72), fill=G)
         d.rounded_rectangle((x0 + s * .02, y0 + s * .7, x0 + s * .98, y0 + s * .8), 6, fill=DARK)
         d.ellipse((x0 + s * .4, y0 + s * .82, x0 + s * .6, y0 + s * 1.0), fill=DARK)
+    elif kind == "chat":                          # speech bubble with text lines
+        d.rounded_rectangle((x0, y0 + s * .05, x0 + s, y0 + s * .75), 22, fill=K.GOLD)
+        d.polygon([(x0 + s * .18, y0 + s * .7), (x0 + s * .1, y0 + s * .98), (x0 + s * .42, y0 + s * .74)], fill=K.GOLD)
+        for i, w in enumerate((0.7, 0.5)):
+            d.line((x0 + s * .16, y0 + s * (0.3 + 0.2 * i), x0 + s * (0.16 + w), y0 + s * (0.3 + 0.2 * i)),
+                   fill=DARK, width=9)
+    elif kind == "check":                         # gold tick in a circle
+        d.ellipse((x0, y0, x0 + s, y0 + s), fill=(80, 200, 120))
+        d.line((x0 + s * .26, y0 + s * .52, x0 + s * .44, y0 + s * .7), fill=(250, 250, 248), width=14)
+        d.line((x0 + s * .43, y0 + s * .7, x0 + s * .76, y0 + s * .32), fill=(250, 250, 248), width=14)
+    elif kind == "person":                        # owner avatar
+        d.ellipse((x0 + s * .3, y0, x0 + s * .7, y0 + s * .4), fill=DARK)
+        d.pieslice((x0 + s * .1, y0 + s * .45, x0 + s * .9, y0 + s * 1.25), 180, 360, fill=K.GOLD)
     elif kind == "odoo":                          # TOLX-style "apps" glyph (not Odoo's logo)
         for i in range(2):
             for j in range(2):

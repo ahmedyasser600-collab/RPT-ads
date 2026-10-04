@@ -1,4 +1,4 @@
-"""TOLX video 02 v2 "Stock & sales" in the 3D-scene + 2D-overlay style (~31.6 s, 9:16).
+"""TOLX video 01 v2 "WhatsApp orders" in the 3D-scene + 2D-overlay style (~26.5 s, 9:16).
 
 Base: Kling 3.0 photoreal CGI clips (AI-generated; no text, logos or people in the footage).
 Overlay (../tolx-kit/tolx_overlay.py): drawn-on gold doodles, springy app tiles, 2-4 word keywords.
@@ -42,52 +42,56 @@ CLIPS = {}
 
 
 # ---------------------------------------------------------------- per-shot overlays (i = frame within shot)
-def ov_shelves(fr, i, out):
-    O.put_tile(fr, 820, 520, i, 16, "sheet", out=out)
-    O.keyword(fr, i, 26, (("Excel says ", TEXT), ("12", DOODLE)), 1380, out=out)
+BURST = [(250, 560, -8), (820, 500, 7), (180, 880, 5), (880, 860, -6), (420, 420, 4), (680, 980, -4)]
 
 
-def ov_three(fr, i, out):
-    for k, st in enumerate(SPARKS):
-        O.draw_polyline(fr, st, ease(lin(i, 6 + 3 * k, 14 + 3 * k)), width=12)
-    O.put_tile(fr, 800, 560, i, 12, "box", badge="3", out=out)
-    O.keyword(fr, i, 16, (("Shelf: ", TEXT), ("3", RED)), 1400, out=out)
+def ov_phone(fr, i, out):
+    for k, (x, y, rot) in enumerate(BURST):                         # chat bubbles burst in around the phone
+        O.put_tile(fr, x, y, i, 4 + 5 * k, "chat", rot=rot, size=150, out=out)
+    O.put_tile(fr, 540, 600, i, 36, "chat", badge="99+", size=230, rot=0, out=out)
+    O.keyword(fr, i, 40, (("On ", TEXT), ("WhatsApp?", DOODLE)), 1400, out=out)
 
 
-FILES = [("12", 260, 560, -8), ("9", 800, 520, 7), ("7", 210, 900, 6), ("10", 860, 880, -6), ("3", 530, 420, -3)]
+def ov_buried(fr, i, out):
+    """New bubbles keep arriving at the top and push the gold ORDER bubble down and away."""
+    step, x = 120, 555
+    arrivals = [6, 14 + 12, 30 + 12, 46 + 12, 62 + 12]               # frame each new bubble lands
+    order_at = 6
+    for k, f in enumerate(arrivals):
+        if i < f:
+            continue
+        pushed = sum(ease(lin(i, g, g + 8)) for g in arrivals[k + 1:])
+        y = 790 + step * pushed
+        if k == 0:                                                  # the order
+            O.put_tile(fr, x, y, i, f, "receipt", badge="!", badge_col=GOLD, label="NEW ORDER", rot=-3,
+                       out=out * (1 - ease(lin(y, 1150, 1260))))
+        else:
+            O.put_tile(fr, x + (-30 if k % 2 else 30), y, i, f, "chat", size=150, rot=(-5, 5)[k % 2], out=out * (1 - ease(lin(y, 1150, 1260))))
+    O.keyword(fr, i, 70, (("Order ", TEXT), ("buried", DOODLE)), 1400, out=out)
 
 
-def ov_files(fr, i, out):
-    for k, (num, x, y, rot) in enumerate(FILES):
-        jig = 4 * math.sin(i / 2.3 + k) if i > 40 else 0            # nervous jiggle once all are in
-        O.put_tile(fr, x + jig, y, i, 8 + 7 * k, "sheet", rot=rot, badge=num, size=180, out=out)
-    O.keyword(fr, i, 46, (("Which ", TEXT), ("file?", DOODLE)), 1400, out=out)
+def ov_parcel(fr, i, out):
+    O.draw_polyline(fr, ARROW_PARCEL, ease(lin(i, 28, 46)) * out)
+    for hd in ARROW_PARCEL_HEAD:
+        O.draw_polyline(fr, hd, ease(lin(i, 46, 52)) * out)
+    O.put_tile(fr, 540, 540, i, 6, "person", badge="?", badge_col=(130, 130, 140), out=out)
+    O.keyword(fr, i, 16, (("Who's ", TEXT), ("on it?", DOODLE)), 820, out=out)
 
 
-def ov_sale(fr, i, out):
-    O.put_tile(fr, 290, 600, i, 8, "receipt", label="SALE  2 PCS", out=out)
-    O.draw_polyline(fr, ARROW_SALE, ease(lin(i, 26, 44)))
-    for hd in ARROW_SALE_HEAD:
-        O.draw_polyline(fr, hd, ease(lin(i, 44, 50)))
-    O.put_tile(fr, 800, 600, i, 40, "box", badge="6" if i < 58 else "4", label="IN STOCK", rot=5, out=out)
-    O.keyword(fr, i, 54, (("Stock ", TEXT), ("updated", DOODLE)), 1400, out=out)
+def ov_status(fr, i, out):
+    steps = (("receipt", 230, "NEW"), ("box", 540, "CONFIRMED"), ("check", 850, "DELIVERED"))
+    for k, (kind, x, lab) in enumerate(steps):
+        O.put_tile(fr, x, 560, i, 10 + 16 * k, kind, size=190, label=lab, rot=(-4, 0, 4)[k], out=out)
+    O.put_tile(fr, 540, 900, i, 60, "person", label="OWNER", size=170, out=out)
+    O.draw_polyline(fr, STATUS_LINE, ease(lin(i, 16, 52)) * out, width=8)
+    O.keyword(fr, i, 64, (("Every order ", TEXT), ("tracked", DOODLE)), 1400, size=80, out=out)
 
 
-def ov_sync(fr, i, out):
-    for k, (kind, x, y, lab) in enumerate(((("store", 230, 600, "SHOP")), ("warehouse", 540, 470, "WAREHOUSE"),
-                                           ("phone", 850, 600, "YOUR PHONE"))):
-        O.put_tile(fr, x, y, i, 10 + 10 * k, kind, rot=(-5, 0, 5)[k], badge="4", badge_col=(60, 150, 90),
-                   size=190, label=lab, out=out)
-    O.draw_polyline(fr, LINK, ease(lin(i, 44, 66)), width=8)
-    O.keyword(fr, i, 70, (("Same ", TEXT), ("number", DOODLE)), 1400, out=out)
-
-
-def ov_alert(fr, i, out):
-    O.put_tile(fr, 280, 1020, i, 30, "bell", badge="!", out=out)
-    O.draw_polyline(fr, ARROW_ALERT, ease(lin(i, 46, 64)))
-    for hd in ARROW_ALERT_HEAD:
-        O.draw_polyline(fr, hd, ease(lin(i, 64, 70)))
-    O.keyword(fr, i, 40, (("Reorder ", TEXT), ("in time", DOODLE)), 1400, out=out)
+def ov_reminder(fr, i, out):
+    O.put_tile(fr, 560, 760, i, 8, "bell", label="CALL BACK  SAT 10:00", size=230, rot=-4, out=out)
+    for k, st in enumerate(REMIND_SPARKS):
+        O.draw_polyline(fr, st, ease(lin(i, 18 + 2 * k, 26 + 2 * k)) * out, width=12)
+    O.keyword(fr, i, 26, (("No missed ", TEXT), ("follow-ups", DOODLE)), 1400, size=80, out=out)
 
 
 def ov_offer(fr, i, out):
@@ -102,8 +106,8 @@ def ov_offer(fr, i, out):
     O.keyword(fr, i, 26, (("Shift to ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
 
 
-OVERLAYS = {"shelves": ov_shelves, "three": ov_three, "files": ov_files, "sale": ov_sale,
-            "sync": ov_sync, "alert": ov_alert, "offer": ov_offer}
+OVERLAYS = {"phone": ov_phone, "buried": ov_buried, "parcel": ov_parcel, "status": ov_status,
+            "reminder": ov_reminder, "offer": ov_offer}
 
 
 # ---------------------------------------------------------------- end card
@@ -185,19 +189,15 @@ def render(n):
 
 
 def setup():
-    global VIGNETTE, CIRCLE, SPARKS, ARROW_SALE, ARROW_SALE_HEAD, LINK, ARROW_ALERT, ARROW_ALERT_HEAD
+    global VIGNETTE, ARROW_PARCEL, ARROW_PARCEL_HEAD, STATUS_LINE, REMIND_SPARKS, OFFER_SPARKS
     for s in SHOTS:
         if s["clip"] not in CLIPS:
             CLIPS[s["clip"]] = O.load_clip(os.path.join(HERE, s["clip"]))
     VIGNETTE = O.make_vignette()
-    CIRCLE = O.scribble_circle(540, 900, 230, 120, seed=3)
-    SPARKS = O.spark_strokes(560, 900, 200, 285, (-150, -118, -90, -62, -30))
-    ARROW_SALE = O.arrow_path(420, 520, 670, 520, bend=0.35)
-    ARROW_SALE_HEAD = O.arrow_head(ARROW_SALE)
-    LINK = O.arrow_path(250, 760, 850, 760, bend=0.12, seed=5)
-    ARROW_ALERT = O.arrow_path(360, 900, 590, 450, bend=-0.25, seed=7)
-    ARROW_ALERT_HEAD = O.arrow_head(ARROW_ALERT)
-    global OFFER_SPARKS
+    ARROW_PARCEL = O.arrow_path(600, 930, 560, 1220, bend=0.25, seed=4)
+    ARROW_PARCEL_HEAD = O.arrow_head(ARROW_PARCEL)
+    STATUS_LINE = O.arrow_path(250, 700, 850, 700, bend=0.1, seed=5)
+    REMIND_SPARKS = O.spark_strokes(560, 760, 220, 290, (-150, -120, -60, -30))
     OFFER_SPARKS = O.spark_strokes(540, 800, 290, 360, (-155, -125, -55, -25, 25, 55, 125, 155))
 
 
