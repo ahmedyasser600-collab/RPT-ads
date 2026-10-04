@@ -36,12 +36,13 @@ LINES = [
     ("Here's the order. Now... find it.", s(TL.KEY_IN) + 0.05, s(TL.QUESTIONS) - 0.05),
     ("Who's handling it? Did anyone follow up?", s(TL.QUESTIONS) + 0.1, s(TL.TURN) + 0.3),
     ("Give every order a place to live.", s(TL.TURN) + 0.35, s(TL.STEP_LOG) - 0.05),
-    ("One: log it in one shared list.", s(TL.STEP_LOG) + 0.1, s(TL.STEP_ASSIGN) - 0.05),
+    ("One: log it in one system.", s(TL.STEP_LOG) + 0.1, s(TL.STEP_ASSIGN) - 0.05),
     ("Two: assign it to one person.", s(TL.STEP_ASSIGN) + 0.1, s(TL.STEP_TRACK) - 0.05),
     ("Three: track the status, so nobody has to ask.", s(TL.STEP_TRACK) + 0.1, s(TL.STEP_FOLLOW) - 0.05),
     ("Four: follow up, with a name and a date.", s(TL.STEP_FOLLOW) + 0.1, s(TL.STATEMENT) + 0.08),
-    ("Every order gets an owner, a status, and a next step.", s(TL.STATEMENT) + 0.18, s(TL.END_CARD) + 0.5),  # may run into the logo intro
-    ("Read the free guide on our blog.", s(TL.END_CARD) + 0.8, s(TL.TOTAL) - 0.6),
+    ("Move beyond WhatsApp, with Odoo, or software built around your business.", s(TL.STATEMENT) + 0.18,
+     s(TL.END_CARD) + 0.2),
+    ("Book your discovery call today.", s(TL.END_CARD) + 1.0, s(TL.TOTAL) - 0.6),
 ]
 
 

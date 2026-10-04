@@ -1,0 +1,44 @@
+1
+00:00:00,300 --> 00:00:03,490
+Your spreadsheet says twelve in stock.
+
+2
+00:00:03,433 --> 00:00:05,123
+The shelf says three.
+
+3
+00:00:05,100 --> 00:00:06,660
+Which file is right?
+
+4
+00:00:06,817 --> 00:00:09,567
+Who sold what? When do we reorder?
+
+5
+00:00:09,650 --> 00:00:12,320
+Move to one system, with one number.
+
+6
+00:00:12,317 --> 00:00:15,537
+Make a sale, and stock updates once.
+
+7
+00:00:15,600 --> 00:00:20,160
+The shop, the warehouse and your phone all see the same number.
+
+8
+00:00:19,980 --> 00:00:23,320
+Running low? It tells you before you run out.
+
+9
+00:00:23,267 --> 00:00:25,967
+And you see the whole day at a glance.
+
+10
+00:00:26,150 --> 00:00:30,860
+Move beyond Excel, with Odoo, or software built around your business.
+
+11
+00:00:31,333 --> 00:00:33,593
+Book your discovery call today.
+

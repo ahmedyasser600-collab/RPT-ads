@@ -1,0 +1,44 @@
+1
+00:00:00,200 --> 00:00:03,200
+Your spreadsheet says 12.
+
+2
+00:00:03,200 --> 00:00:04,933
+The shelf says 3.
+
+3
+00:00:04,933 --> 00:00:06,600
+Which file is right?
+
+4
+00:00:06,600 --> 00:00:09,633
+Five files. Five numbers. Who updated it last? What sold today? When do we reorder?
+
+5
+00:00:09,633 --> 00:00:12,167
+One system. One number.
+
+6
+00:00:12,167 --> 00:00:15,500
+1. Sell: stock updates the moment you sell.
+
+7
+00:00:15,500 --> 00:00:19,833
+2. Same number: shop, warehouse and owner see it.
+
+8
+00:00:19,833 --> 00:00:23,167
+3. Reorder in time: low stock is flagged early.
+
+9
+00:00:23,167 --> 00:00:26,000
+4. See the day: sales and stock at a glance.
+
+10
+00:00:26,000 --> 00:00:30,333
+Ready to move beyond Excel? Odoo, or custom software built around exactly how you work.
+
+11
+00:00:30,333 --> 00:00:34,333
+Book a 30-minute discovery call: tolx.ae/contact or WhatsApp +971 50 986 0063
+

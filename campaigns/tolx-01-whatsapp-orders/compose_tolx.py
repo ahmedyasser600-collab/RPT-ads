@@ -1,4 +1,4 @@
-"""Compose the 30 s TOLX video "WhatsApp orders without losing track".
+"""Compose the 32 s TOLX video "WhatsApp orders without losing track".
 
 Motion-graphics only (no stock footage, no photos of people, no real client data).
 The chat, order card and board are an ILLUSTRATIVE workflow, labelled as such on screen;
@@ -9,7 +9,7 @@ Brand: TOLX helm drawn from the theme's SVG geometry (partials/helm.php), gold #
 Everything is laid out on a 1080x1350 "stage". --format feed renders the stage as-is (4:5,
 LinkedIn / Instagram feed); --format reel puts it on a 1080x1920 canvas (9:16, Reels /
 Stories / LinkedIn vertical) at y=250 so text clears the platform UI.
-Frame n (zero-based) is shown at n/30 s; 900 frames.
+Frame n (zero-based) is shown at n/30 s; 960 frames.
 
 Usage:
   python compose_tolx.py --out video.mp4 [--format reel|feed] [--size 540] [--vo audio/vo_gia.wav]
@@ -63,8 +63,12 @@ GREEN = (80, 200, 120)
 SAFE_X0, SAFE_X1, SAFE_Y0, SAFE_Y1 = 70, 1010, 20, 1290
 
 FOOTNOTE = "Illustrative scenario. Not a client project."
-GUIDE_TITLE = "How to manage WhatsApp orders without losing track"
-CTA_URL = "tolx.ae/blog"          # change to the article URL once the guide is published
+# lead CTA (contact details from the theme's contact page / footer)
+CTA_URL = "tolx.ae/contact"
+PHONE = "+971 50 986 0063"
+CALL_LENGTH = "30-minute"         # the site describes "usually 30 minutes for an initial call"; not stated as free
+TAGLINE = "SOFTWARE HOUSE  ·  ODOO PARTNER"
+STATEMENT_LINES = ((("Ready to move", TEXT),), (("beyond WhatsApp?", GOLD),))
 
 
 # ---------------------------------------------------------------- helpers
@@ -319,7 +323,7 @@ HEADLINES = [
     (TURN + 4, STEP_LOG - 2, ((("Give every order", TEXT),), (("a place to live.", GOLD),))),
 ]
 STEPS = [
-    (STEP_LOG, STEP_ASSIGN, "1", "Log it", "Record every order in one shared list."),
+    (STEP_LOG, STEP_ASSIGN, "1", "Log it", "Record every order in one system."),
     (STEP_ASSIGN, STEP_TRACK, "2", "Assign it", "One person owns it, so nobody has to guess."),
     (STEP_TRACK, STEP_FOLLOW, "3", "Track it", "Everyone sees the status without asking."),
     (STEP_FOLLOW, STATEMENT, "4", "Follow up", "The next step has a name and a date."),
@@ -737,29 +741,37 @@ def follow_card():
 
 
 # ---------------------------------------------------------------- statement + end card
+OPTIONS = [("ODOO", "Proven business apps,", "set up for your team"),
+           ("CUSTOM SOFTWARE", "Built around exactly", "how you work")]
+
+
 def draw_statement(frame, n):
     if not (STATEMENT <= n < END_CARD + 6):
         return
     out = 1 - ease(lin(n, END_CARD - 4, END_CARD + 6))
-    lines = [(("Every order gets", TEXT),), (("an owner, a status", GOLD),), (("and a next step.", GOLD),)]
-    for i, segs in enumerate(lines):
+    for i, segs in enumerate(STATEMENT_LINES):
         t = ease(lin(n, STATEMENT + 3 * i, STATEMENT + 3 * i + 12))
-        put(frame, rich_sprite(segs, "P8", 74), W / 2, 300 + i * 94 + 24 * (1 - t), "tc", a=min(t, out), text=True)
-    for k, (lab, f) in enumerate(zip(("OWNER", "STATUS", "NEXT STEP"), STATEMENT_PILLS)):
-        t = lin(n, f, f + 10)
-        sp = pill(lab)
-        put(frame, sp, [262, 540, 818][k], 640, "cc", a=min(ease(t * 1.5), out), s=0.6 + 0.4 * back(t, 2.2))
-    sub = "The right tool depends on your workflow and budget. Not every shop needs a full ERP."
-    for i, ln in enumerate(wrap(sub, "C5", 38, 820)):
-        put_text(frame, ln, "C5", 38, TEXT2, W / 2, 780 + i * 50, "tc",
-                 a=min(ease(lin(n, STATEMENT + 34, STATEMENT + 48)), out))
+        put(frame, rich_sprite(segs, "P8", 74), W / 2, 250 + i * 94 + 24 * (1 - t), "tc", a=min(t, out), text=True)
+    for k, f in enumerate(STATEMENT_PILLS[:2]):
+        t = lin(n, f, f + 12)
+        put(frame, option_card(*OPTIONS[k]), [300, 780][k], 640, "cc", a=min(ease(t * 1.5), out),
+            s=0.7 + 0.3 * back(t, 2.0))
+    t = lin(n, STATEMENT_PILLS[1] - 4, STATEMENT_PILLS[1] + 6)
+    put_text(frame, "or", "P7", 40, GOLD, W / 2, 640, "cc", a=min(ease(t), out))
+    put_text(frame, "Sized to your workflow and budget.", "C5", 38, TEXT2, W / 2, 820, "tc",
+             a=min(ease(lin(n, STATEMENT_PILLS[2], STATEMENT_PILLS[2] + 14)), out))
 
 
 @lru_cache(None)
-def pill(lab):
-    ts = text_sprite(lab, "M", 30, GOLD, 3)
-    im = rrect(250, 76, 38, GOLD + (30,), GOLD + (255,), 2).copy()
-    im.alpha_composite(ts, ((250 - ts.width) // 2, (76 - ts.height) // 2 + 1))
+def option_card(title, l1, l2):
+    w, h = 420, 230
+    im = rrect(w, h, 24, RAISED + (255,), GOLD + (200,), 2).copy()
+    ts = text_sprite(title, "M", 34, GOLD, 3)
+    im.alpha_composite(ts, ((w - ts.width) // 2, 40))
+    ImageDraw.Draw(im).line((60, 100, w - 60, 100), fill=GOLD + (90,), width=2)
+    for i, ln in enumerate((l1, l2)):
+        t2 = text_sprite(ln, "C5", 32, TEXT)
+        im.alpha_composite(t2, ((w - t2.width) // 2, 122 + i * 42))
     return im
 
 
@@ -768,18 +780,19 @@ def draw_end_card(frame, n):
         return
     t = lin(n, END_CARD, END_CARD + 20)
     rot = -90 * (1 - ease(t))
-    hm = helm(230).rotate(rot, resample=Image.BICUBIC)
-    put(frame, hm, W / 2, 300, "cc", a=ease(t * 1.4), s=0.8 + 0.2 * ease(t))
-    put(frame, wordmark(120), W / 2, 500, "cc", a=ease(lin(n, END_CARD + 8, END_CARD + 20)), text=True)
-    tg = "Sales, stock and team in one organised system."
-    put_text(frame, tg, "C5", 34, TEXT2, W / 2, 580, "tc", a=ease(lin(n, END_CARD + 14, END_CARD + 26)))
-    a2 = ease(lin(n, END_CARD + 22, END_CARD + 34))
-    put_text(frame, "FREE GUIDE", "M", 28, GOLD, W / 2, 700, "tc", a=a2, track=4)
-    for i, ln in enumerate(wrap(GUIDE_TITLE, "P7", 50, 860)):
-        put_text(frame, ln, "P7", 50, TEXT, W / 2, 748 + i * 64, "tc", a=a2)
-    a3 = lin(n, END_CARD + 32, END_CARD + 44)
-    btn = cta_button()
-    put(frame, btn, W / 2, 1010, "cc", a=ease(a3 * 1.3), s=0.85 + 0.15 * back(a3, 2.0))
+    hm = helm(190).rotate(rot, resample=Image.BICUBIC)
+    put(frame, hm, W / 2, 230, "cc", a=ease(t * 1.4), s=0.8 + 0.2 * ease(t))
+    put(frame, wordmark(104), W / 2, 400, "cc", a=ease(lin(n, END_CARD + 8, END_CARD + 20)), text=True)
+    put_text(frame, TAGLINE, "M", 26, GOLD, W / 2, 462, "tc", a=ease(lin(n, END_CARD + 14, END_CARD + 26)), track=3)
+    a2 = ease(lin(n, END_CARD + 20, END_CARD + 32))
+    put(frame, rich_sprite((("Book a ", TEXT), (CALL_LENGTH, GOLD)), "P8", 64), W / 2, 580, "tc", a=a2, text=True)
+    put(frame, rich_sprite((("discovery call", GOLD),), "P8", 64), W / 2, 662, "tc", a=a2, text=True)
+    put_text(frame, "We map your workflow and suggest the right fit.", "C5", 34, TEXT2, W / 2, 762, "tc",
+             a=ease(lin(n, END_CARD + 28, END_CARD + 40)))
+    a3 = lin(n, END_CARD + 36, END_CARD + 48)
+    put(frame, cta_button(), W / 2, 912, "cc", a=ease(a3 * 1.3), s=0.85 + 0.15 * back(a3, 2.0))
+    put_text(frame, f"or WhatsApp {PHONE}", "C6", 38, TEXT, W / 2, 1000, "tc",
+             a=ease(lin(n, END_CARD + 46, END_CARD + 58)))
 
 
 @lru_cache(None)
@@ -850,13 +863,13 @@ CAPTIONS = [  # on-screen copy, mirrored into an SRT for platforms that accept c
     (KEY_IN - 6, QUESTIONS - 4, "Here's the order. Now find it."),
     (QUESTIONS - 4, TURN + 4, "Buried in the group chat. Who's handling it? Was it confirmed? Did anyone follow up?"),
     (TURN + 4, STEP_LOG, "Give every order a place to live."),
-    (STEP_LOG, STEP_ASSIGN, "1. Log it: record every order in one shared list, not only in the chat."),
+    (STEP_LOG, STEP_ASSIGN, "1. Log it: record every order in one system, not only in the chat."),
     (STEP_ASSIGN, STEP_TRACK, "2. Assign it: one person owns it, so nobody has to guess."),
     (STEP_TRACK, STEP_FOLLOW, "3. Track it: everyone sees the status without asking."),
     (STEP_FOLLOW, STATEMENT, "4. Follow up: the next step has a name and a date."),
-    (STATEMENT, END_CARD, "Every order gets an owner, a status and a next step. The right tool depends on your "
-                          "workflow and budget."),
-    (END_CARD, TOTAL, f"Free guide: {GUIDE_TITLE}. {CTA_URL}"),
+    (STATEMENT, END_CARD, "Ready to move beyond WhatsApp? Odoo, or custom software built around exactly how you "
+                          "work. Sized to your workflow and budget."),
+    (END_CARD, TOTAL, f"Book a {CALL_LENGTH} discovery call: {CTA_URL} or WhatsApp {PHONE}"),
 ]
 
 
@@ -897,7 +910,7 @@ def mux_audio(video, out):
 def storyboard(path):
     picks = [(60, "Hook"), (135, "The order"), (240, "Buried + questions"), (320, "Lift out"),
              (410, "1 Log"), (490, "2 Assign"), (590, "3 Track"), (670, "4 Follow up"),
-             (760, "Statement"), (880, "End card")]
+             (770, "Statement"), (930, "End card")]
     tw = 216
     th = tw * H // W
     f = F("C6", 16)

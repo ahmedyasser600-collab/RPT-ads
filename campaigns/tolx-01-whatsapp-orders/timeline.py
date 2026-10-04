@@ -1,9 +1,9 @@
-"""Shared timeline for the TOLX "WhatsApp orders" video (30 fps, 900 frames = 30 s).
+"""Shared timeline for the TOLX "WhatsApp orders" video (30 fps, 960 frames = 32 s).
 
 Imported by compose_tolx.py (picture) and audio/compose_audio.py (music + SFX) so that
 message pops, step changes and board moves stay frame-locked. Frame n is shown at n/30 s.
 """
-FPS, TOTAL = 30, 900
+FPS, TOTAL = 30, 960
 
 # ---- scenes (start frames)
 HOOK = 0            # 0.0 s  chat floods in: "Taking orders on WhatsApp?"
@@ -15,8 +15,8 @@ STEP_LOG = 345      # 11.5 s 1 Log it
 STEP_ASSIGN = 430   # 14.3 s 2 Assign it
 STEP_TRACK = 510    # 17.0 s 3 Track it
 STEP_FOLLOW = 615   # 20.5 s 4 Follow up
-STATEMENT = 690     # 23.0 s owner / status / next step
-END_CARD = 780      # 26.0 s logo + guide CTA
+STATEMENT = 690     # 23.0 s 'Ready to move beyond WhatsApp?' Odoo or custom software
+END_CARD = 810      # 27.0 s logo + discovery-call CTA
 
 # ---- team-group chat. (frame, sender, text); sender "You" = the owner, drawn on the right
 CHAT = [
@@ -45,4 +45,4 @@ BOARD_IN = STEP_TRACK + 6
 MOVE_CONFIRMED = STEP_TRACK + 40
 MOVE_DELIVERED = STEP_TRACK + 72
 FOLLOW_CHIP = STEP_FOLLOW + 8
-STATEMENT_PILLS = [STATEMENT + 18, STATEMENT + 26, STATEMENT + 34]
+STATEMENT_PILLS = [STATEMENT + 22, STATEMENT + 40, STATEMENT + 62]   # Odoo card, custom card, sub line
