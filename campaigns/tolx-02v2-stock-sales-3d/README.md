@@ -1,4 +1,4 @@
-# TOLX video 02 v2: "Stock & sales" in the 3D-scene style (32.3 s, 9:16)
+# TOLX video 02 v2: "Stock & sales" in the 3D-scene style (31.6 s, 9:16)
 
 The first full video in the new visual style the client asked for (reference: Odoo's own marketing, with 3D-rendered
 real-world scenes, white app tiles and hand-drawn highlight doodles on top). It replaces the text-heavy cards of v1
@@ -6,7 +6,7 @@ with **moving scenes, one idea per shot and 2–3 words on screen**. Topic, font
 the "Tol-x" brand line and the end card are unchanged.
 
 ## Deliverable
-`deliverables/TOLX_02v2_stock-sales-3d_9x16.mp4`: 1080×1920, 30 fps, H.264 + AAC. Instagram Reels / Stories and
+`deliverables/TOLX_02v2_stock-sales-3d_9x16.mp4`: 1080×1920, 30 fps, 948 frames, 31.6 s, H.264 + AAC, about -14.3 LUFS. Instagram Reels / Stories and
 LinkedIn vertical. A 4:5 feed version would need the graphics re-laid out for the crop, so it isn't made yet.
 
 ## Shots
@@ -14,13 +14,13 @@ LinkedIn vertical. A 4:5 feed version would need the graphics re-laid out for th
 | # | Time | 3D scene (AI-generated) | Graphics on top | Gia |
 |---|---|---|---|---|
 | 1 | 0–3.6 s | Camera glides past dark shelves of boxes | Gold scribble around the gap, sheet tile, **Excel says 12** | Your spreadsheet says twelve in stock… |
-| 2 | 3.6–7 s | Push-in on three boxes under a spotlight | Gold sparks, box tile with red **3**, **Shelf: 3** | But the shelf? Only three! |
-| 3 | 7–11 s | Night desk: laptop, scattered papers, lamp | Five file tiles pop in with 12 / 9 / 7 / 10 / 3, jiggling, **Which file?** | Five files, five numbers. Which one is right? |
-| 4 | 11–14.8 s | Box on a counter by card terminals, orbit | Sale tile, then gold arrow, then stock tile 6 → 4, **Stock updated** | With one system, every sale updates your stock. |
-| 5 | 14.8–19.6 s | Warehouse aisle, dolly forward | Shop, warehouse and phone tiles all at **4**, gold link line, **Same number** | Shop, warehouse, your phone. Same number, everywhere! |
-| 6 | 19.6–23.2 s | Tilt up to the lone box on the top shelf | Bell alert tile, gold arrow to the box, **Reorder in time** | Running low? You're alerted before you run out. |
-| 7 | 23.2–27.7 s | Tidy shop at closing, pull-back | Odoo and Custom tiles glide together, **Built around you** | Odoo, or software built around your business. |
-| 8 | 27.7–32.3 s | Blurred, darkened last scene | Standard end card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with Tol-x today! |
+| 2 | 3.6–6.6 s | Push-in on three boxes under a spotlight | Gold sparks, box tile with red **3**, **Shelf: 3** | But the shelf? Only three! |
+| 3 | 6.6–10.6 s | Night desk: laptop, scattered papers, lamp | Five file tiles pop in with 12 / 9 / 7 / 10 / 3, jiggling, **Which file?** | Five files, five numbers. Which one is right? |
+| 4 | 10.6–14.4 s | Box on a counter by card terminals, orbit | Sale tile, then gold arrow, then stock tile 6 → 4, **Stock updated** | With one system, every sale updates your stock. |
+| 5 | 14.4–19.2 s | Warehouse aisle, dolly forward | Shop, warehouse and phone tiles all at **4**, gold link line, **Same number** | Shop, warehouse, your phone. Same number, everywhere! |
+| 6 | 19.2–22.8 s | Tilt up to the lone box on the top shelf | Bell alert tile, gold arrow to the box, **Reorder in time** | Running low? You're alerted before you run out. |
+| 7 | 22.8–27 s | Tidy shop at closing, pull-back | Odoo and Custom tiles glide together, **Built around you** | Odoo, or software built around your business. |
+| 8 | 27–31.6 s | Blurred, darkened last scene | Standard end card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with Tol-x today! |
 
 ## How it's built
 - **Footage:** 7 × 5 s Kling 3.0 clips (pro, silent), photoreal CGI prompts with *no text, logos or people*. Clips 1–2 come
@@ -48,3 +48,11 @@ python compose.py --frames 83,185,305      # stills to .work/ for checking overl
 ## Post copy
 Use the same as v1 (`../tolx-02-stock-sales/README.md`), with the UTM `utm_content=video02v2`, and add
 "Visuals are AI-generated and illustrative." to the caption.
+
+## Checks performed
+- Rendered end to end. Decoding confirmed 948 frames, 31.6 s, 1080×1920, with an AAC track. About -14.3 LUFS.
+- Before the final render I inspected stills from every shot. That led to three fixes: a keyword too wide for the screen,
+  overlapping tiles, and the reorder arrow re-aimed at the lone box.
+- Frames decoded at each cut confirm the zoom-blur crossfades and that the graphics clear before each cut.
+- VO placement: all 8 lines at 1.06×, no overlaps.
+- **Not done:** human playback and listening review, and test uploads.

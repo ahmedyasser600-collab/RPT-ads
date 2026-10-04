@@ -15,8 +15,8 @@ OFFSETS = {"alert": 43}           # start the tilt-up clip later so the lone top
 for clip, ov, length in _SHOTS:
     SHOTS.append({"clip": clip, "overlay": ov, "start": _t, "len": length, "offset": OFFSETS.get(ov, 0)})
     _t += length
-END_CARD = _t                     # 830 (27.7 s)
-TOTAL = END_CARD + 138            # 968 frames (32.3 s)
+END_CARD = _t                     # 810 (27.0 s)
+TOTAL = END_CARD + 138            # 948 frames (31.6 s)
 
 
 def shot_at(n):
