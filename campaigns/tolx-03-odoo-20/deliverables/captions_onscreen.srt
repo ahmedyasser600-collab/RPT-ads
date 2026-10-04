@@ -1,0 +1,32 @@
+1
+00:00:00,133 --> 00:00:03,833
+Odoo 20. Released September 2026. What it means for your business.
+
+2
+00:00:03,833 --> 00:00:06,667
+Still on chats and spreadsheets?
+
+3
+00:00:06,667 --> 00:00:13,167
+1. AI agent: tell it what you need, in plain words. It shows the plan before it runs.
+
+4
+00:00:13,167 --> 00:00:18,667
+2. Accounting assistant: answers from your own reports.
+
+5
+00:00:18,667 --> 00:00:23,000
+3. Offline POS: the till keeps selling, then syncs.
+
+6
+00:00:23,000 --> 00:00:26,667
+One system: sales, stock, accounting, team. AI built in.
+
+7
+00:00:26,667 --> 00:00:29,000
+Odoo 20, set up around your business, or custom software built around exactly how you work.
+
+8
+00:00:29,000 --> 00:00:33,667
+Book a 30-minute discovery call: tolx.ae/contact or WhatsApp +971 50 986 0063
+

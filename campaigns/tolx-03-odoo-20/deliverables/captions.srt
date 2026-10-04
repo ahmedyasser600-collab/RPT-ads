@@ -1,0 +1,28 @@
+1
+00:00:00,300 --> 00:00:04,050
+Odoo 20 just landed. Here's why it's time to move.
+
+2
+00:00:03,933 --> 00:00:06,673
+Still running on chats and spreadsheets?
+
+3
+00:00:06,817 --> 00:00:13,147
+Tell the AI agent what you need, in plain words. It shows you the plan before it runs.
+
+4
+00:00:13,267 --> 00:00:18,697
+Ask your accounting assistant what you're owed. The answer comes from your own reports.
+
+5
+00:00:18,767 --> 00:00:23,017
+Internet down at the kiosk? Your point of sale keeps selling offline.
+
+6
+00:00:23,100 --> 00:00:26,720
+One system for your whole business, with AI built in.
+
+7
+00:00:26,767 --> 00:00:31,407
+Move to Odoo 20 with us. Book your discovery call today.
+
