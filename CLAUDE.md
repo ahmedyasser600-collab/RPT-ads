@@ -8,7 +8,8 @@ This repo holds two separate video projects: **RPT** (Italian bathroom-renovatio
 - **Brand pronunciation: TOLX is pronounced "Tol-x".** In any voiceover / TTS prompt write `Tolex`
   (client-approved sample: `campaigns/tolx-kit/pronunciation/B_Tolex.mp3`)
   (`tolx_audio.BRAND_SPOKEN`). On screen and in captions keep "TOLX".
-- Goal is leads: every video ends with Odoo or custom software, then "Book your discovery call with Tolex today!"
+- Goal is leads: every video ends with a direct **"shift to Odoo now"** pitch (client decision, 4 Oct 2026: don't
+  offer "or software built around your business" for now), then "Book your discovery call with Tolex today!"
   and the end card (tolx.ae/contact, WhatsApp +971 50 986 0063).
 - Current style: female voice Gia (Higgsfield TTS V2, ElevenLabs preset, energetic read), smooth title reveals
   (no slam/shake/flash), the calm `build_music_smooth()` bed, few soft sound effects.

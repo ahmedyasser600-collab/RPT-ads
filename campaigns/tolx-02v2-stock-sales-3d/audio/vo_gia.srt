@@ -23,8 +23,8 @@ Shop, warehouse, your phone. Same number, everywhere!
 Running low? You're alerted before you run out.
 
 7
-00:00:23,450 --> 00:00:26,640
-Odoo, or software built around your business.
+00:00:23,450 --> 00:00:25,900
+It's time. Shift to Odoo now!
 
 8
 00:00:27,900 --> 00:00:30,830

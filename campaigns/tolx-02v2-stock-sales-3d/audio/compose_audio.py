@@ -33,7 +33,7 @@ A.add(sfx, A.soft_keys(A.hz("G5"), 0.03, 0.9), s(st[3] + 58))           # 6 -> 4
 for k in range(3):
     A.add(sfx, A.soft_keys(A.hz(["E5", "G5", "C6"][k]), 0.025, 0.7), s(st[4] + 10 + 10 * k) + 0.1)
 A.add(sfx, A.chime(0.035), s(st[5] + 22) + 0.1)                         # alert
-A.add(sfx, A.chime(0.035), s(st[6] + 58))                               # tiles meet
+A.add(sfx, A.chime(0.035), s(st[6] + 18))                               # Odoo tile + sparks
 A.write_stereo(os.path.join(HERE, "music.wav"), music, 0.55, DUR)
 A.write_stereo(os.path.join(HERE, "sfx.wav"), sfx, 0.45, DUR)
 print("wrote music.wav and sfx.wav")
@@ -45,7 +45,7 @@ LINES = [  # (Gia prompt, window start s, window end s); takes vo_lines/g<n>.mp3
     ("With one system, every sale updates your stock.", s(st[3]) + 0.25, s(st[4])),
     ("Shop, warehouse, your phone. Same number, everywhere!", s(st[4]) + 0.25, s(st[5])),
     ("Running low? You're alerted before you run out.", s(st[5]) + 0.25, s(st[6])),
-    ("Odoo, or software built around your business.", s(st[6]) + 0.25, s(TL.END_CARD)),
+    ("It's time. Shift to Odoo now!", s(st[6]) + 0.25, s(TL.END_CARD)),
     ("Book your discovery call with Tolex today!", s(TL.END_CARD) + 0.9, DUR - 0.5),
 ]
 A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "g", os.path.join(HERE, "vo_gia.wav"), DUR,

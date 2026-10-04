@@ -89,16 +89,15 @@ def ov_alert(fr, i, out):
 
 
 def ov_offer(fr, i, out):
-    t = ease(K.clamp((i - 40) / 18))                                 # tiles glide together
-    if i >= 8:                                                        # Odoo: official logo artwork on a white tile
-        tt = lin(i, 8, 24)
-        sp = odoo_tile().rotate(-6 * (1 - 0.4 * ease(tt)), resample=Image.BICUBIC, expand=True)
-        K.put(fr, sp, 300 + 50 * t, 820 + 6 * math.sin((i - 8) / 11), "cc", a=ease(tt * 2) * out,
-              s=max(0.01, O.spring(tt)))
-    O.put_tile(fr, 790 - 50 * t, 820, i, 18, "custom", label="CUSTOM", rot=6, out=out)
-    if i > 30:
-        K.put_text(fr, "or", "P7", 46, DOODLE, 540, 820, "cc", a=(1 - t) * out)
-    O.keyword(fr, i, 44, (("Built ", TEXT), ("around you", DOODLE)), 1400, out=out)
+    """The pitch is simply 'shift to Odoo now': the Odoo logo tile, centred, with gold sparks."""
+    if i >= 6:
+        tt = lin(i, 6, 22)
+        sp = odoo_tile().rotate(-4 * (1 - ease(tt)), resample=Image.BICUBIC, expand=True)
+        K.put(fr, sp, 540, 800 + 6 * math.sin((i - 6) / 11), "cc", a=ease(tt * 2) * out,
+              s=max(0.01, 1.25 * O.spring(tt)))
+    for k, st in enumerate(OFFER_SPARKS):
+        O.draw_polyline(fr, st, ease(lin(i, 18 + 2 * k, 26 + 2 * k)) * out, width=12)
+    O.keyword(fr, i, 26, (("Shift to ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
 
 
 OVERLAYS = {"shelves": ov_shelves, "three": ov_three, "files": ov_files, "sale": ov_sale,
@@ -196,6 +195,8 @@ def setup():
     LINK = O.arrow_path(250, 760, 850, 760, bend=0.12, seed=5)
     ARROW_ALERT = O.arrow_path(360, 900, 590, 450, bend=-0.25, seed=7)
     ARROW_ALERT_HEAD = O.arrow_head(ARROW_ALERT)
+    global OFFER_SPARKS
+    OFFER_SPARKS = O.spark_strokes(540, 800, 290, 360, (-155, -125, -55, -25, 25, 55, 125, 155))
 
 
 def main():
