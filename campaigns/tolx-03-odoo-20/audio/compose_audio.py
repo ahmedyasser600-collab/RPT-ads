@@ -1,6 +1,6 @@
 """Score, SFX and voiceover placement for TOLX video 03 (frame-locked to ../timeline.py).
 
-Writes music.wav, sfx.wav, vo_marcus.wav (+ .srt) next to this script.
+Writes music.wav, sfx.wav, vo_gia.wav (+ .srt) next to this script.
 Usage: python compose_audio.py
 """
 import os
@@ -21,14 +21,17 @@ def s(f):
     return f / TL.FPS
 
 
-# the "problem" colour only covers the pain recap; the hook already lifts
-music = A.build_music(DUR, s(TL.AGENT), s(TL.AGENT + 30), s(TL.END_CARD))
+# energetic from the first frame: full 124 BPM groove throughout, C major ring-out under the end card
+music = A.build_music(DUR, 0.0, 0.3, s(TL.END_CARD), bpm=124)
+SLAMS = [3, 13, 26]                         # compose_03.py SLAM_ODOO / SLAM_20 / SLAM_HERE
 
 sfx = np.zeros(int(A.SR * DUR))
-A.add(sfx, A.swish(0.8, 0.05, 300, 6000), s(4) - 0.5)               # title in
-A.add(sfx, A.kick(0.4), s(10))
-A.add(sfx, A.bell(A.hz("C6"), 0.05, 1.6), s(12))
-A.add(sfx, A.pop(0.08, 900), s(31))                                   # release chip
+for f, v in zip(SLAMS, (0.45, 0.7, 0.4)):                            # title hits: whoosh in, then a hit
+    A.add(sfx, A.swish(0.35, 0.05 * v / 0.45, 300, 7000), s(f) - 0.3)
+    A.add(sfx, A.kick(v), s(f + 5))
+    A.add(sfx, A.sub(A.hz("C2"), 0.5, 0.25 * v), s(f + 5))
+A.add(sfx, A.bell(A.hz("C6"), 0.06, 1.6), s(SLAMS[1] + 5))
+A.add(sfx, A.pop(0.08, 900), s(41))                                   # release chip
 for f in (TL.PAIN + 6, TL.PAIN + 16):
     A.add(sfx, A.pop(0.09, 640), s(f + 1))
 A.add(sfx, A.swish(0.35, 0.05, 1500, 7000, rise=False), s(TL.AGENT - 26))  # strike-through
@@ -64,15 +67,16 @@ A.write_stereo(os.path.join(HERE, "music.wav"), music, 0.55, DUR)
 A.write_stereo(os.path.join(HERE, "sfx.wav"), sfx, 0.45, DUR)
 print("wrote music.wav and sfx.wav")
 
-LINES = [  # (text = generation prompt, window start s, window end s). Takes: vo_lines/m<n>.mp3 (Marcus).
-    ("Odoo 20 just landed. Here's why it's time to move.", 0.3, s(TL.PAIN)),
-    ("Still running on chats and spreadsheets?", s(TL.PAIN) + 0.1, s(TL.AGENT)),
-    ("Tell the AI agent what you need, in plain words. It shows you the plan before it runs.",
+LINES = [  # (text = generation prompt, window start s, window end s). Takes: vo_lines/g<n>.mp3 (Gia, energetic read).
+    ("Odoo 20 is HERE! And it's time to make the move!", 0.45, s(TL.PAIN)),
+    ("Still stuck on chats and spreadsheets?!", s(TL.PAIN) + 0.1, s(TL.AGENT)),
+    ("Meet your AI agent! Just tell it what you need, and it shows you the plan before it runs.",
      s(TL.AGENT) + 0.15, s(TL.ACCOUNT)),
-    ("Ask your accounting assistant what you're owed. The answer comes from your own reports.",
+    ("Need numbers? Ask your accounting assistant what you're owed. Answers straight from your own reports!",
      s(TL.ACCOUNT) + 0.1, s(TL.OFFLINE)),
-    ("Internet down at the kiosk? Your point of sale keeps selling offline.", s(TL.OFFLINE) + 0.1, s(TL.ONE)),
-    ("One system for your whole business, with AI built in.", s(TL.ONE) + 0.1, s(TL.OFFER)),
-    ("Move to Odoo 20 with us. Book your discovery call today.", s(TL.OFFER) + 0.1, DUR - 0.8),
+    ("Internet down at the kiosk? No problem! Your point of sale keeps selling.", s(TL.OFFLINE) + 0.1, s(TL.ONE)),
+    ("One system for your whole business. With AI built in!", s(TL.ONE) + 0.1, s(TL.OFFER)),
+    ("Ready to move to Odoo 20? Book your discovery call today!", s(TL.OFFER) + 0.1, DUR - 0.8),
 ]
-A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "m", os.path.join(HERE, "vo_marcus.wav"), DUR)
+A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "g", os.path.join(HERE, "vo_gia.wav"), DUR,
+           base_tempo=1.06, fx=A.ENERGY_FX)

@@ -1,6 +1,6 @@
 1
 00:00:00,133 --> 00:00:03,833
-Odoo 20. Released September 2026. What it means for your business.
+Odoo 20 is here! Released September 2026.
 
 2
 00:00:03,833 --> 00:00:06,667

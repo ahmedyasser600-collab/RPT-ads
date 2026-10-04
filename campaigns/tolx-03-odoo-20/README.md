@@ -8,25 +8,25 @@ business, or custom software. It ends with the discovery call and TOLX's Odoo Re
 
 | File | Use |
 |---|---|
-| `TOLX_03_odoo-20_reel_9x16.mp4` | Instagram Reels / Stories, LinkedIn vertical. 1080×1920, Marcus voiceover |
-| `TOLX_03_odoo-20_feed_4x5.mp4` | LinkedIn feed, Instagram feed. 1080×1350, Marcus voiceover |
-| `cover_reel.png`, `cover_feed.png` | Cover ("ODOO 20 · Released September 2026") |
+| `TOLX_03_odoo-20_reel_9x16.mp4` | Instagram Reels / Stories, LinkedIn vertical. 1080×1920, Gia voiceover (energetic) |
+| `TOLX_03_odoo-20_feed_4x5.mp4` | LinkedIn feed, Instagram feed. 1080×1350, Gia voiceover (energetic) |
+| `cover_reel.png`, `cover_feed.png` | Cover ("ODOO 20 IS HERE") |
 | `captions.srt` / `captions_onscreen.srt` | Spoken-line / on-screen captions |
 | `storyboard_*.png` | 10-frame contact sheets |
 
-Both files: H.264 + AAC, 30 fps, 1010 frames, 33.7 s, about -14.8 LUFS.
+Both files: H.264 + AAC, 30 fps, 1010 frames, 33.7 s, about -14.4 LUFS. (The first Marcus version is in git history.)
 
-## Storyboard and voiceover (Marcus)
+## Storyboard and voiceover (Gia, energetic read)
 
 | Time | On screen | Voiceover |
 |---|---|---|
-| 0–3.8 s | "ODOO 20", gold sweep, "Released September 2026", "What it means for your business." | Odoo 20 just landed. Here's why it's time to move. |
-| 3.8–6.7 s | "Still on chats and spreadsheets?" The group chat and Stock_FINAL_v7.xlsx from videos 01–02, struck through | Still running on chats and spreadsheets? |
-| 6.7–13.2 s | **1 AI agent.** "Alert me when phone cases drop below 5." The agent shows a 3-step plan, then Approve, then ACTIVE | Tell the AI agent what you need, in plain words. It shows you the plan before it runs. |
-| 13.2–18.7 s | **2 Accounting assistant.** "How much do customers owe me?" → AED 48,250 across 23 invoices, largest balances, "Source: Aged Receivable report" | Ask your accounting assistant what you're owed. The answer comes from your own reports. |
-| 18.7–23 s | **3 Offline POS.** Kiosk till goes OFFLINE but keeps selling (3 orders "saved on device"), then "Back online · 3 orders synced" | Internet down at the kiosk? Your point of sale keeps selling offline. |
-| 23–26.7 s | "One system. AI built in." Sales, Stock, Accounting and Team tiles merge inside an "ODOO 20" frame | One system for your whole business, with AI built in. |
-| 26.7–29 s | "Odoo 20, set up around your business." **Odoo** or **Custom software** | Move to Odoo 20 with us. |
+| 0–3.8 s | Slam-in title: "ODOO" (Poppins Black, gold extrusion), a huge gold "20" with flash and screen-shake, "IS HERE", "Released September 2026" | Odoo 20 is HERE! And it's time to make the move! |
+| 3.8–6.7 s | "Still on chats and spreadsheets?" The group chat and Stock_FINAL_v7.xlsx from videos 01–02, struck through | Still stuck on chats and spreadsheets?! |
+| 6.7–13.2 s | **1 AI agent.** "Alert me when phone cases drop below 5." The agent shows a 3-step plan, then Approve, then ACTIVE | Meet your AI agent! Just tell it what you need, and it shows you the plan before it runs. |
+| 13.2–18.7 s | **2 Accounting assistant.** "How much do customers owe me?" → AED 48,250 across 23 invoices, largest balances, "Source: Aged Receivable report" | Need numbers? Ask your accounting assistant what you're owed. Answers straight from your own reports! |
+| 18.7–23 s | **3 Offline POS.** Kiosk till goes OFFLINE but keeps selling (3 orders "saved on device"), then "Back online · 3 orders synced" | Internet down at the kiosk? No problem! Your point of sale keeps selling. |
+| 23–26.7 s | "One system. AI built in." Sales, Stock, Accounting and Team tiles merge inside an "ODOO 20" frame | One system for your whole business. With AI built in! |
+| 26.7–29 s | "Odoo 20, set up around your business." **Odoo** or **Custom software** | Ready to move to Odoo 20? |
 | 29–33.7 s | End card: TOLX, "Book a 30-minute discovery call", tolx.ae/contact, WhatsApp, **Odoo Ready Partner badge** | Book your discovery call today. |
 
 ## Fact basis (checked 4 Oct 2026)
@@ -52,7 +52,10 @@ the release notes before posting if wording matters.
   You confirmed TOLX may use it.
 - **Odoo AI features consume paid credits (in-app purchase)**, so nothing in the video says AI is free. Mention it in the caption.
 - No prices, savings, upgrade times or UAE e-invoicing claims. E-invoicing is planned as video 04.
-- The narration says "with us" rather than "TOLX" (pronunciation not yet confirmed).
+- The narration never says "TOLX" (pronunciation not yet confirmed).
+- The voice is synthetic: Higgsfield TTS V2, ElevenLabs engine, preset **Gia**. Takes are in `audio/vo_lines/g*.mp3`, with the old Marcus takes in `m*`.
+  For energy, the script uses short exclamatory lines, the read is sped up 1.06× (pitch kept) with a presence EQ and compression (`ENERGY_FX` in the kit),
+  and the score runs a 124 BPM groove from the first frame with bass hits on each title slam.
 
 ## Post copy (lead-focused)
 UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_campaign=odoo-20&utm_content=video03`
@@ -87,10 +90,10 @@ UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_ca
 
 ## Render
 ```bash
-python audio/compose_audio.py                       # music.wav, sfx.wav, vo_marcus.wav (+ .srt)
+python audio/compose_audio.py                       # music.wav, sfx.wav, vo_gia.wav (+ .srt)
 python compose_03.py --format reel --out .work/silent_reel.mp4 --storyboard deliverables/storyboard_reel.png \
   --cover deliverables/cover_reel.png --srt deliverables/captions_onscreen.srt
-python compose_03.py --format reel --video-in .work/silent_reel.mp4 --vo audio/vo_marcus.wav \
+python compose_03.py --format reel --video-in .work/silent_reel.mp4 --vo audio/vo_gia.wav \
   --music audio/music.wav --sfx audio/sfx.wav --out deliverables/TOLX_03_odoo-20_reel_9x16.mp4
 # same two steps with --format feed -> ..._feed_4x5.mp4
 ```
@@ -101,5 +104,7 @@ Uses the shared kit in `../tolx-kit/`.
 - The layout check caught the hero title running outside the safe area, and it was fixed. The check now passes for every 5th frame in both formats.
 - Inspected frames decoded from the MP4s (hook, agent, offline POS, one system, end card with badge). Fixed an orphaned
   word wrap and a gap above the agent's plan card.
-- VO placement: all 7 lines at natural speed (no speed-up), no overlaps.
-- **Not done:** human listening review (check how Marcus says "Odoo"), test uploads, and a re-read of odoo.com wording.
+- VO placement (Gia): 1.06× base speed (one line 1.08×), no overlaps. Compared with the Marcus takes, Gia runs at 3.1 vs 2.8 words/s with
+  11.4 vs 9.8 semitones of pitch range (a livelier read). On separated stems the voice sits about 12 dB above the music on every line.
+- New hook checked on frames decoded from the 9:16 file, including the full-screen flash.
+- **Not done:** human listening review (check how Gia says "Odoo"), test uploads, and a re-read of odoo.com wording.

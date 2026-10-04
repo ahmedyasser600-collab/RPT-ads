@@ -81,6 +81,7 @@ def parse_args(doc):
 
 # ---------------------------------------------------------------- primitives
 FONT_FILES = {
+    "P9": "poppins-latin-900-normal.woff", "P9I": "poppins-latin-900-italic.woff",
     "P8": "poppins-latin-800-normal.woff", "P7": "poppins-latin-700-normal.woff",
     "P5": "poppins-latin-500-normal.woff", "C7": "chakra-petch-latin-700-normal.woff",
     "C6": "chakra-petch-latin-600-normal.woff", "C5": "chakra-petch-latin-500-normal.woff",

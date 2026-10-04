@@ -164,8 +164,8 @@ MAX_PAUSE = 0.22
 MAX_TEMPO = 1.15
 
 
-def _load(path, tempo=1.0):
-    af = ["aresample=48000"] + ([f"atempo={tempo:.4f}"] if tempo != 1.0 else [])
+def _load(path, tempo=1.0, extra=""):
+    af = ["aresample=48000"] + ([f"atempo={tempo:.4f}"] if tempo != 1.0 else []) + ([extra] if extra else [])
     raw = subprocess.run([FFMPEG, "-nostdin", "-loglevel", "error", "-i", path, "-af", ",".join(af),
                           "-ac", "1", "-f", "f32le", "-"], capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.float32).astype(np.float64)
@@ -195,19 +195,25 @@ def tight_duration(path):
     return len(_tighten(_load(path))) / SR
 
 
-def place_vo(lines, vo_dir, prefix, out_wav, dur):
+# brighter, more forward read for energetic spots: presence lift, a little less low-mid, firmer compression
+ENERGY_FX = ("equalizer=f=3200:t=q:w=1.2:g=3,equalizer=f=250:t=q:w=1:g=-2,"
+             "acompressor=threshold=0.08:ratio=4:attack=3:release=80:makeup=2")
+
+
+def place_vo(lines, vo_dir, prefix, out_wav, dur, base_tempo=1.0, fx=""):
     """lines: (text, window_start_s, window_end_s). Takes are <vo_dir>/<prefix><index>.mp3.
+    base_tempo speeds every take (pitch kept); fx is an extra ffmpeg filter chain (e.g. ENERGY_FX).
     Writes out_wav and a matching .srt; returns the placed (start, end, text) cues."""
     track = np.zeros(int(SR * dur))
     prev_end, cues = 0.0, []
     for k, (text, t0, t1) in enumerate(lines):
         path = os.path.join(vo_dir, f"{prefix}{k}.mp3")
         t0 = max(t0, prev_end + 0.12)
-        y = _tighten(_load(path))
-        win, tempo = t1 - t0, 1.0
+        y = _tighten(_load(path, base_tempo, fx))
+        win, tempo = t1 - t0, base_tempo
         if len(y) / SR > win:
-            tempo = min(MAX_TEMPO, len(y) / SR / win)
-            y = _tighten(_load(path, tempo))
+            tempo = min(MAX_TEMPO, base_tempo * len(y) / SR / win)
+            y = _tighten(_load(path, tempo, fx))
         d = len(y) / SR
         print(f"{k}: {t0:5.2f}-{t0 + d:5.2f}s (window {win:.2f}s, tempo {tempo:.2f})"
               f"{'  OVERRUN' if d > win + 0.02 else ''}  {text}")

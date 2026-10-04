@@ -46,26 +46,61 @@ def typed(text, n, start, cps=1.3):
 
 
 # ---------------------------------------------------------------- hook
+SLAM_ODOO, SLAM_20, SLAM_HERE = 3, 13, 26            # frames where each word hits (SFX follow these)
+DEEP_GOLD = (120, 88, 22)
+
+
 @lru_cache(None)
-def hero():
-    return K.rich_sprite((("ODOO ", TEXT), ("20", GOLD)), "P8", 180)
+def tight(text, fkey, size, color):
+    sp = text_sprite(text, fkey, size, color)
+    return sp.crop(sp.getchannel("A").getbbox())
+
+
+@lru_cache(None)
+def extruded(text, fkey, size, face, depth):
+    """Heavy title: a stack of darker copies offset down-right under the face colour (3D extrusion)."""
+    top = tight(text, fkey, size, face)
+    side = tight(text, fkey, size, DEEP_GOLD)
+    im = Image.new("RGBA", (top.width + depth, top.height + depth), (0, 0, 0, 0))
+    for k in range(depth, 0, -1):
+        im.alpha_composite(side, (k, k))
+    im.alpha_composite(top, (0, 0))
+    return im
+
+
+def slam(n, f, dur=8):
+    """Scale for a word slamming in at frame f: big -> slight undershoot -> 1."""
+    t = lin(n, f, f + dur)
+    return 2.2 - 1.2 * back(t, 2.6), ease(lin(n, f, f + 3))
 
 
 def draw_hook(frame, n):
     if n >= PAIN + 8:
         return
     out = 1 - ease(lin(n, PAIN - 6, PAIN + 8))
-    t = lin(n, 4, 22)
-    g, pad = K.glow(760, 200, GOLD, 60, 70)
-    put(frame, g, W / 2 - 380 - pad, 520 - 100 - pad, "tl", a=ease(t) * out * (0.7 + 0.3 * math.sin(n / 9) ** 2))
-    put(frame, hero(), W / 2, 520, "cc", a=ease(t * 1.4) * out, s=1.06 - 0.06 * back(t, 1.4), text=True)
-    # gold sweep line under the title
-    sw = ease_io(lin(n, 18, 40))
-    if sw > 0:
-        put(frame, rrect(max(8, int(700 * sw)), 6, 3, GOLD), W / 2, 668, "tc", a=out)
-    put(frame, K.label_chip("RELEASED SEPTEMBER 2026"), W / 2, 730, "tc", a=ease(lin(n, 30, 42)) * out, text=True)
-    put_text(frame, "What it means for your business.", "C5", 40, TEXT2, W / 2, 820, "tc",
-             a=ease(lin(n, 42, 56)) * out)
+    # screen-shake after each hit (decays over ~8 frames)
+    sh = 0.0
+    for f, amp in ((SLAM_ODOO + 6, 8), (SLAM_20 + 6, 16), (SLAM_HERE + 4, 6)):
+        if f <= n < f + 9:
+            sh += amp * (1 - (n - f) / 9) * math.sin((n - f) * 2.7)
+    dx, dy = sh, -sh * 0.6
+    g, pad = K.glow(700, 420, GOLD, 80, 95)
+    put(frame, g, W / 2 - 350 - pad + dx, 640 - 210 - pad + dy, "tl",
+        a=ease(lin(n, SLAM_20, SLAM_20 + 10)) * out * (0.75 + 0.25 * math.sin(n / 7) ** 2))
+    s1, a1 = slam(n, SLAM_ODOO)
+    if n >= SLAM_ODOO:
+        put(frame, extruded("ODOO", "P9I", 250, TEXT, 16), W / 2 + dx, 365 + dy, "cc", a=a1 * out, s=s1, text=True)
+    s2, a2 = slam(n, SLAM_20)
+    if n >= SLAM_20:
+        put(frame, extruded("20", "P9I", 470, GOLD, 22), W / 2 + 10 + dx, 650 + dy, "cc", a=a2 * out, s=s2, text=True)
+    s3, a3 = slam(n, SLAM_HERE, 7)
+    if n >= SLAM_HERE:
+        put(frame, extruded("IS HERE", "P9I", 104, TEXT, 8), W / 2 + dx, 905 + dy, "cc", a=a3 * out, s=s3, text=True)
+    put(frame, K.label_chip("RELEASED SEPTEMBER 2026"), W / 2, 1000, "tc", a=ease(lin(n, 40, 50)) * out, text=True)
+    # white flash on the big hit
+    if SLAM_20 + 5 <= n < SLAM_20 + 12:
+        fl = Image.new("RGBA", (W, K.H), (255, 236, 190, int(110 * (1 - (n - SLAM_20 - 5) / 7))))
+        put(frame, fl, 0, -K.OY, "tl")                 # whole canvas, also in the 9:16 format
 
 
 # ---------------------------------------------------------------- pain recap
@@ -386,7 +421,7 @@ def render(n):
 
 
 CAPTIONS = [
-    (4, PAIN, "Odoo 20. Released September 2026. What it means for your business."),
+    (4, PAIN, "Odoo 20 is here! Released September 2026."),
     (PAIN, AGENT, "Still on chats and spreadsheets?"),
     (AGENT, ACCOUNT, "1. AI agent: tell it what you need, in plain words. It shows the plan before it runs."),
     (ACCOUNT, OFFLINE, "2. Accounting assistant: answers from your own reports."),
@@ -399,4 +434,4 @@ PICKS = [(60, "Hook"), (170, "Pain"), (300, "Agent plan"), (370, "Agent active")
          (600, "Offline"), (670, "Synced"), (760, "One system"), (840, "Offer"), (980, "End card")]
 
 if __name__ == "__main__":
-    K.run(ARGS, render, CAPTIONS, PICKS, cover_frame=50)
+    K.run(ARGS, render, CAPTIONS, PICKS, cover_frame=60)
