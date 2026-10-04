@@ -5,7 +5,7 @@ and `CLAUDE.md`). One idea per shot, 2–3 words on screen, Gia voice, calm musi
 pitch with the Odoo logo, and the standard discovery-call end card.
 
 ## Deliverable
-`deliverables/TOLX_01v2_whatsapp-orders-3d_9x16.mp4`: 1080×1920, 30 fps, 796 frames, 26.5 s. Reels / Stories / LinkedIn vertical.
+`deliverables/TOLX_01v2_whatsapp-orders-3d_9x16.mp4`: 1080×1920, 30 fps, 796 frames, 26.5 s, H.264 + AAC, about -14.7 LUFS (decode-verified). Reels / Stories / LinkedIn vertical.
 
 ## Shots
 
