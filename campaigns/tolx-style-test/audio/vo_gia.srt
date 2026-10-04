@@ -1,0 +1,8 @@
+1
+00:00:00,400 --> 00:00:02,800
+Your spreadsheet says twelve in stock
+
+2
+00:00:05,300 --> 00:00:07,630
+But the shelf? Only three!
+
