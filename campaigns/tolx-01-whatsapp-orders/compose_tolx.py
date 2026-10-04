@@ -12,8 +12,8 @@ Stories / LinkedIn vertical) at y=250 so text clears the platform UI.
 Frame n (zero-based) is shown at n/30 s; 900 frames.
 
 Usage:
-  python compose_tolx.py --out video.mp4 [--format reel|feed] [--size 540]
-         [--music audio/music.wav] [--sfx audio/sfx.wav] [--srt captions.srt]
+  python compose_tolx.py --out video.mp4 [--format reel|feed] [--size 540] [--vo audio/vo_gia.wav]
+         [--video-in silent.mp4] [--music audio/music.wav] [--sfx audio/sfx.wav] [--srt captions.srt]
          [--storyboard sheet.png] [--cover cover.png] [--frames 0,120,600]
 """
 import argparse
@@ -33,6 +33,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--out")
 ap.add_argument("--format", choices=("reel", "feed"), default="reel")
 ap.add_argument("--size", type=int, default=1080, help="output width (1080 final, 540 review)")
+ap.add_argument("--vo", help="placed voiceover wav (audio/place_vo.py); music and SFX duck under it")
+ap.add_argument("--video-in", help="reuse an already rendered (silent) video instead of rendering frames")
 ap.add_argument("--music")
 ap.add_argument("--sfx")
 ap.add_argument("--srt")
@@ -869,14 +871,24 @@ def write_srt(path):
 
 def mux_audio(video, out):
     inputs, chains, labels, idx = ["-i", video], [], [], 1
-    for name, path, gain in (("mu", ARGS.music, -2), ("fx", ARGS.sfx, -4)):
+    if ARGS.vo:
+        inputs += ["-i", ARGS.vo]
+        chains.append(f"[{idx}:a]aresample=48000,highpass=f=80,acompressor=threshold=0.1:ratio=3:attack=5:release=120,"
+                      "loudnorm=I=-16:TP=-2:LRA=7,aresample=48000,apad=whole_dur=30,asplit[vo][key]")   # same level for any voice
+        idx += 1
+    for name, path, gain in (("mu", ARGS.music, -7.5 if ARGS.vo else -2), ("fx", ARGS.sfx, -7 if ARGS.vo else -4)):
         if path:
             inputs += ["-i", path]
             chains.append(f"[{idx}:a]aresample=48000,volume={gain}dB[{name}]")
             labels.append(f"[{name}]")
             idx += 1
-    chains.append(f"{''.join(labels)}amix=inputs={len(labels)}:normalize=0,"
-                  "loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000[aout]")   # social platforms normalise near -14 LUFS
+    chains.append(f"{''.join(labels)}amix=inputs={len(labels)}:normalize=0[bed]")
+    if ARGS.vo:
+        chains.append("[bed][key]sidechaincompress=threshold=0.08:ratio=3:attack=15:release=350[duck]")
+        chains.append("[vo][duck]amix=inputs=2:normalize=0[pre]")
+    else:
+        chains.append("[bed]anull[pre]")
+    chains.append("[pre]loudnorm=I=-14:TP=-1.5:LRA=9,aresample=48000[aout]")   # social platforms normalise near -14 LUFS
     subprocess.run([FFMPEG, "-nostdin", "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(chains),
                     "-map", "0:v", "-map", "[aout]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
                     "-ac", "2", "-t", str(TOTAL / FPS), "-movflags", "+faststart", out], check=True)
@@ -913,7 +925,10 @@ def main():
         return
     if not ARGS.out:
         return
-    has_audio = ARGS.music or ARGS.sfx
+    has_audio = ARGS.music or ARGS.sfx or ARGS.vo
+    if ARGS.video_in:
+        mux_audio(ARGS.video_in, ARGS.out)
+        return
     video = tempfile.mktemp(suffix=".mp4") if has_audio else ARGS.out
     ow = ARGS.size
     oh = ow * H // W // 2 * 2
@@ -926,7 +941,7 @@ def main():
     proc.stdin.close()
     if proc.wait():
         raise SystemExit("ffmpeg failed")
-    if has_audio:
+    if has_audio and video != ARGS.out:
         mux_audio(video, ARGS.out)
         os.remove(video)
 

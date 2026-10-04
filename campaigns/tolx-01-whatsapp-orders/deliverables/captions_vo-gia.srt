@@ -1,0 +1,40 @@
+1
+00:00:00,350 --> 00:00:02,120
+Taking orders on WhatsApp?
+
+2
+00:00:03,883 --> 00:00:06,363
+Here's the order. Now find it.
+
+3
+00:00:06,767 --> 00:00:09,037
+Who's handling it? Did anyone follow up?
+
+4
+00:00:09,350 --> 00:00:11,740
+Give every order a place to live.
+
+5
+00:00:11,600 --> 00:00:14,540
+One: log it in one shared list.
+
+6
+00:00:14,433 --> 00:00:16,803
+Two: assign it to one person.
+
+7
+00:00:17,100 --> 00:00:20,740
+Three: track the status, so nobody has to ask.
+
+8
+00:00:20,600 --> 00:00:23,490
+Four: follow up, with a name and a date.
+
+9
+00:00:23,310 --> 00:00:26,910
+Every order gets an owner, a status, and a next step.
+
+10
+00:00:26,800 --> 00:00:28,680
+Read the free guide on our blog.
+

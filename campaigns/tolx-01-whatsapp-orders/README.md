@@ -12,10 +12,12 @@ WhatsApp groups, Excel and staff memory. Most of them have never searched for "E
 
 | File | Use |
 |---|---|
-| `TOLX_01_whatsapp-orders_reel_9x16.mp4` | Instagram Reels / Stories, LinkedIn vertical video. 1080×1920 |
-| `TOLX_01_whatsapp-orders_feed_4x5.mp4` | LinkedIn feed, Instagram feed. 1080×1350 |
+| `TOLX_01_whatsapp-orders_reel_9x16_vo-gia.mp4` / `_vo-marcus.mp4` | **With voiceover** (female Gia / male Marcus). Instagram Reels / Stories, LinkedIn vertical. 1080×1920 |
+| `TOLX_01_whatsapp-orders_feed_4x5_vo-gia.mp4` / `_vo-marcus.mp4` | **With voiceover.** LinkedIn feed, Instagram feed. 1080×1350 |
+| `TOLX_01_whatsapp-orders_reel_9x16.mp4`, `..._feed_4x5.mp4` | Music-only versions (no narration) |
+| `captions_vo-gia.srt`, `captions_vo-marcus.srt` | Spoken-line captions matching each voiceover version |
 | `cover_reel.png`, `cover_feed.png` | Cover / thumbnail ("Buried in the group chat.") |
-| `captions.srt` | On-screen copy as a caption file (LinkedIn accepts SRT uploads) |
+| `captions.srt` | On-screen copy as a caption file, for the music-only versions |
 | `storyboard_*.png` | Contact sheets showing 10 key frames |
 
 Both files: H.264 + AAC, 30 fps, 900 frames, 30.0 s, about -14 LUFS integrated.
@@ -49,7 +51,7 @@ Both files: H.264 + AAC, 30 fps, 900 frames, 30.0 s, about -14 LUFS integrated.
 2. **Campaign tags.** Use UTM-tagged links in captions/bio so the website's attribution capture can credit the video:
    - LinkedIn: `https://tolx.ae/blog/?utm_source=linkedin&utm_medium=social&utm_campaign=whatsapp-orders&utm_content=video01`
    - Instagram: `https://tolx.ae/blog/?utm_source=instagram&utm_medium=social&utm_campaign=whatsapp-orders&utm_content=video01`
-3. Upload `captions.srt` on LinkedIn. On Instagram, the copy is already on screen.
+3. Upload the matching `captions_vo-*.srt` (or `captions.srt` for music-only) on LinkedIn. On Instagram, the copy is already on screen.
 4. Watch it once with sound on a phone before posting. Nobody has done a human playback review yet.
 
 ## Post copy
@@ -84,14 +86,38 @@ Both files: H.264 + AAC, 30 fps, 900 frames, 30.0 s, about -14 LUFS integrated.
 >
 > #DubaiSmallBusiness #UAEbusiness #SmallBusinessTips #ShopOwner #DubaiShops #BusinessSystems #TOLX
 
-## Optional voiceover (not recorded)
-The video works muted. On-screen text carries the message. If you want narration, record or generate
-this script and supply the WAV. Placement and ducking would then be added the way the RPT campaigns do it.
-If you use synthetic speech, don't present it as a human recording.
+## Voiceover
+Synthetic speech: Higgsfield Text to Speech V2 (ElevenLabs engine), preset voices **Gia** (female)
+and **Marcus** (male). It is generated, not a human recording, so don't describe it as a voice actor.
+Each line is a separate take in `audio/vo_lines/` (`f*` = Gia, `m*` = Marcus, numbered by line).
+`audio/place_vo.py` trims each take and shortens long pauses. Where a line runs past its scene,
+the script speeds it up by at most 1.15× (pitch kept). It then places the line on its scene and writes
+`audio/vo_<voice>.wav` + `.srt`. In the mix, the voice is loudness-matched (-16 LUFS stem), and music and
+SFX are lowered and side-chain ducked. Stem measurement put the voice about 10–20 dB above the music
+on every line, for both voices.
 
-> Taking orders on WhatsApp? Here's the order... now find it. Who's handling it? Was it confirmed? Did anyone follow up?
-> Give every order a place to live. Log it. Assign it. Track it. Follow up.
-> Every order gets an owner, a status and a next step. The free guide is at tolx dot ae.
+| # | Time | Line |
+|---|---|---|
+| 1 | 0.4 s | Taking orders on WhatsApp? |
+| 2 | 3.9 s | Here's the order. Now… find it. |
+| 3 | 6.8 s | Who's handling it? Did anyone follow up? |
+| 4 | 9.4 s | Give every order a place to live. |
+| 5 | 11.6 s | One: log it in one shared list. |
+| 6 | 14.4 s | Two: assign it to one person. |
+| 7 | 17.1 s | Three: track the status, so nobody has to ask. |
+| 8 | 20.6 s | Four: follow up, with a name and a date. |
+| 9 | 23.3 s | Every order gets an owner, a status, and a next step. |
+| 10 | 26.8 s | Read the free guide on our blog. |
+
+The narration never says "TOLX" because the intended pronunciation isn't confirmed. The logo and URL are on screen.
+To change a line: regenerate that take into `audio/vo_lines/`, run `place_vo.py`, then remux (no picture re-render):
+
+```bash
+python audio/place_vo.py f vo_gia.wav          # or: m vo_marcus.wav
+python compose_tolx.py --format reel --out .work/silent_reel.mp4          # once per format (silent master)
+python compose_tolx.py --format reel --video-in .work/silent_reel.mp4 --vo audio/vo_gia.wav \
+  --music audio/music.wav --sfx audio/sfx.wav --out deliverables/TOLX_01_whatsapp-orders_reel_9x16_vo-gia.mp4
+```
 
 ## Render
 
@@ -140,4 +166,6 @@ Check UAE keyword data before you put ad spend behind it.
 - Loudness measured with ffmpeg ebur128: about -13.6 LUFS integrated, peak about -2 dBFS.
 - Inspected frames decoded from the MP4s, not only source renders. Contact sheets of in-between frames covered the lift-out and board transitions.
 - `check_layout()` checked every 5th frame for text inside the safe area. It passes for both formats.
-- **Not done:** human playback/listening review, upload tests on LinkedIn/Instagram, and checking how each app crops the cover.
+- Voiceover: placement log checked (no overlapping lines, max speed-up 1.15×). Voice-to-music ratio measured on
+  separately rendered stems through the same filter chain. Final mixes measured at -14.2 / -14.9 LUFS.
+- **Not done:** human listening review of the synthetic voices (pronunciation, naturalness, which voice fits TOLX better), upload tests on LinkedIn/Instagram, and checking how each app crops the cover.
