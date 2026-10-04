@@ -46,7 +46,7 @@ def typed(text, n, start, cps=1.3):
 
 
 # ---------------------------------------------------------------- hook
-SLAM_ODOO, SLAM_20, SLAM_HERE = 3, 13, 26            # frames where each word hits (SFX follow these)
+SLAM_ODOO, SLAM_20, SLAM_HERE = 2, 14, 28            # frames where each word starts its reveal (SFX follow)
 DEEP_GOLD = (120, 88, 22)
 
 
@@ -75,32 +75,20 @@ def slam(n, f, dur=8):
 
 
 def draw_hook(frame, n):
+    """Smooth staggered reveal (no slam / shake / flash): words rise and fade in, gold underline sweeps."""
     if n >= PAIN + 8:
         return
     out = 1 - ease(lin(n, PAIN - 6, PAIN + 8))
-    # screen-shake after each hit (decays over ~8 frames)
-    sh = 0.0
-    for f, amp in ((SLAM_ODOO + 6, 8), (SLAM_20 + 6, 16), (SLAM_HERE + 4, 6)):
-        if f <= n < f + 9:
-            sh += amp * (1 - (n - f) / 9) * math.sin((n - f) * 2.7)
-    dx, dy = sh, -sh * 0.6
-    g, pad = K.glow(700, 420, GOLD, 80, 95)
-    put(frame, g, W / 2 - 350 - pad + dx, 640 - 210 - pad + dy, "tl",
-        a=ease(lin(n, SLAM_20, SLAM_20 + 10)) * out * (0.75 + 0.25 * math.sin(n / 7) ** 2))
-    s1, a1 = slam(n, SLAM_ODOO)
-    if n >= SLAM_ODOO:
-        put(frame, extruded("ODOO", "P9I", 250, TEXT, 16), W / 2 + dx, 365 + dy, "cc", a=a1 * out, s=s1, text=True)
-    s2, a2 = slam(n, SLAM_20)
-    if n >= SLAM_20:
-        put(frame, extruded("20", "P9I", 470, GOLD, 22), W / 2 + 10 + dx, 650 + dy, "cc", a=a2 * out, s=s2, text=True)
-    s3, a3 = slam(n, SLAM_HERE, 7)
-    if n >= SLAM_HERE:
-        put(frame, extruded("IS HERE", "P9I", 104, TEXT, 8), W / 2 + dx, 905 + dy, "cc", a=a3 * out, s=s3, text=True)
-    put(frame, K.label_chip("RELEASED SEPTEMBER 2026"), W / 2, 1000, "tc", a=ease(lin(n, 40, 50)) * out, text=True)
-    # white flash on the big hit
-    if SLAM_20 + 5 <= n < SLAM_20 + 12:
-        fl = Image.new("RGBA", (W, K.H), (255, 236, 190, int(110 * (1 - (n - SLAM_20 - 5) / 7))))
-        put(frame, fl, 0, -K.OY, "tl")                 # whole canvas, also in the 9:16 format
+    g, pad = K.glow(700, 420, GOLD, 80, 80)
+    put(frame, g, W / 2 - 350 - pad, 640 - 210 - pad, "tl", a=ease(lin(n, SLAM_20, SLAM_20 + 24)) * out)
+    for txt, sz, col, dep, x, y, f in (("ODOO", 250, TEXT, 10, W / 2, 365, SLAM_ODOO),
+                                       ("20", 470, GOLD, 14, W / 2 + 10, 650, SLAM_20),
+                                       ("IS HERE", 104, TEXT, 6, W / 2, 905, SLAM_HERE)):
+        if n >= f:
+            dy, a, sc = K.reveal(n, f)
+            put(frame, extruded(txt, "P9I", sz, col, dep), x, y + dy, "cc", a=a * out, s=sc, text=True)
+    K.underline(frame, n, SLAM_HERE + 10, 975, 520, out)
+    put(frame, K.label_chip("RELEASED SEPTEMBER 2026"), W / 2, 1010, "tc", a=ease(lin(n, 46, 56)) * out, text=True)
 
 
 # ---------------------------------------------------------------- pain recap

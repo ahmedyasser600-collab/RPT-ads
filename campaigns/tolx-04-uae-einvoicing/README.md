@@ -3,7 +3,7 @@
 Goal: **generate leads** from UAE businesses that sell to other businesses. A real, dated deadline is the
 hook. The video explains what changes in plain words and closes on the offer: get sales, VAT and invoicing
 into one system (Odoo or custom software), then book a discovery call. Series style from video 03:
-slam-in title, energetic Gia voice, 124 BPM.
+smooth title reveal, energetic Gia voice, calm premium music bed.
 
 ## Deliverables (`deliverables/`)
 
@@ -21,14 +21,14 @@ Both files: H.264 + AAC, 30 fps, 1020 frames, 34.0 s, about -14.1 LUFS.
 
 | Time | On screen | Voiceover |
 |---|---|---|
-| 0–4.2 s | Slam-in: "UAE", "E-INVOICING", gold "JULY 2027" (flash and shake), "IS YOUR BUSINESS READY?", chip "For business-to-business invoices" | UAE e-invoicing is coming! Is your business ready? |
+| 0–4.2 s | Smooth reveal: "UAE", "E-INVOICING", gold "JULY 2027" (underline sweep), "IS YOUR BUSINESS READY?", chip "For business-to-business invoices" | UAE e-invoicing is coming! Is your business ready? |
 | 4.2–8.4 s | "The deadlines." Vertical timeline: 1 Jul 2026 pilot · 1 Jan 2027 AED 50M+ go live · 31 Mar 2027 appoint provider · **1 Jul 2027 under AED 50M go live** (highlighted) | Selling to other businesses? Your deadline is July 2027! |
 | 8.4–11.7 s | **31 Mar 2027** highlighted too | And you must appoint an accredited provider by the end of March! |
 | 11.7–17.5 s | "No more PDF invoices." The PDF is crossed out and becomes structured data (TRN, 5% VAT, total; "PINT AE · XML"), then flows to your accredited provider, then to the buyer and the FTA ("Simplified") | No more PDF invoices. Every invoice goes out as structured data, through your provider. |
 | 17.5–21.3 s | "Invoicing from Excel or Word?" Docx and xlsx invoices, then the stamp **NOT E-INVOICE READY** | Still invoicing from Excel or Word? That won't cut it! |
 | 21.3–27 s | "Get ready before the deadline." Checklist ticks: customer TRNs · VAT on every line · all invoices from one system · ready to connect to your provider | Get your sales, VAT and invoices into one system now, and be ready early! |
 | 27–29.3 s | "Get e-invoice ready with TOLX." **Odoo** or **Custom software** | With Odoo, or software built around your business. |
-| 29.3–34 s | End card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call today! |
+| 29.3–34 s | End card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with Tolx today! |
 
 ## Fact basis (checked 4 Oct 2026)
 UAE Ministry of Finance **Ministerial Decisions No. 243 and 244 of 2025**, with the large-business provider
@@ -91,6 +91,12 @@ UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_ca
 > Not tax advice.
 >
 > #UAEeInvoicing #UAEbusiness #DubaiSmallBusiness #VAT #Odoo #TOLX
+
+## v2 changes (4 Oct 2026 feedback)
+- **Title entrance:** a smooth staggered reveal with a gold underline sweep. The slam, screen-shake and flash are gone. The heavy Poppins Black italic font stays.
+- **Music:** replaced the plucky 124 BPM groove with the calm `build_music_smooth()` bed. Sound effects are cut down to a few soft chimes and swishes.
+- **Brand:** the closing line now says "Book your discovery call **with Tolx** today!" (new Gia take `g6.mp3`). Check how "Tolx" is pronounced.
+- The "NOT E-INVOICE READY" stamp also uses the smooth reveal instead of a slam.
 
 ## Render
 ```bash

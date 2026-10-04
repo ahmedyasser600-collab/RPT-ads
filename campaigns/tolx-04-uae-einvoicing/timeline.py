@@ -13,7 +13,7 @@ READY = 640         # 21.3 s readiness checklist
 OFFER = 810         # 27.0 s Odoo or custom software
 END_CARD = 880      # 29.3 s discovery-call CTA + Odoo Ready Partner badge
 
-SLAMS = [3, 11, 22, 38]                         # UAE, E-INVOICING, JULY 2027 (big hit), READY? stamp
+REVEALS = [2, 12, 24, 40]                       # UAE, E-INVOICING, JULY 2027, READY? (smooth reveals)
 MILESTONES_IN = [DEADLINES + 8, DEADLINES + 16, DEADLINES + 24, DEADLINES + 32]
 HL_JULY = DEADLINES + 46                         # "July 2027" highlighted (voice line 1)
 HL_MARCH = DEADLINES + 126                       # "31 March 2027" highlighted (voice line 2)

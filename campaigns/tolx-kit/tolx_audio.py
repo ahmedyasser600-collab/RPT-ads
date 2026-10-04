@@ -232,3 +232,54 @@ def place_vo(lines, vo_dir, prefix, out_wav, dur, base_tempo=1.0, fx=""):
         for i, (a, b, text) in enumerate(cues, 1):
             fh.write(f"{i}\n{ts(a)} --> {ts(b + 0.3)}\n{text}\n\n")
     return cues
+
+
+# ---------------------------------------------------------------- smooth bed (series default from video 04 v2)
+def soft_keys(freq, vel, dur=2.4):
+    """Rounded electric-piano-like tone: few harmonics, slow decay, no click."""
+    t = tt(dur)
+    s = np.sin(2 * np.pi * freq * t) + 0.18 * np.sin(4 * np.pi * freq * t) + 0.05 * np.sin(6 * np.pi * freq * t)
+    return vel * lp(s, 2500) * np.exp(-t * 1.6) * np.minimum(1, t / 0.012) * np.minimum(1, (dur - t) / 0.4)
+
+
+def soft_kick(vel):
+    t = tt(0.4)
+    return vel * lp(np.sin(2 * np.pi * np.cumsum(45 + 40 * np.exp(-t * 25)) / SR), 300) * np.exp(-t * 7)
+
+
+def build_music_smooth(dur, end, bpm=96):
+    """Calm, premium bed: warm 'breathing' pads (Cmaj9 - Am9 - Fmaj7 - G6), long sub notes, a soft kick on
+    beats 1 and 3 from bar 2, sparse keys; no plucks, arps or ticks. C major chord rings out from `end` (s)."""
+    beat = 60 / bpm
+    bar = 4 * beat
+    music = np.zeros(int(SR * dur))
+    prog = [("C2", ["C3", "G3", "B3", "D4", "E4"]), ("A1", ["A2", "E3", "G3", "B3", "C4"]),
+            ("F1", ["F2", "C3", "E3", "A3", "C4"]), ("G1", ["G2", "D3", "E3", "B3", "D4"])]
+    t, k = 0.0, 0
+    while t < end:
+        bass, voicing = prog[k % 4]
+        p = pad([hz(n) for n in voicing], bar + 0.8, 0.13, 1500)
+        tb = tt(bar + 0.8)
+        p *= 1 - 0.22 * (0.5 + 0.5 * np.cos(2 * np.pi * tb / beat))       # gentle pulse on every beat
+        add(music, p, max(0, t - 0.2))
+        add(music, sub(hz(bass) * 2, bar, 0.17), t)
+        if t >= bar - 1e-6:
+            for b in (0, 2):
+                add(music, soft_kick(0.22), t + b * beat)
+        add(music, soft_keys(hz(voicing[3]) * 2, 0.045), t + beat * 0.5)
+        add(music, soft_keys(hz(voicing[4]) * 2, 0.035), t + beat * 2.5)
+        t += bar
+        k += 1
+    for i, n in enumerate(["C3", "G3", "C4", "E4", "G4", "D5"]):
+        add(music, soft_keys(hz(n), 0.05, 3.8), end + 0.05 * i)
+    add(music, pad([hz(n) for n in ["C3", "G3", "B3", "E4"]], dur - end + 0.3, 0.12, 1600), end - 0.3)
+    add(music, sub(hz("C2"), dur - end, 0.16), end)
+    return hp(music, 30)
+
+
+def chime(vel=0.04):
+    """Soft two-note accent for section changes (replaces pops/ticks)."""
+    out = np.zeros(int(SR * 1.4))
+    add(out, soft_keys(hz("G5"), vel, 1.2), 0.0)
+    add(out, soft_keys(hz("C6"), vel * 0.8, 1.2), 0.09)
+    return out

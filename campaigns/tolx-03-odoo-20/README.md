@@ -20,14 +20,14 @@ Both files: H.264 + AAC, 30 fps, 1010 frames, 33.7 s, about -14.4 LUFS. (The fir
 
 | Time | On screen | Voiceover |
 |---|---|---|
-| 0–3.8 s | Slam-in title: "ODOO" (Poppins Black, gold extrusion), a huge gold "20" with flash and screen-shake, "IS HERE", "Released September 2026" | Odoo 20 is HERE! And it's time to make the move! |
+| 0–3.8 s | Smooth staggered reveal: "ODOO" (Poppins Black, gold extrusion), a huge gold "20", "IS HERE" with gold underline, "Released September 2026" | Odoo 20 is HERE! And it's time to make the move! |
 | 3.8–6.7 s | "Still on chats and spreadsheets?" The group chat and Stock_FINAL_v7.xlsx from videos 01–02, struck through | Still stuck on chats and spreadsheets?! |
 | 6.7–13.2 s | **1 AI agent.** "Alert me when phone cases drop below 5." The agent shows a 3-step plan, then Approve, then ACTIVE | Meet your AI agent! Just tell it what you need, and it shows you the plan before it runs. |
 | 13.2–18.7 s | **2 Accounting assistant.** "How much do customers owe me?" → AED 48,250 across 23 invoices, largest balances, "Source: Aged Receivable report" | Need numbers? Ask your accounting assistant what you're owed. Answers straight from your own reports! |
 | 18.7–23 s | **3 Offline POS.** Kiosk till goes OFFLINE but keeps selling (3 orders "saved on device"), then "Back online · 3 orders synced" | Internet down at the kiosk? No problem! Your point of sale keeps selling. |
 | 23–26.7 s | "One system. AI built in." Sales, Stock, Accounting and Team tiles merge inside an "ODOO 20" frame | One system for your whole business. With AI built in! |
 | 26.7–29 s | "Odoo 20, set up around your business." **Odoo** or **Custom software** | Ready to move to Odoo 20? |
-| 29–33.7 s | End card: TOLX, "Book a 30-minute discovery call", tolx.ae/contact, WhatsApp, **Odoo Ready Partner badge** | Book your discovery call today. |
+| 29–33.7 s | End card: TOLX, "Book a 30-minute discovery call", tolx.ae/contact, WhatsApp, **Odoo Ready Partner badge** | Book your discovery call with Tolx today! |
 
 ## Fact basis (checked 4 Oct 2026)
 Odoo 20 was released on 24 September 2026 at Odoo Experience. The three features come from Odoo's own announcement
@@ -87,6 +87,11 @@ UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_ca
 > Illustrative screens. AI features use Odoo credits.
 >
 > #Odoo20 #Odoo #DubaiSmallBusiness #UAEbusiness #BusinessSoftware #TOLX
+
+## v2 changes (4 Oct 2026 feedback)
+- **Title entrance:** a smooth staggered reveal with a gold underline sweep. The slam, screen-shake and flash are gone. The heavy Poppins Black italic font stays.
+- **Music:** replaced the plucky 124 BPM groove with the calm `build_music_smooth()` bed. Sound effects are cut down to a few soft chimes and swishes.
+- **Brand:** the closing line now says "Book your discovery call **with Tolx** today!" (new Gia take `g6.mp3`). Check how "Tolx" is pronounced.
 
 ## Render
 ```bash

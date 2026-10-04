@@ -581,3 +581,16 @@ def flash(frame, n, f, dur=7, strength=110):
     """Warm full-canvas flash starting at frame f (covers the whole 9:16 canvas too)."""
     if f <= n < f + dur:
         put(frame, Image.new("RGBA", (W, H), (255, 236, 190, int(strength * (1 - (n - f) / dur)))), 0, -OY, "tl")
+
+
+def reveal(n, f, dur=14, rise=46):
+    """Smooth title entrance (series default from video 04 v2): (dy, alpha, scale) easing in from frame f."""
+    t = ease(lin(n, f, f + dur))
+    return rise * (1 - t), ease(lin(n, f, f + dur * 0.8)), 0.96 + 0.04 * t
+
+
+def underline(frame, n, f, y, width=640, a=1.0):
+    """Gold line that sweeps out from the centre under a title."""
+    sw = ease_io(lin(n, f, f + 16))
+    if sw > 0:
+        put(frame, rrect(max(8, int(width * sw)), 6, 3, GOLD), W / 2, y, "tc", a=a)

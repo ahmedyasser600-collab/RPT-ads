@@ -23,6 +23,6 @@ Internet down at the kiosk? No problem! Your point of sale keeps selling.
 One system for your whole business. With AI built in!
 
 7
-00:00:26,767 --> 00:00:30,317
-Ready to move to Odoo 20? Book your discovery call today!
+00:00:26,767 --> 00:00:31,347
+Ready to move to Odoo 20? Book your discovery call with Tolx today!
 

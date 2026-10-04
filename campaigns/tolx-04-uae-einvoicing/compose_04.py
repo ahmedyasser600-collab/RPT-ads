@@ -39,22 +39,21 @@ HEADLINES = [
 
 # ---------------------------------------------------------------- hook
 def draw_hook(frame, n):
+    """Smooth staggered reveal (no slam / shake / flash): words rise and fade in, gold underline sweeps."""
     if n >= DEADLINES + 8:
         return
     out = 1 - ease(lin(n, DEADLINES - 6, DEADLINES + 8))
-    dx, dy = K.shake(n, [(SLAMS[0] + 6, 6), (SLAMS[1] + 6, 8), (SLAMS[2] + 6, 16), (SLAMS[3] + 4, 6)])
-    g, pad = K.glow(760, 260, GOLD, 80, 95)
-    put(frame, g, W / 2 - 380 - pad + dx, 640 - 130 - pad + dy, "tl",
-        a=ease(lin(n, SLAMS[2], SLAMS[2] + 10)) * out * (0.75 + 0.25 * math.sin(n / 7) ** 2))
-    items = [("UAE", "P9I", 120, TEXT, 8, 300), ("E-INVOICING", "P9I", 126, TEXT, 10, 445),
-             ("JULY 2027", "P9I", 164, GOLD, 16, 640), ("IS YOUR BUSINESS READY?", "P9I", 62, TEXT, 6, 815)]
-    for (txt, fk, sz, col, dep, y), f in zip(items, SLAMS):
+    g, pad = K.glow(760, 260, GOLD, 80, 80)
+    put(frame, g, W / 2 - 380 - pad, 640 - 130 - pad, "tl", a=ease(lin(n, REVEALS[2], REVEALS[2] + 24)) * out)
+    items = [("UAE", "P9I", 120, TEXT, 6, 300), ("E-INVOICING", "P9I", 126, TEXT, 8, 445),
+             ("JULY 2027", "P9I", 164, GOLD, 12, 640), ("IS YOUR BUSINESS READY?", "P9I", 62, TEXT, 5, 815)]
+    for (txt, fk, sz, col, dep, y), f in zip(items, REVEALS):
         if n >= f:
-            s, a = K.slam(n, f, 7 if f == SLAMS[3] else 8)
-            put(frame, K.extruded(txt, fk, sz, col, dep), W / 2 + dx, y + dy, "cc", a=a * out, s=s, text=True)
+            dy, a, sc = K.reveal(n, f)
+            put(frame, K.extruded(txt, fk, sz, col, dep), W / 2, y + dy, "cc", a=a * out, s=sc, text=True)
+    K.underline(frame, n, REVEALS[2] + 12, 738, 700, out)
     put(frame, K.label_chip("FOR BUSINESS-TO-BUSINESS INVOICES"), W / 2, 920, "tc",
-        a=ease(lin(n, SLAMS[3] + 12, SLAMS[3] + 22)) * out, text=True)
-    K.flash(frame, n, SLAMS[2] + 5)
+        a=ease(lin(n, REVEALS[3] + 12, REVEALS[3] + 22)) * out, text=True)
 
 
 # ---------------------------------------------------------------- deadlines
@@ -227,15 +226,15 @@ def draw_excel(frame, n):
     if not (EXCEL <= n < READY + 8):
         return
     out = 1 - ease(lin(n, READY - 6, READY + 8))
-    dx, dy = K.shake(n, [(STAMP + 5, 12)])
+    dx, dy = 0, 0
     for k, (name, kind, x, rot, f) in enumerate([("Invoice_final_v2.docx", "W", 320, -6, DOCS_IN[0]),
                                                  ("Invoices_2027.xlsx", "X", 760, 5, DOCS_IN[1])]):
         t = lin(n, f, f + 12)
         sp = doc_card(name, kind).rotate(rot, resample=Image.BICUBIC, expand=True)
         put(frame, sp, x + dx, 680 + dy + 40 * (1 - ease(t)), "cc", a=ease(t * 1.4) * out, s=0.85 + 0.15 * back(t, 1.8))
     if n >= STAMP:
-        s, a = K.slam(n, STAMP, 7)
-        put(frame, stamp(), W / 2 + dx, 690 + dy, "cc", a=a * out, s=s, text=True)
+        ry, a, sc = K.reveal(n, STAMP, 10, 30)
+        put(frame, stamp(), W / 2, 690 + ry, "cc", a=a * out, s=sc, text=True)
 
 
 # ---------------------------------------------------------------- readiness checklist

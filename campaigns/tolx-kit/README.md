@@ -14,11 +14,17 @@ of the same code). It keeps every video on one brand, one layout and one lead CT
 Series rules baked in:
 - **The goal is leads.** Every video ends with "Move beyond X, with Odoo or software built around your business",
   then "Book a 30-minute discovery call · tolx.ae/contact · WhatsApp +971 50 986 0063".
-- **Style from video 03 on (approved):** slam-in hook in Poppins Black italic with gold extrusion, screen-shake and flash
-  (`extruded`, `slam`, `shake`, `flash`); a 124 BPM groove from frame 0 (`build_music(dur, 0.0, 0.3, end, bpm=124)`);
-  **Gia** voice (Higgsfield TTS V2, ElevenLabs preset) with short exclamatory lines, `place_vo(..., base_tempo=1.06, fx=ENERGY_FX)`.
-  The voice is synthetic, so it's never presented as a human recording. The narration doesn't say "TOLX" until the pronunciation is confirmed.
-  (Videos 01–02 still use the earlier Marcus / calm treatment.)
+- **Series style (v2, from 4 Oct 2026 feedback):**
+  - **Title:** heavy Poppins Black italic with a subtle gold extrusion, entering with a *smooth* staggered reveal
+    (`reveal()` + `underline()`). **No slam, screen-shake or flash** (judged cringe).
+  - **Music:** the calm, premium `build_music_smooth()` bed (breathing pads, soft sub, soft kick on 1 and 3, sparse keys).
+    **No plucky 124 BPM groove.** Effects stay sparse and soft (`chime`, gentle `swish`), with no pop or tick clutter.
+  - **Voice:** **Gia** (Higgsfield TTS V2, ElevenLabs preset), short punchy lines, `place_vo(..., base_tempo=1.06, fx=ENERGY_FX)`.
+    Synthetic, so it's never presented as a human recording.
+  - **Brand in the CTA (required):** the last line says "**Book your discovery call with Tolx today!**" (prompt spelling "Tolx").
+    Check the pronunciation by ear. A duration check suggests it's read as one word.
+  - The older `extruded/slam/shake/flash` and `build_music()` helpers remain for reference only.
+  - Videos 01–02 still use the earlier Marcus / calm treatment and don't say the brand yet.
 - Scenarios are illustrative and labelled on screen. No invented client results, prices, savings or integrations.
 - To change the CTA (for example, if the call is free) edit `CTA_URL`, `PHONE`, `CALL_LENGTH` and `draw_end_card()` here,
   then re-render each video.
