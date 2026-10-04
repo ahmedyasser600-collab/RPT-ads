@@ -1,0 +1,50 @@
+# TOLX video 02 v2: "Stock & sales" in the 3D-scene style (32.3 s, 9:16)
+
+The first full video in the new visual style the client asked for (reference: Odoo's own marketing, with 3D-rendered
+real-world scenes, white app tiles and hand-drawn highlight doodles on top). It replaces the text-heavy cards of v1
+with **moving scenes, one idea per shot and 2–3 words on screen**. Topic, fonts, Gia's voice, the calm music,
+the "Tol-x" brand line and the end card are unchanged.
+
+## Deliverable
+`deliverables/TOLX_02v2_stock-sales-3d_9x16.mp4`: 1080×1920, 30 fps, H.264 + AAC. Instagram Reels / Stories and
+LinkedIn vertical. A 4:5 feed version would need the graphics re-laid out for the crop, so it isn't made yet.
+
+## Shots
+
+| # | Time | 3D scene (AI-generated) | Graphics on top | Gia |
+|---|---|---|---|---|
+| 1 | 0–3.6 s | Camera glides past dark shelves of boxes | Gold scribble around the gap, sheet tile, **Excel says 12** | Your spreadsheet says twelve in stock… |
+| 2 | 3.6–7 s | Push-in on three boxes under a spotlight | Gold sparks, box tile with red **3**, **Shelf: 3** | But the shelf? Only three! |
+| 3 | 7–11 s | Night desk: laptop, scattered papers, lamp | Five file tiles pop in with 12 / 9 / 7 / 10 / 3, jiggling, **Which file?** | Five files, five numbers. Which one is right? |
+| 4 | 11–14.8 s | Box on a counter by card terminals, orbit | Sale tile, then gold arrow, then stock tile 6 → 4, **Stock updated** | With one system, every sale updates your stock. |
+| 5 | 14.8–19.6 s | Warehouse aisle, dolly forward | Shop, warehouse and phone tiles all at **4**, gold link line, **Same number** | Shop, warehouse, your phone. Same number, everywhere! |
+| 6 | 19.6–23.2 s | Tilt up to the lone box on the top shelf | Bell alert tile, gold arrow to the box, **Reorder in time** | Running low? You're alerted before you run out. |
+| 7 | 23.2–27.7 s | Tidy shop at closing, pull-back | Odoo and Custom tiles glide together, **Built around you** | Odoo, or software built around your business. |
+| 8 | 27.7–32.3 s | Blurred, darkened last scene | Standard end card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with Tol-x today! |
+
+## How it's built
+- **Footage:** 7 × 5 s Kling 3.0 clips (pro, silent), photoreal CGI prompts with *no text, logos or people*. Clips 1–2 come
+  from the approved style test. Prompts are in the git log and in the Higgsfield history. Cost: 7.5 credits per clip.
+- **Overlay:** `../tolx-kit/tolx_overlay.py` provides grading, vignette, zoom-blur cuts, drawn-on doodles (scribble, sparks,
+  curved arrows), springy app tiles with gold/dark icons, and baseline-aligned kinetic keywords. `compose.py` holds the
+  per-shot overlays. `timeline.py` holds the shot lengths, set from the measured voice takes.
+- **Audio:** `audio/compose_audio.py` builds the smooth bed, a soft whoosh into every cut, small chimes for the tiles,
+  and Gia's lines (`vo_lines/g0–g7`, 1.06× energetic read). The brand is spoken "Tol-x" (prompt "Tolex").
+
+```bash
+python audio/compose_audio.py
+python compose.py --out deliverables/TOLX_02v2_stock-sales-3d_9x16.mp4 --vo audio/vo_gia.wav --music audio/music.wav --sfx audio/sfx.wav
+python compose.py --frames 83,185,305      # stills to .work/ for checking overlay positions
+```
+
+## Guardrails
+- The footnote "AI-generated visuals. Illustrative." stays on screen during every scene. Products, numbers and the shop are
+  invented. No client, no prices, no savings. The features shown (stock updated by sales, one shared figure, low-stock
+  alerts) are generic inventory functions in Odoo and similar systems.
+- The icons are TOLX-drawn (including a generic "apps" glyph for Odoo), not Odoo's logo. The official partner badge appears
+  only on the end card, unchanged.
+- The voice is synthetic (Higgsfield TTS, ElevenLabs preset Gia), so don't present it as a human recording.
+
+## Post copy
+Use the same as v1 (`../tolx-02-stock-sales/README.md`), with the UTM `utm_content=video02v2`, and add
+"Visuals are AI-generated and illustrative." to the caption.

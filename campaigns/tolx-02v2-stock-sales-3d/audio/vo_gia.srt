@@ -1,0 +1,32 @@
+1
+00:00:00,350 --> 00:00:02,750
+Your spreadsheet says twelve in stock
+
+2
+00:00:03,850 --> 00:00:06,180
+But the shelf? Only three!
+
+3
+00:00:07,250 --> 00:00:10,790
+Five files, five numbers. Which one is right?
+
+4
+00:00:11,250 --> 00:00:14,340
+With one system, every sale updates your stock.
+
+5
+00:00:15,050 --> 00:00:19,490
+Shop, warehouse, your phone. Same number, everywhere!
+
+6
+00:00:19,850 --> 00:00:22,700
+Running low? You're alerted before you run out.
+
+7
+00:00:23,450 --> 00:00:26,640
+Odoo, or software built around your business.
+
+8
+00:00:27,900 --> 00:00:30,830
+Book your discovery call with TOLX today!
+
