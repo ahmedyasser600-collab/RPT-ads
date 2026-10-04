@@ -41,7 +41,6 @@ CLIPS = {}
 
 # ---------------------------------------------------------------- per-shot overlays (i = frame within shot)
 def ov_shelves(fr, i, out):
-    O.draw_polyline(fr, CIRCLE, ease(lin(i, 10, 30)))
     O.put_tile(fr, 820, 520, i, 16, "sheet", out=out)
     O.keyword(fr, i, 26, (("Excel says ", TEXT), ("12", DOODLE)), 1380, out=out)
 
@@ -91,8 +90,12 @@ def ov_alert(fr, i, out):
 
 def ov_offer(fr, i, out):
     t = ease(K.clamp((i - 40) / 18))                                 # tiles glide together
-    O.put_tile(fr, 320 + 50 * t, 820, i, 8, "odoo", label="ODOO", out=out)
-    O.put_tile(fr, 760 - 50 * t, 820, i, 18, "custom", label="CUSTOM", rot=6, out=out)
+    if i >= 8:                                                        # Odoo: official logo artwork on a white tile
+        tt = lin(i, 8, 24)
+        sp = odoo_tile().rotate(-6 * (1 - 0.4 * ease(tt)), resample=Image.BICUBIC, expand=True)
+        K.put(fr, sp, 300 + 50 * t, 820 + 6 * math.sin((i - 8) / 11), "cc", a=ease(tt * 2) * out,
+              s=max(0.01, O.spring(tt)))
+    O.put_tile(fr, 790 - 50 * t, 820, i, 18, "custom", label="CUSTOM", rot=6, out=out)
     if i > 30:
         K.put_text(fr, "or", "P7", 46, DOODLE, 540, 820, "cc", a=(1 - t) * out)
     O.keyword(fr, i, 44, (("Built ", TEXT), ("around you", DOODLE)), 1400, out=out)
@@ -111,6 +114,24 @@ def partner_badge():
     card = K.rrect(306, art.height + 40, 20, (255, 255, 255, 255)).copy()
     card.alpha_composite(art, (28, 20))
     return card
+
+
+@lru_cache(None)
+def odoo_tile():
+    """White rounded tile carrying the official Odoo Ready Partner artwork (unchanged, proportional resize),
+    same shadow treatment as the other app tiles."""
+    from PIL import ImageDraw
+    art = Image.open(os.path.join(HERE, "assets", "odoo_ready_partners_rgb.png")).convert("RGBA")
+    art = art.crop(art.getbbox())
+    tw, th, pad = 330, 220, 40
+    art = art.resize((270, int(art.height * 270 / art.width)), Image.LANCZOS)
+    im = Image.new("RGBA", (tw + 2 * pad, th + 2 * pad), (0, 0, 0, 0))
+    sh = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(sh).rounded_rectangle((pad + 6, pad + 14, pad + tw + 6, pad + th + 14), 40, fill=(0, 0, 0, 150))
+    im.alpha_composite(sh.filter(ImageFilter.GaussianBlur(16)))
+    im.alpha_composite(K.rrect(tw, th, 40, (250, 250, 248, 255)), (pad, pad))
+    im.alpha_composite(art, (pad + (tw - art.width) // 2, pad + (th - art.height) // 2))
+    return im
 
 
 def end_card(fr, n):
@@ -159,7 +180,6 @@ def render(n):
     out = 1 - ease(lin(n, end - 7, end))                              # overlays clear just before the cut
     OVERLAYS[shot["overlay"]](fr, i, out)
     K.brand_lockup(fr, 90, 300, 44, 34, 1.0)
-    K.put_text(fr, "AI-generated visuals. Illustrative.", "M", 22, (200, 200, 205), W / 2, 1560, "tc", a=0.8, track=1)
     return fr.convert("RGB")
 
 

@@ -12,5 +12,11 @@ This repo holds two separate video projects: **RPT** (Italian bathroom-renovatio
   and the end card (tolx.ae/contact, WhatsApp +971 50 986 0063).
 - Current style: female voice Gia (Higgsfield TTS V2, ElevenLabs preset, energetic read), smooth title reveals
   (no slam/shake/flash), the calm `build_music_smooth()` bed, few soft sound effects.
-- Scenarios are illustrative and labelled on screen. No invented client results, prices, savings or unverified
-  integrations. Check dated facts (e.g. Odoo releases, UAE regulations) before each video.
+- No invented client results, prices, savings or unverified integrations. Check dated facts (e.g. Odoo releases,
+  UAE regulations) before each video.
+- **Newest style (client-approved, video 02 v2): "3D scene + 2D overlay".** AI-generated photoreal CGI clips (Higgsfield
+  Kling 3.0 pro, silent, 9:16, prompts with no text/logos/people) with `campaigns/tolx-kit/tolx_overlay.py` graphics:
+  springy white app tiles, gold doodles (sparks, arrows), 2-3 word keywords, one idea per shot, ~3.5-4.5 s shots.
+  - **No on-screen "AI-generated" footnote** (client decision). **No scribble circles** (client found them unclear).
+  - **When Odoo is mentioned, show Odoo's logo**: use the official partner artwork from the TOLX theme
+    (`odoo_ready_partners_rgb.png`), unchanged, on a white tile.
