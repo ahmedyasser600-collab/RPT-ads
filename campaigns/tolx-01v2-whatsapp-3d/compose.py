@@ -88,7 +88,7 @@ def ov_status(fr, i, out):
 
 
 def ov_reminder(fr, i, out):
-    O.put_tile(fr, 560, 760, i, 8, "bell", label="CALL BACK  SAT 10:00", size=230, rot=-4, out=out)
+    O.put_card(fr, O.notification_card("Call back Khalid", "Reminder  ·  Sat 10:00"), 540, 760, i, 8, out=out)
     for k, st in enumerate(REMIND_SPARKS):
         O.draw_polyline(fr, st, ease(lin(i, 18 + 2 * k, 26 + 2 * k)) * out, width=12)
     O.keyword(fr, i, 26, (("No missed ", TEXT), ("follow-ups", DOODLE)), 1400, size=80, out=out)
@@ -103,7 +103,7 @@ def ov_offer(fr, i, out):
               s=max(0.01, 1.25 * O.spring(tt)))
     for k, st in enumerate(OFFER_SPARKS):
         O.draw_polyline(fr, st, ease(lin(i, 18 + 2 * k, 26 + 2 * k)) * out, width=12)
-    O.keyword(fr, i, 26, (("Shift to ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
+    O.keyword(fr, i, 26, (("Time for ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
 
 
 OVERLAYS = {"phone": ov_phone, "buried": ov_buried, "parcel": ov_parcel, "status": ov_status,
@@ -197,7 +197,7 @@ def setup():
     ARROW_PARCEL = O.arrow_path(600, 930, 560, 1220, bend=0.25, seed=4)
     ARROW_PARCEL_HEAD = O.arrow_head(ARROW_PARCEL)
     STATUS_LINE = O.arrow_path(250, 700, 850, 700, bend=0.1, seed=5)
-    REMIND_SPARKS = O.spark_strokes(560, 760, 220, 290, (-150, -120, -60, -30))
+    REMIND_SPARKS = O.spark_strokes(540, 760, 470, 530, (-160, -140, -40, -20))
     OFFER_SPARKS = O.spark_strokes(540, 800, 290, 360, (-155, -125, -55, -25, 25, 55, 125, 155))
 
 

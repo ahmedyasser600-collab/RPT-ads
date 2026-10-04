@@ -19,7 +19,7 @@ LinkedIn vertical. A 4:5 feed version would need the graphics re-laid out for th
 | 4 | 10.6–14.4 s | Box on a counter by card terminals, orbit | Sale tile, then gold arrow, then stock tile 6 → 4, **Stock updated** | With one system, every sale updates your stock. |
 | 5 | 14.4–19.2 s | Warehouse aisle, dolly forward | Shop, warehouse and phone tiles all at **4**, gold link line, **Same number** | Shop, warehouse, your phone. Same number, everywhere! |
 | 6 | 19.2–22.8 s | Tilt up to the lone box on the top shelf | Bell alert tile, gold arrow to the box, **Reorder in time** | Running low? You're alerted before you run out. |
-| 7 | 22.8–27 s | Tidy shop at closing, pull-back | **Odoo logo** tile (official Odoo Ready Partner artwork), centred with gold sparks, **Shift to Odoo** | It's time. Shift to Odoo now! |
+| 7 | 22.8–27 s | Tidy shop at closing, pull-back | **Odoo logo** tile (official Odoo Ready Partner artwork), centred with gold sparks, **Time for Odoo** | It's time to shift to Odoo! |
 | 8 | 27–31.6 s | Blurred, darkened last scene | Standard end card: discovery call, tolx.ae/contact, WhatsApp, Odoo Ready Partner badge | Book your discovery call with Tol-x today! |
 
 ## How it's built
@@ -66,3 +66,7 @@ Use the same as v1 (`../tolx-02-stock-sales/README.md`), with the UTM `utm_conte
 ## v4 changes (client feedback)
 - Shot 7 pitches Odoo directly: "It's time. Shift to Odoo now!" with just the Odoo logo tile and **Shift to Odoo**.
   The "or software built around your business" option and the Custom tile were dropped (client: Odoo only, for now).
+
+## v5 changes (client feedback, 4 Oct 2026)
+- Pitch line is now "It's time to shift to Odoo!" with the keyword **Time for Odoo**.
+- Odoo is pronounced "oh-DOO" (TTS prompt spelling `Oh-doo`, `tolx_audio.ODOO_SPOKEN`); captions still read "Odoo".

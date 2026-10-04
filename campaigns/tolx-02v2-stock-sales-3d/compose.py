@@ -99,7 +99,7 @@ def ov_offer(fr, i, out):
               s=max(0.01, 1.25 * O.spring(tt)))
     for k, st in enumerate(OFFER_SPARKS):
         O.draw_polyline(fr, st, ease(lin(i, 18 + 2 * k, 26 + 2 * k)) * out, width=12)
-    O.keyword(fr, i, 26, (("Shift to ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
+    O.keyword(fr, i, 26, (("Time for ", TEXT), ("Odoo", DOODLE)), 1400, out=out)
 
 
 OVERLAYS = {"shelves": ov_shelves, "three": ov_three, "files": ov_files, "sale": ov_sale,

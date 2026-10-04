@@ -113,3 +113,6 @@ Uses the shared kit in `../tolx-kit/`.
   11.4 vs 9.8 semitones of pitch range (a livelier read). On separated stems the voice sits about 12 dB above the music on every line.
 - New hook checked on frames decoded from the 9:16 file, including the full-screen flash.
 - **Not done:** human listening review (check how Gia says "Odoo"), test uploads, and a re-read of odoo.com wording.
+
+## Pronunciation fix (4 Oct 2026)
+- Odoo is now spoken "oh-DOO" (TTS spelling `Oh-doo`); the affected Gia lines were re-recorded and both formats remuxed. Captions still read "Odoo".

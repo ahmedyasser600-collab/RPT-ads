@@ -245,3 +245,31 @@ def keyword(frame, n, f, segs, y, size=104, out=1.0):
         dy, a, sc = K.reveal(n, f + 4 * i, 12, 40)
         K.put(frame, sp, x + sp.width / 2, y + dy, "cc", a=a * out, s=sc, text=True)
         x += sp.width + gap
+
+
+@lru_cache(None)
+def notification_card(title, sub, kind="bell", width=760):
+    """Phone-style notification: white rounded card, icon tile on the left, bold dark title and a grey line.
+    Readable on any footage (replaces thin mono labels)."""
+    pad, h = 40, 200
+    im = Image.new("RGBA", (width + 2 * pad, h + 2 * pad), (0, 0, 0, 0))
+    sh = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(sh).rounded_rectangle((pad + 6, pad + 14, pad + width + 6, pad + h + 14), 44, fill=(0, 0, 0, 160))
+    im.alpha_composite(sh.filter(ImageFilter.GaussianBlur(18)))
+    im.alpha_composite(K.rrect(width, h, 44, (250, 250, 248, 255)), (pad, pad))
+    d = ImageDraw.Draw(im)
+    s = 120
+    d.rounded_rectangle((pad + 40, pad + (h - s) // 2, pad + 40 + s, pad + (h + s) // 2), 30, fill=(240, 236, 226))
+    _icon(d, kind, pad + 40 + s * 0.2, pad + (h - s) // 2 + s * 0.2, s * 0.6)
+    tx = pad + 40 + s + 36
+    d.text((tx, pad + 38), title, font=K.F("C7", 54), fill=DARK)
+    d.text((tx, pad + 112), sub, font=K.F("C5", 38), fill=(110, 110, 118))
+    return im
+
+
+def put_card(frame, sprite, x, y, n, f, out=1.0):
+    if n < f:
+        return
+    t = lin(n, f, f + 16)
+    K.put(frame, sprite, x, y + 30 * (1 - ease(t)) + 5 * math.sin((n - f) / 12), "cc", a=ease(t * 2) * out,
+          s=max(0.01, 0.85 + 0.15 * spring(t)))

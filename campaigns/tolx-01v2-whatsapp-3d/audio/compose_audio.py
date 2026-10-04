@@ -43,7 +43,7 @@ LINES = [  # (Gia prompt, window start s, window end s); takes vo_lines/g<n>.mp3
     ("Who's handling it? Did anyone follow up?", s(st[2]) + 0.25, s(st[3])),
     ("In one system, every order gets an owner and a status.", s(st[3]) + 0.25, s(st[4])),
     ("And every follow-up comes with a reminder.", s(st[4]) + 0.25, s(st[5])),
-    ("It's time. Shift to Odoo now!", s(st[5]) + 0.25, s(TL.END_CARD)),
+    ("It's time to shift to Oh-doo!", s(st[5]) + 0.25, s(TL.END_CARD)),
     ("Book your discovery call with Tolex today!", s(TL.END_CARD) + 0.9, DUR - 0.5),
 ]
 A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "g", os.path.join(HERE, "vo_gia.wav"), DUR,

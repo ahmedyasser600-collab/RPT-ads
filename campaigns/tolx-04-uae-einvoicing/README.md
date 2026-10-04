@@ -115,3 +115,6 @@ python compose_04.py --format reel --video-in .work/silent_reel.mp4 --vo audio/v
   and stamp text overflowing its border.
 - VO: all 7 lines at 1.06× with no overlaps. Voice measured 11–13 dB over the music on separated stems.
 - **Not done:** human listening review, test uploads, and a legal/tax review of the wording (recommended for a compliance topic).
+
+## Pronunciation fix (4 Oct 2026)
+- Odoo is now spoken "oh-DOO" (TTS spelling `Oh-doo`); the affected Gia lines were re-recorded and both formats remuxed. Captions still read "Odoo".
