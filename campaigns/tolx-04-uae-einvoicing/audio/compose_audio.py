@@ -50,7 +50,7 @@ LINES = [  # (text = generation prompt, window start s, window end s). Takes: vo
      s(TL.FORMAT) + 0.1, s(TL.EXCEL)),
     ("Still invoicing from Excel or Word? That won't cut it!", s(TL.EXCEL) + 0.1, s(TL.READY)),
     ("Get your sales, VAT and invoices into one system now, and be ready early!", s(TL.READY) + 0.1, s(TL.OFFER)),
-    ("With Odoo, or software built around your business. Book your discovery call with Tolx today!", s(TL.OFFER) + 0.1,
+    ("With Odoo, or software built around your business. Book your discovery call with Tool-ex today!", s(TL.OFFER) + 0.1,
      DUR - 0.8),
 ]
 A.place_vo(LINES, os.path.join(HERE, "vo_lines"), "g", os.path.join(HERE, "vo_gia.wav"), DUR,

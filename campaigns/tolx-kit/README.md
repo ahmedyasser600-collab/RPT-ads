@@ -21,8 +21,9 @@ Series rules baked in:
     **No plucky 124 BPM groove.** Effects stay sparse and soft (`chime`, gentle `swish`), with no pop or tick clutter.
   - **Voice:** **Gia** (Higgsfield TTS V2, ElevenLabs preset), short punchy lines, `place_vo(..., base_tempo=1.06, fx=ENERGY_FX)`.
     Synthetic, so it's never presented as a human recording.
-  - **Brand in the CTA (required):** the last line says "**Book your discovery call with Tolx today!**" (prompt spelling "Tolx").
-    Check the pronunciation by ear. A duration check suggests it's read as one word.
+  - **Brand in the CTA (required):** the last line says "**Book your discovery call with TOLX today!**".
+  - **Pronunciation: TOLX is said "Tool-ex"** (confirmed by the client). In TTS prompts always write `Tool-ex`
+    (`tolx_audio.BRAND_SPOKEN`). On screen and in captions it stays "TOLX", and `place_vo` converts the SRT text automatically.
   - The older `extruded/slam/shake/flash` and `build_music()` helpers remain for reference only.
   - Videos 01–02 still use the earlier Marcus / calm treatment and don't say the brand yet.
 - Scenarios are illustrative and labelled on screen. No invented client results, prices, savings or integrations.

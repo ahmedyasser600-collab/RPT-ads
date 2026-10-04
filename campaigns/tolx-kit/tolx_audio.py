@@ -15,6 +15,11 @@ from scipy.signal import butter, sosfilt
 
 SR = 48000
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
+
+# Brand pronunciation (confirmed by the client, 4 Oct 2026): TOLX is said "Tool-ex".
+# Always write it this way in TTS prompts, e.g. "Book your discovery call with Tool-ex today!".
+# On screen and in captions/SRT the brand stays "TOLX".
+BRAND_SPOKEN = "Tool-ex"
 NOTE = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A": 9, "B": 11}
 rng = np.random.default_rng(42)
 
@@ -218,7 +223,7 @@ def place_vo(lines, vo_dir, prefix, out_wav, dur, base_tempo=1.0, fx=""):
         print(f"{k}: {t0:5.2f}-{t0 + d:5.2f}s (window {win:.2f}s, tempo {tempo:.2f})"
               f"{'  OVERRUN' if d > win + 0.02 else ''}  {text}")
         prev_end = t0 + d
-        cues.append((t0, t0 + d, " ".join(text.replace("...", "").split())))
+        cues.append((t0, t0 + d, " ".join(text.replace("...", "").replace(BRAND_SPOKEN, "TOLX").split())))
         i = int(t0 * SR)
         j = min(len(track), i + len(y))
         track[i:j] += y[: j - i]

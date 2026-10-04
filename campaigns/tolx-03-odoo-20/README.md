@@ -27,7 +27,7 @@ Both files: H.264 + AAC, 30 fps, 1010 frames, 33.7 s, about -14.4 LUFS. (The fir
 | 18.7–23 s | **3 Offline POS.** Kiosk till goes OFFLINE but keeps selling (3 orders "saved on device"), then "Back online · 3 orders synced" | Internet down at the kiosk? No problem! Your point of sale keeps selling. |
 | 23–26.7 s | "One system. AI built in." Sales, Stock, Accounting and Team tiles merge inside an "ODOO 20" frame | One system for your whole business. With AI built in! |
 | 26.7–29 s | "Odoo 20, set up around your business." **Odoo** or **Custom software** | Ready to move to Odoo 20? |
-| 29–33.7 s | End card: TOLX, "Book a 30-minute discovery call", tolx.ae/contact, WhatsApp, **Odoo Ready Partner badge** | Book your discovery call with Tolx today! |
+| 29–33.7 s | End card: TOLX, "Book a 30-minute discovery call", tolx.ae/contact, WhatsApp, **Odoo Ready Partner badge** | Book your discovery call with TOLX ("Tool-ex") today! |
 
 ## Fact basis (checked 4 Oct 2026)
 Odoo 20 was released on 24 September 2026 at Odoo Experience. The three features come from Odoo's own announcement
@@ -91,7 +91,7 @@ UTM link: `https://tolx.ae/contact/?utm_source=linkedin&utm_medium=social&utm_ca
 ## v2 changes (4 Oct 2026 feedback)
 - **Title entrance:** a smooth staggered reveal with a gold underline sweep. The slam, screen-shake and flash are gone. The heavy Poppins Black italic font stays.
 - **Music:** replaced the plucky 124 BPM groove with the calm `build_music_smooth()` bed. Sound effects are cut down to a few soft chimes and swishes.
-- **Brand:** the closing line now says "Book your discovery call **with Tolx** today!" (new Gia take `g6.mp3`). Check how "Tolx" is pronounced.
+- **Brand:** the closing line now says "Book your discovery call **with TOLX** today!", spoken "Tool-ex" (new Gia take `g6.mp3`).
 
 ## Render
 ```bash
