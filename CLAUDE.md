@@ -5,7 +5,8 @@ This repo holds two separate video projects: **RPT** (Italian bathroom-renovatio
 
 ## TOLX website theme
 - Source in `campaigns/tolx-site-theme/tolx/` (WordPress), packaged zips in `dist/`. Keep the brand (black + gold, Chakra Petch /
-  Share Tech Mono). Site positioning: **Odoo-first** (Odoo Ready Partner), other solutions only when Odoo isn't the right fit.
+  Share Tech Mono). Site positioning: **Odoo partner, diplomatic**: lead with Odoo implemented around
+  the client's business. Never headline "not Odoo-only" or push alternatives; at most a soft line that advice starts from the client's needs.
 
 ## TOLX videos (LinkedIn / Instagram)
 - Shared code and the series rules live in `campaigns/tolx-kit/` (read its README before making a new video).

@@ -31,7 +31,7 @@ get_header(); ?>
     <div class="fade-in">
       <div class="section-tag mono">Get in Touch</div>
       <h1>Let's find the right <em>starting point.</em></h1>
-      <p>Tell us where orders, stock, quotations, follow-ups or team updates become hard to track. We implement Odoo around how you work, or another solution when Odoo isn't the right fit, and put a practical process in place.</p>
+      <p>Tell us where orders, stock, quotations, follow-ups or team updates become hard to track. We implement Odoo around how you work and put a practical process in place.</p>
     </div>
   </div>
 </section>
@@ -165,7 +165,7 @@ get_header(); ?>
           <a href="tel:+971509860063" class="op-block" style="text-decoration:none;color:inherit;">
             <div class="op-block-icon"><?php tolx_icon('phone', 18); ?></div>
             <div>
-              <h4>Call Us</h4>
+              <h3>Call Us</h3>
               <p style="font-family:'Share Tech Mono',monospace;color:var(--gold);letter-spacing:0.5px;">+971 50 986 0063</p>
             </div>
           </a>
@@ -173,7 +173,7 @@ get_header(); ?>
           <a href="https://wa.me/971509860063" target="_blank" rel="noopener" class="op-block" style="text-decoration:none;color:inherit;">
             <div class="op-block-icon"><?php tolx_icon('chat', 18); ?></div>
             <div>
-              <h4>WhatsApp</h4>
+              <h3>WhatsApp</h3>
               <p>Message us directly. Replies same day.</p>
             </div>
           </a>
@@ -181,7 +181,7 @@ get_header(); ?>
           <a href="mailto:sales@tolx.ae" class="op-block" style="text-decoration:none;color:inherit;">
             <div class="op-block-icon"><?php tolx_icon('mail', 18); ?></div>
             <div>
-              <h4>Email</h4>
+              <h3>Email</h3>
               <p style="font-family:'Share Tech Mono',monospace;color:var(--gold);letter-spacing:0.5px;font-size:13px;">sales@tolx.ae</p>
             </div>
           </a>
@@ -189,7 +189,7 @@ get_header(); ?>
           <a href="https://www.linkedin.com/company/tolx1" target="_blank" rel="noopener" class="op-block" style="text-decoration:none;color:inherit;">
             <div class="op-block-icon"><?php tolx_icon('linkedin', 18); ?></div>
             <div>
-              <h4>LinkedIn</h4>
+              <h3>LinkedIn</h3>
               <p>Follow for industry insights and updates.</p>
             </div>
           </a>
@@ -197,7 +197,7 @@ get_header(); ?>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('pin', 18); ?></div>
             <div>
-              <h4>Office</h4>
+              <h3>Office</h3>
               <p>Dubai, United Arab Emirates</p>
             </div>
           </div>
@@ -212,6 +212,8 @@ get_header(); ?>
 <?php
 // Contact page has its own footer (no CTA block — visitor is already converting here)
 ?>
+</main>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
@@ -228,7 +230,7 @@ get_header(); ?>
         </a>
       </div>
       <div>
-        <h4>Systems</h4>
+        <h3>Systems</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/solutions/'); ?>">Revenue Asset Systems</a></li>
           <li><a href="<?php echo home_url('/solutions/'); ?>">Workflow Automation</a></li>
@@ -238,7 +240,7 @@ get_header(); ?>
         </ul>
       </div>
       <div>
-        <h4>Growth Systems</h4>
+        <h3>Growth Systems</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/growth-systems/'); ?>">Web Development</a></li>
           <li><a href="<?php echo home_url('/growth-systems/'); ?>">Marketing Systems</a></li>
@@ -248,7 +250,7 @@ get_header(); ?>
         </ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h3>Company</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/about/'); ?>">About</a></li>
           <li><a href="<?php echo home_url('/software-house-dubai/'); ?>">Software House Dubai</a></li>
@@ -257,7 +259,7 @@ get_header(); ?>
         </ul>
       </div>
       <div>
-        <h4>Get in Touch</h4>
+        <h3>Get in Touch</h3>
         <ul class="footer-links">
           <li><a href="https://wa.me/971509860063" target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href="tel:+971509860063">+971 50 986 0063</a></li>

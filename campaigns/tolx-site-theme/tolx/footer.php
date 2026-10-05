@@ -1,10 +1,12 @@
+</main>
+
 <?php // Reusable CTA Block — V2 command panel ?>
 <section class="cta-section">
   <div class="container">
     <div class="cta-cmd fade-in">
       <div class="cta-cmd-tag">Next stop</div>
       <h2>Ready to replace spreadsheets with systems built around how your business runs?</h2>
-      <p>Tell us what is hard to track: orders, stock, follow-ups or team updates. We implement Odoo around how you work, or another solution if Odoo isn't the right fit.</p>
+      <p>Tell us what is hard to track: orders, stock, follow-ups or team updates. We implement Odoo around how you work and help your team adopt it.</p>
       <div class="cta-cmd-actions">
         <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Discovery Call <span>→</span></a>
         <a href="https://wa.me/971509860063" target="_blank" rel="noopener" class="btn-ghost">WhatsApp us</a>
@@ -22,7 +24,7 @@
           <?php tolx_helm(28); ?>
           <span class="nav-wordmark">TOLX<span>.</span></span>
         </a>
-        <p>A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. Odoo Ready Partner: Odoo-first implementation, other platforms when Odoo isn't the right fit, and support for adoption.</p>
+        <p>A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. As an Odoo Ready Partner, we implement Odoo around your operation and support your team through adoption.</p>
         <a href="<?php echo home_url('/about/odoo-partnership/'); ?>" class="footer-badge" aria-label="Odoo Ready Partner">
           <span class="odoo-badge-chip odoo-badge-chip--sm">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/odoo_ready_partners_rgb.svg" alt="Odoo Ready Partner badge" width="68" height="34" loading="lazy">
@@ -30,7 +32,7 @@
         </a>
       </div>
       <div>
-        <h4>Systems</h4>
+        <h3>Systems</h3>
         <ul class="footer-links">
           <li><a href="<?php echo esc_url(tolx_published_destination('stock-sales-management')); ?>">Stock &amp; Sales</a></li>
           <li><a href="<?php echo esc_url(tolx_published_destination('team-tasks-approvals')); ?>">Team Tasks &amp; Approvals</a></li>
@@ -40,7 +42,7 @@
         </ul>
       </div>
       <div>
-        <h4>Growth Systems</h4>
+        <h3>Growth Systems</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/growth-systems/'); ?>">Web Development</a></li>
           <li><a href="<?php echo home_url('/growth-systems/'); ?>">Marketing Systems</a></li>
@@ -50,7 +52,7 @@
         </ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h3>Company</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/about/'); ?>">About</a></li>
           <li><a href="<?php echo home_url('/about/our-approach/'); ?>">Our Approach</a></li>
@@ -59,7 +61,7 @@
         </ul>
       </div>
       <div>
-        <h4>Get in Touch</h4>
+        <h3>Get in Touch</h3>
         <ul class="footer-links">
           <li><a href="<?php echo home_url('/contact/'); ?>">Contact Us</a></li>
           <li><a href="https://wa.me/971509860063" target="_blank" rel="noopener">WhatsApp</a></li>

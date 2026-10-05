@@ -314,7 +314,7 @@ get_header(); ?>
       <a href="<?php echo home_url('/solutions/'); ?>" class="op-block fade-in" data-stagger="1" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Systems Beyond Odoo</h4>
+          <h3>Systems Beyond Odoo</h3>
           <p>Where Odoo fits alongside custom software, automation, web, CRM, and dashboards.</p>
         </div>
       </a>
@@ -322,7 +322,7 @@ get_header(); ?>
       <a href="<?php echo home_url('/odoo/uae-implementation/'); ?>" class="op-block fade-in" data-stagger="2" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('settings', 18); ?></div>
         <div>
-          <h4>Odoo Implementation in the UAE</h4>
+          <h3>Odoo Implementation in the UAE</h3>
           <p>What a real Odoo implementation looks like with a Dubai-based partner — VAT, DEWA, RTA awareness built in.</p>
         </div>
       </a>
@@ -330,7 +330,7 @@ get_header(); ?>
       <a href="<?php echo home_url('/odoo-partner-dubai/'); ?>" class="op-block fade-in" data-stagger="3" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>Odoo Partner in Dubai</h4>
+          <h3>Odoo Partner in Dubai</h3>
           <p>Tolx is an Odoo Ready Partner in Dubai. How to choose a partner, and what working with one delivers.</p>
         </div>
       </a>
@@ -338,7 +338,7 @@ get_header(); ?>
       <a href="<?php echo home_url('/solutions/'); ?>" class="op-block fade-in" data-stagger="4" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Tolx Vertical Solutions</h4>
+          <h3>Tolx Vertical Solutions</h3>
           <p>EV charging, fleet management, logistics, and CPO revenue — pre-configured Odoo systems for UAE operators.</p>
         </div>
       </a>

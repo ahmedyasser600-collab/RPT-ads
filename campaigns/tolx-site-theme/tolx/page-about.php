@@ -11,7 +11,7 @@ get_header(); ?>
     <div class="fade-in">
       <div class="section-tag mono">About Tolx</div>
       <h1>Built in the UAE. <em>Built around how you run.</em></h1>
-      <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. Odoo-first implementation, plus software, automation, CRM, dashboards and web.</p>
+      <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. Odoo implementation, plus software, automation, CRM, dashboards and web.</p>
     </div>
   </div>
 </section>
@@ -28,7 +28,7 @@ get_header(); ?>
         <h2 class="section-title">Most software starts with the software.</h2>
         <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:16px;">Most software houses and partners in the UAE lead with the tool. They sell the same blank system to a clinic, a trading company, and a service business, then ask each one to change how they work to fit it.</p>
         <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:16px;">The result is long timelines, unclear cost, and systems that never quite fit how the business actually operates, so people drift back to spreadsheets.</p>
-        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;">Tolx starts the other way round. We map how revenue moves through your business — the assets, workflows, and data it depends on — then build the system around it. Usually on Odoo, and on another platform when Odoo isn't the right fit.</p>
+        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;">Tolx starts the other way round. We map how revenue moves through your business — the assets, workflows, and data it depends on — then build the system around it. Most often on Odoo, configured around the way you work.</p>
       </div>
 
       <div class="fade-in" data-stagger="1">
@@ -38,28 +38,28 @@ get_header(); ?>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
             <div>
-              <h4>Compliance Is Tightening</h4>
+              <h3>Compliance Is Tightening</h3>
               <p>VAT, corporate tax, and the 2026 e-invoicing mandate push every UAE business toward connected, auditable systems.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('growth', 18); ?></div>
             <div>
-              <h4>SMEs Are Digitising</h4>
+              <h3>SMEs Are Digitising</h3>
               <p>UAE SMEs are moving off spreadsheets and disconnected tools, but most are under-served by generic partners.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
             <div>
-              <h4>Tools Have Multiplied</h4>
+              <h3>Tools Have Multiplied</h3>
               <p>Businesses run on five apps that don't talk to each other. The need now is connection, not more software.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('scale', 18); ?></div>
             <div>
-              <h4>Local Knowledge Matters</h4>
+              <h3>Local Knowledge Matters</h3>
               <p>UAE compliance and the way local businesses actually operate favour a partner on the ground, not offshore.</p>
             </div>
           </div>

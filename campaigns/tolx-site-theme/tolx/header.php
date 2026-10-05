@@ -14,7 +14,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="<?php echo get_template_directory_uri(); ?>/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="<?php echo get_template_directory_uri(); ?>/apple-touch-icon.png">
   <link rel="manifest" href="<?php echo get_template_directory_uri(); ?>/site.webmanifest">
-  <script>try{if(sessionStorage.getItem('tolxSeen'))document.documentElement.classList.add('no-preload')}catch(e){}</script>
   <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -22,13 +21,7 @@
 
 <div class="scroll-progress" aria-hidden="true"></div>
 
-<!-- PRELOADER -->
-<div id="preloader">
-  <div class="preloader-inner">
-    <?php tolx_helm(80, 'preloader-helm'); ?>
-    <span class="preloader-wordmark">TOLX<span style="color:#D4A843">.</span></span>
-  </div>
-</div>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- NAV -->
 <nav class="nav">
@@ -70,3 +63,5 @@
   <a href="<?php echo home_url('/operations-readiness-scorecard/'); ?>" class="nav-cta nav-cta-ghost">Find Your Opportunities</a>
   <a href="<?php echo home_url('/contact/'); ?>" class="nav-cta">Book a Call</a>
 </div>
+
+<main id="main">

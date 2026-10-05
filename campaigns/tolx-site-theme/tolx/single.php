@@ -57,7 +57,7 @@ get_header(); ?>
         <a href="<?php echo get_permalink($prev_post); ?>" class="op-block" style="text-decoration:none;color:inherit;">
           <div class="op-block-icon"><?php tolx_icon('return', 18); ?></div>
           <div>
-            <h4 style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Previous</h4>
+            <h3 style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Previous</h3>
             <p style="color:var(--text);"><?php echo esc_html(get_the_title($prev_post)); ?></p>
           </div>
         </a>
@@ -67,7 +67,7 @@ get_header(); ?>
       <?php if ($next_post) : ?>
         <a href="<?php echo get_permalink($next_post); ?>" class="op-block" style="text-decoration:none;color:inherit;text-align:right;grid-template-columns:1fr 38px;">
           <div>
-            <h4 style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Next</h4>
+            <h3 style="font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Next</h3>
             <p style="color:var(--text);"><?php echo esc_html(get_the_title($next_post)); ?></p>
           </div>
           <div class="op-block-icon"><?php tolx_icon('arrow', 18); ?></div>

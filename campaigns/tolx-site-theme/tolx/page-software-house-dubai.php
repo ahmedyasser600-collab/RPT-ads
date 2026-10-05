@@ -317,28 +317,28 @@ get_header(); ?>
       <a href="<?php echo home_url('/odoo-partner-dubai/'); ?>" class="op-block fade-in" data-stagger="1" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>Odoo Partner in Dubai</h4>
+          <h3>Odoo Partner in Dubai</h3>
           <p>Tolx as an Odoo Ready Partner — what that means and how to choose a partner.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/odoo/'); ?>" class="op-block fade-in" data-stagger="2" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>What is Odoo?</h4>
+          <h3>What is Odoo?</h3>
           <p>The platform Tolx builds on — what it is, the modules, and where it fits.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/about/our-approach/'); ?>" class="op-block fade-in" data-stagger="3" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('check', 18); ?></div>
         <div>
-          <h4>Our Approach</h4>
+          <h3>Our Approach</h3>
           <p>Scope-led delivery, built around your operation — how Tolx delivers.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/solutions/'); ?>" class="op-block fade-in" data-stagger="4" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('operator', 18); ?></div>
         <div>
-          <h4>Our Solutions</h4>
+          <h3>Our Solutions</h3>
           <p>Operational software for EV, fleet, logistics, and adjacent verticals.</p>
         </div>
       </a>

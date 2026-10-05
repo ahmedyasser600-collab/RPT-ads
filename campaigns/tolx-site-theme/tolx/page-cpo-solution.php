@@ -105,28 +105,28 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('kwh', 18); ?></div>
         <div>
-          <h4>kWh Delivered</h4>
+          <h3>kWh Delivered</h3>
           <p>Energy throughput per charger, per session, per period — reconciled against the meter.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('session', 18); ?></div>
         <div>
-          <h4>Session Revenue</h4>
+          <h3>Session Revenue</h3>
           <p>Revenue collected per session and rolled up by charger, site, and operator.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('lightning', 18); ?></div>
         <div>
-          <h4>Energy Cost</h4>
+          <h3>Energy Cost</h3>
           <p>Energy cost per kWh — DEWA tariff aware. Variable rates and time-of-use supported.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('revenue', 18); ?></div>
         <div>
-          <h4>Gross Margin per Charger</h4>
+          <h3>Gross Margin per Charger</h3>
           <p>Session revenue minus energy cost, normalised to a per-charger view for siting decisions.</p>
         </div>
       </div>

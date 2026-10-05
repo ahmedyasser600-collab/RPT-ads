@@ -146,56 +146,56 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('survey', 18); ?></div>
         <div>
-          <h4>Site Survey &amp; BOQ</h4>
+          <h3>Site Survey &amp; BOQ</h3>
           <p>Pre-sales site assessments, Bills of Quantity, drawings, and approvals — captured in one place.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('project', 18); ?></div>
         <div>
-          <h4>Project Management</h4>
+          <h3>Project Management</h3>
           <p>Track installations from contract to handover with task assignments, milestones, and documents.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('field-service', 18); ?></div>
         <div>
-          <h4>Field Service &amp; Maintenance</h4>
+          <h3>Field Service &amp; Maintenance</h3>
           <p>Schedule technician visits, manage work orders, track spare parts, log fault history per charger.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('asset', 18); ?></div>
         <div>
-          <h4>Charger Asset Register</h4>
+          <h3>Charger Asset Register</h3>
           <p>Full asset lifecycle — warranty tracking, maintenance history, location, and DEWA approval status.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="5">
         <div class="op-block-icon"><?php tolx_icon('inventory', 18); ?></div>
         <div>
-          <h4>Inventory &amp; Spare Parts</h4>
+          <h3>Inventory &amp; Spare Parts</h3>
           <p>Stock management for cables, connectors, controllers — reorder alerts and supplier management.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="6">
         <div class="op-block-icon"><?php tolx_icon('contract', 18); ?></div>
         <div>
-          <h4>Client Contracts &amp; Billing</h4>
+          <h3>Client Contracts &amp; Billing</h3>
           <p>AMC contracts, recurring invoicing, SLA tracking, and a client portal for service requests.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('revenue', 18); ?></div>
         <div>
-          <h4>CPO Revenue <span class="chip" style="margin-left:6px;">Add-on</span></h4>
+          <h3>CPO Revenue <span class="chip" style="margin-left:6px;">Add-on</span></h3>
           <p>Track kWh delivered, session revenue, energy cost, and gross margin per charger.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('dashboard', 18); ?></div>
         <div>
-          <h4>Management Dashboard</h4>
+          <h3>Management Dashboard</h3>
           <p>Live KPIs — chargers deployed, open faults, revenue MTD, top-performing sites, pending invoices.</p>
         </div>
       </div>
@@ -218,22 +218,22 @@ get_header(); ?>
     <div class="route route--phases">
       <div class="route-stop fade-in" data-stagger="1">
         <div class="route-marker">W1–2</div>
-        <h4>Setup &amp; Discovery</h4>
+        <h3>Setup &amp; Discovery</h3>
         <p>Requirements mapping, system setup, data migration planning.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="2">
         <div class="route-marker">W3–4</div>
-        <h4>Configuration</h4>
+        <h3>Configuration</h3>
         <p>Vertical modules configured, workflows built, integrations connected.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="3">
         <div class="route-marker">W5–6</div>
-        <h4>Training</h4>
+        <h3>Training</h3>
         <p>Your team trained on every module. Onsite or remote. Field staff included.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="4">
         <div class="route-marker">W7–8</div>
-        <h4>Go Live</h4>
+        <h3>Go Live</h3>
         <p>System live. Support period active. Ongoing enhancements via AMC.</p>
       </div>
     </div>

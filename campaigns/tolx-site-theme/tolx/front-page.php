@@ -35,7 +35,7 @@ get_header(); ?>
           </span>
           <span class="line">as your business grows.</span>
         </h1>
-        <p class="hero-sub">Orders in WhatsApp, stock in Excel, follow-ups in email? Tolx helps UAE SMEs organise sales, stock and team tasks. As an Odoo Ready Partner we implement Odoo around how you work, or another solution when Odoo isn't the right fit, and support your team as they adopt it.</p>
+        <p class="hero-sub">Orders in WhatsApp, stock in Excel, follow-ups in email? Tolx helps UAE SMEs organise sales, stock and team tasks. As an Odoo Ready Partner, we implement Odoo around how you work and support your team as they adopt it.</p>
         <div class="hero-actions">
           <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Discovery Call <span>→</span></a>
           <a href="<?php echo home_url('/solutions/'); ?>" class="btn-ghost">See Our Systems</a>
@@ -358,9 +358,9 @@ get_header(); ?>
 
       <div class="fade-in">
         <div class="section-tag mono">The Tolx Layer</div>
-        <h2 class="section-title">Odoo first. The right fit, always.</h2>
+        <h2 class="section-title">Odoo, implemented around how you work.</h2>
         <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:18px;"><a href="<?php echo home_url('/odoo/'); ?>" style="color:var(--text-sec);border-bottom:1px solid var(--gold);text-decoration:none;">Odoo</a> is an open-source ERP foundation — modular, proven across thousands of businesses, and a genuine alternative to SAP and Oracle without the enterprise overhead. It is our core platform and where most of our projects start.</p>
-        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:24px;">We don't sell blank Odoo licences. We configure Odoo around how your business actually works. If, after discovery, Odoo genuinely isn't the right fit, we tell you and implement a solution that is.</p>
+        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:24px;">We don't sell blank Odoo licences. We configure Odoo around how your business actually works, and our advice always starts from what your operation needs.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
           <a href="<?php echo home_url('/odoo/'); ?>" class="btn-ghost">What is Odoo? →</a>
           <a href="<?php echo home_url('/odoo-partner-dubai/'); ?>" class="btn-ghost">Odoo Partner Dubai →</a>
@@ -371,28 +371,28 @@ get_header(); ?>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('open-source', 18); ?></div>
           <div>
-            <h4>Open Source</h4>
+            <h3>Open Source</h3>
             <p>You own the system and your data. No vendor lock-in.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
           <div>
-            <h4>Modular</h4>
+            <h3>Modular</h3>
             <p>Start with what you need today. Add modules as the operation grows.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
           <div>
-            <h4>UAE-aware</h4>
+            <h3>UAE-aware</h3>
             <p>VAT and UAE compliance, plus Arabic support — configured, not bolted on.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('scale', 18); ?></div>
           <div>
-            <h4>SME-ready</h4>
+            <h3>SME-ready</h3>
             <p>Enterprise capability, configured for the size of operation that actually runs the field.</p>
           </div>
         </div>
@@ -417,27 +417,27 @@ get_header(); ?>
     <div class="route">
       <div class="route-stop fade-in" data-stagger="1">
         <div class="route-marker">01</div>
-        <h4>Discovery</h4>
+        <h3>Discovery</h3>
         <p>30-minute call. We learn the operation — assets, workflows, pain points.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="2">
         <div class="route-marker">02</div>
-        <h4>Scope</h4>
+        <h3>Scope</h3>
         <p>We define what gets built, configured, connected, or automated before any work starts. Clear scope, no ambiguity.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="3">
         <div class="route-marker">03</div>
-        <h4>Build</h4>
+        <h3>Build</h3>
         <p>We build, configure, connect, or automate against the agreed scope — around how your business already works.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="4">
         <div class="route-marker">04</div>
-        <h4>Train</h4>
+        <h3>Train</h3>
         <p>Operational staff train on a system that already speaks the language of your field.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="5">
         <div class="route-marker">05</div>
-        <h4>Go Live</h4>
+        <h3>Go Live</h3>
         <p>System goes live with ongoing support and improvements as the operation grows.</p>
       </div>
     </div>

@@ -32,3 +32,25 @@ the footer, About, Odoo Partnership ("Odoo-first, never Odoo-only.") and the Odo
 Install: upload `dist/tolx-theme-1.3.0.zip` under Appearance → Themes → Add New → Upload, then activate. Pages, posts and Customizer images are kept.
 Checked locally with a WordPress stub: every page template renders without PHP errors, there is no sideways scroll at 390px, and there are no JS errors.
 Not checked: the live site with real images and plugins. Please look over the site after installing.
+
+### Positioning copy, revised (5 Oct 2026)
+Client: "we are Odoo partner, we do not rub it in their face that we are not Odoo only, need to be more diplomatic."
+Headlines and the hero now just lead with Odoo ("Built on Odoo. *Implemented around your business.*", "Odoo, implemented around
+how you work."). Alternatives are no longer mentioned in headlines, the hero, the CTA or the footer. The home Odoo section keeps
+one soft line: "our advice always starts from what your operation needs". The original advisory paragraphs on the Odoo guide
+pages (when Odoo isn't a fit) are unchanged from 1.2.0.
+
+## 1.3.1 (5 Oct 2026): speed + accessibility
+Live PageSpeed before this (1.3.0, mobile): Performance 77 (FCP 3.4 s, LCP 4.3 s), Accessibility 95, SEO 92. Desktop 95.
+- **Fonts self-hosted** (`tolx/assets/fonts`, woff2, OFL licence included). Removes the render-blocking Google Fonts
+  stylesheet plus two extra connections. The weights the hero needs (300, 700) are preloaded, with `font-display: swap`.
+- **Preloader removed.** It covered the page on every first visit, which is exactly what PageSpeed measures.
+- **The hero paints immediately.** Its text no longer waits for JavaScript to fade in (the hero paragraph is the mobile LCP element).
+  The operations panel animates in with pure CSS.
+- **Minified CSS:** `style.min.css` (58 KB vs 85 KB) is served automatically, but only when it is newer than `style.css`.
+  After editing `style.css`, run `./build.sh`; until then WordPress falls back to `style.css`, so nothing breaks.
+- `main.js` is deferred. The hero headline's width measurement now runs after load. Hero animations pause when the hero is off screen.
+  The aurora's blur filter was removed (expensive to repaint).
+- Accessibility: a `<main>` landmark, a skip link, and heading order fixed (card and footer titles changed from h4 to h3, same styling).
+Local Lighthouse (mobile, Moto G emulation, no plugins): Performance 95 → 96, FCP 2.4 → 2.0 s, Accessibility 96 → 100.
+The live score also depends on hosting and plugins. See the delivery notes for page caching and the cookie banner.

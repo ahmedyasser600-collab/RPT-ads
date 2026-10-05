@@ -110,42 +110,42 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('order', 18); ?></div>
         <div>
-          <h4>Customer Order Management</h4>
+          <h3>Customer Order Management</h3>
           <p>Inbound orders from multiple channels, auto-assignment to delivery routes.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('route', 18); ?></div>
         <div>
-          <h4>Route Optimisation</h4>
+          <h3>Route Optimisation</h3>
           <p>Planned route management, stop sequencing, estimated arrival times.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('check', 18); ?></div>
         <div>
-          <h4>Proof of Delivery</h4>
+          <h3>Proof of Delivery</h3>
           <p>Digital signature capture, photo upload, delivery confirmation — fully mobile.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('return', 18); ?></div>
         <div>
-          <h4>Returns &amp; Failed Deliveries</h4>
+          <h3>Returns &amp; Failed Deliveries</h3>
           <p>Return workflows, re-delivery scheduling, automated client notifications.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="5">
         <div class="op-block-icon"><?php tolx_icon('portal', 18); ?></div>
         <div>
-          <h4>Client Portal &amp; Tracking</h4>
+          <h3>Client Portal &amp; Tracking</h3>
           <p>Clients log in and track their shipment status in real time.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="6">
         <div class="op-block-icon"><?php tolx_icon('cash', 18); ?></div>
         <div>
-          <h4>Billing &amp; COD Management</h4>
+          <h3>Billing &amp; COD Management</h3>
           <p>Cash-on-delivery reconciliation, automated invoicing per delivery batch.</p>
         </div>
       </div>

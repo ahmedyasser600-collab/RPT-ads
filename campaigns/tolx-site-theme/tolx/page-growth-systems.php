@@ -43,28 +43,28 @@ get_header(); ?>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('project', 18); ?></div>
           <div>
-            <h4>Map</h4>
+            <h3>Map</h3>
             <p>How customers find you, buy, and come back — and where the journey leaks.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
           <div>
-            <h4>Build</h4>
+            <h3>Build</h3>
             <p>Web, content, CRM, and automation built around that journey, not bolted on.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('dashboard', 18); ?></div>
           <div>
-            <h4>Measure</h4>
+            <h3>Measure</h3>
             <p>Analytics and reporting so growth activity becomes visible and trackable.</p>
           </div>
         </div>
         <div class="op-block">
           <div class="op-block-icon"><?php tolx_icon('revenue', 18); ?></div>
           <div>
-            <h4>Improve</h4>
+            <h3>Improve</h3>
             <p>Tune the system against real numbers, not guesses, as the business grows.</p>
           </div>
         </div>

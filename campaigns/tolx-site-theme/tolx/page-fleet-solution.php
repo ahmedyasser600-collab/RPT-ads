@@ -146,49 +146,49 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('asset', 18); ?></div>
         <div>
-          <h4>Vehicle Asset Register</h4>
+          <h3>Vehicle Asset Register</h3>
           <p>Full profile per vehicle — registration, insurance, Mulkiya, service history, depreciation tracking.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('maintenance', 18); ?></div>
         <div>
-          <h4>Maintenance &amp; Service</h4>
+          <h3>Maintenance &amp; Service</h3>
           <p>Preventive schedules by mileage or date, work orders, garage management, parts consumption.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('driver', 18); ?></div>
         <div>
-          <h4>Driver Management</h4>
+          <h3>Driver Management</h3>
           <p>Driver profiles, licence expiry alerts, trip assignments, and performance tracking.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('fuel', 18); ?></div>
         <div>
-          <h4>Fuel Tracking</h4>
+          <h3>Fuel Tracking</h3>
           <p>Fuel card integration or manual logging, cost-per-km analysis, and anomaly detection.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="5">
         <div class="op-block-icon"><?php tolx_icon('route', 18); ?></div>
         <div>
-          <h4>Trip &amp; Route Management</h4>
+          <h3>Trip &amp; Route Management</h3>
           <p>Trip planning, driver assignment, mileage logging, and client delivery confirmation.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="6">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>Compliance &amp; Documents</h4>
+          <h3>Compliance &amp; Documents</h3>
           <p>Automated alerts for expiring licences, insurance, registration, and Mulkiya renewals.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('dashboard', 18); ?></div>
         <div>
-          <h4>Cost Reporting</h4>
+          <h3>Cost Reporting</h3>
           <p>Total cost of ownership per vehicle, cost per km, and maintenance versus depreciation analysis.</p>
         </div>
       </div>

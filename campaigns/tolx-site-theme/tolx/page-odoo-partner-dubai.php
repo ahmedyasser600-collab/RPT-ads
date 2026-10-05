@@ -190,22 +190,22 @@ get_header(); ?>
     <div class="route route--phases">
       <div class="route-stop fade-in" data-stagger="1">
         <div class="route-marker">01</div>
-        <h4>Discovery Call</h4>
+        <h3>Discovery Call</h3>
         <p>A 30-minute call to understand your operation, your current systems, and whether Odoo is the right fit. Honest assessment, no pressure.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="2">
         <div class="route-marker">02</div>
-        <h4>Scope-Led Proposal</h4>
+        <h3>Scope-Led Proposal</h3>
         <p>A detailed proposal with modules, configuration scope, and timeline, with cost agreed before work begins.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="3">
         <div class="route-marker">03</div>
-        <h4>Implementation</h4>
+        <h3>Implementation</h3>
         <p>4–8 weeks: configuration, data migration, training, and go-live. Weekly check-ins, one project owner, clear status throughout.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="4">
         <div class="route-marker">04</div>
-        <h4>Go-Live &amp; AMC</h4>
+        <h3>Go-Live &amp; AMC</h3>
         <p>Production cutover with a 30-day support window. Then an Annual Maintenance Contract for ongoing support and vertical enhancements.</p>
       </div>
     </div>
@@ -371,28 +371,28 @@ get_header(); ?>
       <a href="<?php echo home_url('/odoo/'); ?>" class="op-block fade-in" data-stagger="1" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>What is Odoo?</h4>
+          <h3>What is Odoo?</h3>
           <p>The full UAE operator's guide to what Odoo is, the modules, and where it fits.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/odoo/uae-implementation/'); ?>" class="op-block fade-in" data-stagger="2" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('settings', 18); ?></div>
         <div>
-          <h4>Odoo Implementation in the UAE</h4>
+          <h3>Odoo Implementation in the UAE</h3>
           <p>What a real implementation looks like — discovery to go-live, with a Dubai partner.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/solutions/'); ?>" class="op-block fade-in" data-stagger="3" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Systems Beyond Odoo</h4>
+          <h3>Systems Beyond Odoo</h3>
           <p>Where Odoo fits alongside custom software, automation, web, CRM, and dashboards.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/about/odoo-partnership/'); ?>" class="op-block fade-in" data-stagger="4" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>Our Odoo Partnership</h4>
+          <h3>Our Odoo Partnership</h3>
           <p>What being an Odoo Ready Partner means for your project.</p>
         </div>
       </a>

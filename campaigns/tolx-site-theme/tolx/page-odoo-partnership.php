@@ -10,7 +10,7 @@ get_header(); ?>
   <div class="container">
     <div class="fade-in">
       <div class="section-tag mono">Odoo Partnership</div>
-      <h1>Built on Odoo. <em>Odoo-first, never Odoo-only.</em></h1>
+      <h1>Built on Odoo. <em>Implemented around your business.</em></h1>
       <p>Tolx is a UAE software house and a certified Odoo Ready Partner. Here's why <a href="<?php echo home_url('/odoo/'); ?>" style="color:inherit;border-bottom:1px solid var(--gold);text-decoration:none;">Odoo</a> is our most established foundation, one of several, and what working with a certified partner means for your project.</p>
     </div>
   </div>
@@ -50,28 +50,28 @@ get_header(); ?>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('open-source', 18); ?></div>
             <div>
-              <h4>Open Source</h4>
+              <h3>Open Source</h3>
               <p>You own the system and your data. No vendor lock-in, no licence trap.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
             <div>
-              <h4>Modular Architecture</h4>
+              <h3>Modular Architecture</h3>
               <p>Start with the modules you need. Add more as the operation grows. No big-bang migrations.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
             <div>
-              <h4>UAE Compliance Ready</h4>
+              <h3>UAE Compliance Ready</h3>
               <p>VAT-aware, DEWA-compatible, RTA-friendly, Arabic-capable — configured, not bolted on.</p>
             </div>
           </div>
           <div class="op-block">
             <div class="op-block-icon"><?php tolx_icon('settings', 18); ?></div>
             <div>
-              <h4>Configurable, Not Custom</h4>
+              <h3>Configurable, Not Custom</h3>
               <p>Most needs are met through configuration. Custom code is the exception, not the default.</p>
             </div>
           </div>
@@ -193,28 +193,28 @@ get_header(); ?>
       <a href="<?php echo home_url('/odoo/'); ?>" class="op-block fade-in" data-stagger="1" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>What is Odoo?</h4>
+          <h3>What is Odoo?</h3>
           <p>The full UAE operator's guide to what Odoo is, what's in the toolbox, and where it fits.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/odoo/uae-implementation/'); ?>" class="op-block fade-in" data-stagger="2" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('settings', 18); ?></div>
         <div>
-          <h4>Odoo Implementation in the UAE</h4>
+          <h3>Odoo Implementation in the UAE</h3>
           <p>What a real Odoo implementation looks like with a Dubai-based partner.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/solutions/'); ?>" class="op-block fade-in" data-stagger="3" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Systems Beyond Odoo</h4>
+          <h3>Systems Beyond Odoo</h3>
           <p>Where Odoo fits alongside custom software, automation, web, CRM, and dashboards.</p>
         </div>
       </a>
       <a href="<?php echo home_url('/odoo-partner-dubai/'); ?>" class="op-block fade-in" data-stagger="4" style="text-decoration: none; color: inherit;">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>Odoo Partner in Dubai</h4>
+          <h3>Odoo Partner in Dubai</h3>
           <p>How to choose an Odoo partner in Dubai, and what working with Tolx looks like.</p>
         </div>
       </a>

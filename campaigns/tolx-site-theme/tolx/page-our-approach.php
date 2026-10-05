@@ -75,22 +75,22 @@ get_header(); ?>
     <div class="route route--phases">
       <div class="route-stop fade-in" data-stagger="1">
         <div class="route-marker">W1–2</div>
-        <h4>Discovery &amp; Setup</h4>
+        <h3>Discovery &amp; Setup</h3>
         <p>We map your operation — assets, workflows, pain points, integrations. System environment provisioned, base configuration starts.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="2">
         <div class="route-marker">W3–4</div>
-        <h4>Configuration &amp; Data</h4>
+        <h3>Configuration &amp; Data</h3>
         <p>Vertical modules configured to your specs. Existing data migrated. Workflows tested against real scenarios.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="3">
         <div class="route-marker">W5–6</div>
-        <h4>Training</h4>
+        <h3>Training</h3>
         <p>Your team trained on every module — office staff and field teams. Onsite or remote, hands-on, not a manual hand-off.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="4">
         <div class="route-marker">W7–8</div>
-        <h4>Go Live &amp; Support</h4>
+        <h3>Go Live &amp; Support</h3>
         <p>System goes live. We stay close for the post-launch period. Issues resolved same-day. Ongoing support via AMC or retainer.</p>
       </div>
     </div>
@@ -113,42 +113,42 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('contract', 18); ?></div>
         <div>
-          <h4>Clear Scope Document</h4>
+          <h3>Clear Scope Document</h3>
           <p>Before build starts, a detailed scope document listing every module, workflow, and deliverable. No ambiguity.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('check', 18); ?></div>
         <div>
-          <h4>Scope-Led Pricing</h4>
+          <h3>Scope-Led Pricing</h3>
           <p>The proposal defines the scope and the cost before work begins. No hourly billing, no change orders for things that should have been scoped.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('operator', 18); ?></div>
         <div>
-          <h4>Dedicated Project Manager</h4>
+          <h3>Dedicated Project Manager</h3>
           <p>One person owns your project from kickoff to go-live. Weekly check-ins, clear status, direct access.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('users', 18); ?></div>
         <div>
-          <h4>Team Training</h4>
+          <h3>Team Training</h3>
           <p>Hands-on training for office staff on back-end modules and field teams on mobile workflows.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="5">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Data Migration</h4>
+          <h3>Data Migration</h3>
           <p>We migrate your existing data — asset registers, client lists, maintenance history — into the new system. Clean and verified.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="6">
         <div class="op-block-icon"><?php tolx_icon('live', 18); ?></div>
         <div>
-          <h4>Post Go-Live Support</h4>
+          <h3>Post Go-Live Support</h3>
           <p>Hands-on support during the post-launch period. Same-day response. Issues resolved before they become problems.</p>
         </div>
       </div>

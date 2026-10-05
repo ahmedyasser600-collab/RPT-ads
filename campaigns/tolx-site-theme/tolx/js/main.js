@@ -30,17 +30,6 @@ window.addEventListener('load', () => {
   }, 1200);
 });
 
-// Preloader — shown on the first page view of a session only, and hidden as
-// soon as the DOM is ready (not after every image has loaded). Repeat views
-// skip it entirely via the inline check in header.php.
-const preloader = document.getElementById('preloader');
-if (preloader) {
-  const hidePreloader = () => preloader.classList.add('loaded');
-  setTimeout(hidePreloader, 450);
-  setTimeout(hidePreloader, 2000); // safety net
-  try { sessionStorage.setItem('tolxSeen', '1'); } catch (e) {}
-}
-
 // Word flip width calculation
 function setFlipWidth() {
   document.querySelectorAll('.flip-wrapper').forEach(wrapper => {
@@ -64,8 +53,10 @@ function setFlipWidth() {
   });
 }
 
+// The hidden .flip-sizer already reserves the width in CSS; the measurement only
+// refines it, so run it after load instead of during first render (it forces layout).
 if (document.querySelector('.flip-wrapper')) {
-  setFlipWidth();
+  window.addEventListener('load', () => requestAnimationFrame(setFlipWidth));
   window.addEventListener('resize', setFlipWidth);
 }
 
@@ -128,19 +119,12 @@ if (navEl) {
   updateNav();
 }
 
-// Hero command panel — gentle reveal sequence after page load
-const heroCmd = document.querySelector('.hero-cmd');
-if (heroCmd) {
-  // Mark for staggered reveal once preloader has cleared
-  window.addEventListener('load', () => {
-    setTimeout(() => heroCmd.classList.add('hero-cmd-revealed'), 250);
-  });
-  // Safety fallback — reveal anyway after 1.5s
-  setTimeout(() => {
-    if (heroCmd && !heroCmd.classList.contains('hero-cmd-revealed')) {
-      heroCmd.classList.add('hero-cmd-revealed');
-    }
-  }, 1500);
+// Pause the hero's looping effects while it is off screen (saves battery/CPU)
+const heroEl = document.querySelector('.hero');
+if (heroEl && 'IntersectionObserver' in window) {
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => heroEl.classList.toggle('fx-paused', !entry.isIntersecting));
+  }).observe(heroEl);
 }
 
 // Scroll progress hairline

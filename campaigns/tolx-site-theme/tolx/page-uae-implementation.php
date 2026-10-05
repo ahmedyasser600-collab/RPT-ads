@@ -134,22 +134,22 @@ get_header(); ?>
     <div class="route route--phases">
       <div class="route-stop fade-in" data-stagger="1">
         <div class="route-marker">W1–2</div>
-        <h4>Discovery &amp; Setup</h4>
+        <h3>Discovery &amp; Setup</h3>
         <p>Workflow mapping, asset inventory review, system environment provisioning, base configuration begins.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="2">
         <div class="route-marker">W3–4</div>
-        <h4>Configuration &amp; Data</h4>
+        <h3>Configuration &amp; Data</h3>
         <p>Vertical modules configured. Existing data (asset register, client list, history) migrated and verified.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="3">
         <div class="route-marker">W5–6</div>
-        <h4>Training &amp; Validation</h4>
+        <h3>Training &amp; Validation</h3>
         <p>Hands-on training for office staff and field teams. Onsite or remote. UAT against real-world scenarios.</p>
       </div>
       <div class="route-stop fade-in" data-stagger="4">
         <div class="route-marker">W7–8</div>
-        <h4>Go-Live &amp; Support</h4>
+        <h3>Go-Live &amp; Support</h3>
         <p>Cutover to production. Same-day support during the post-launch period. AMC engagement begins.</p>
       </div>
     </div>
@@ -172,42 +172,42 @@ get_header(); ?>
       <div class="op-block fade-in" data-stagger="1">
         <div class="op-block-icon"><?php tolx_icon('contract', 18); ?></div>
         <div>
-          <h4>Scope-led proposal</h4>
+          <h3>Scope-led proposal</h3>
           <p>Detailed scope document before work begins. Modules, configuration depth, data migration, training, support window — all defined in a single scope-led proposal.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="2">
         <div class="op-block-icon"><?php tolx_icon('shield', 18); ?></div>
         <div>
-          <h4>UAE compliance configuration</h4>
+          <h3>UAE compliance configuration</h3>
           <p>VAT, FTA invoice formats, multi-currency, Arabic/RTL, and industry-specific regulatory workflows configured during implementation.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="3">
         <div class="op-block-icon"><?php tolx_icon('module', 18); ?></div>
         <div>
-          <h4>Data migration</h4>
+          <h3>Data migration</h3>
           <p>Existing data — customer records, asset registers, transactional history — migrated, verified, and ready in the new system.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="4">
         <div class="op-block-icon"><?php tolx_icon('users', 18); ?></div>
         <div>
-          <h4>Hands-on training</h4>
+          <h3>Hands-on training</h3>
           <p>Office staff trained on back-end modules. Field teams trained on mobile workflows. Onsite or remote, English or Arabic.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="5">
         <div class="op-block-icon"><?php tolx_icon('operator', 18); ?></div>
         <div>
-          <h4>Dedicated project manager</h4>
+          <h3>Dedicated project manager</h3>
           <p>One person owns the engagement from kickoff to go-live. Weekly check-ins, clear status, direct access throughout.</p>
         </div>
       </div>
       <div class="op-block fade-in" data-stagger="6">
         <div class="op-block-icon"><?php tolx_icon('live', 18); ?></div>
         <div>
-          <h4>Post-launch support window</h4>
+          <h3>Post-launch support window</h3>
           <p>30 days of close hands-on support after go-live. Same-day response on operational issues. AMC begins after the support window.</p>
         </div>
       </div>

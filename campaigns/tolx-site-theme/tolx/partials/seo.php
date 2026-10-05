@@ -97,7 +97,7 @@ if (!function_exists('tolx_get_page_meta_map')) {
             ],
             'uae-implementation' => [
                 'title' => 'Odoo Implementation in the UAE — From Discovery to Go-Live · Tolx',
-                'description' => 'Odoo implementation in Dubai and across the UAE. Scope-led delivery by a software house that builds the system around your operation: Odoo-first, other solutions when it is not the right fit.',
+                'description' => 'Odoo implementation in Dubai and across the UAE. Scope-led delivery by a software house that builds the system around your operation.',
             ],
             'odoo-partner-dubai' => [
                 'title' => 'Odoo Partner in Dubai — Implementation for UAE Businesses · Tolx',
