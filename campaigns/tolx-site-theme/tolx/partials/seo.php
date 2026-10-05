@@ -26,7 +26,7 @@ if (!defined('TOLX_LOCALITY'))      define('TOLX_LOCALITY', 'Dubai');
 if (!defined('TOLX_REGION'))        define('TOLX_REGION', 'Dubai');
 if (!defined('TOLX_COUNTRY'))       define('TOLX_COUNTRY', 'AE');
 if (!defined('TOLX_DEFAULT_DESC')) {
-    define('TOLX_DEFAULT_DESC', 'A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. Suitable software, practical implementation and support for adoption, with Odoo as one possible foundation.');
+    define('TOLX_DEFAULT_DESC', 'A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. Odoo Ready Partner: Odoo implemented around your operation, with practical support for adoption.');
 }
 
 /* ==========================================================
@@ -43,13 +43,13 @@ if (!function_exists('tolx_get_page_meta_map')) {
             // Homepage
             'home' => [
                 'title' => 'Software for UAE SMEs | Orders, Stock & Team Tasks · Tolx',
-                'description' => 'Dubai software setup and integration for UAE SMEs. Organise orders, stock, follow-ups and team tasks with suitable tools, implementation and adoption support.',
+                'description' => 'Odoo Ready Partner in Dubai. Tolx helps UAE SMEs organise orders, stock, follow-ups and team tasks with Odoo implemented around how they work, plus adoption support.',
             ],
 
             // Solutions hub
             'solutions' => [
                 'title' => 'Business Software Solutions for UAE SMEs · Tolx',
-                'description' => 'Practical systems for stock, sales, customer follow-ups, tasks and reporting. Tolx helps UAE SMEs choose and implement Odoo, focused tools or custom solutions.',
+                'description' => 'Practical systems for stock, sales, customer follow-ups, tasks and reporting. Tolx implements Odoo for UAE SMEs, configured around how each business works.',
             ],
 
             // Growth Systems department
@@ -83,7 +83,7 @@ if (!function_exists('tolx_get_page_meta_map')) {
             ],
             'odoo-partnership' => [
                 'title' => 'Certified Odoo Ready Partner in Dubai & UAE · Tolx',
-                'description' => 'Tolx is a certified Odoo Ready Partner serving the UAE. Odoo is one of the systems we build, and our most established. Learn what working with a certified partner means for your operation.',
+                'description' => 'Tolx is a certified Odoo Ready Partner serving the UAE. Learn what working with a certified Odoo partner means for your operation.',
             ],
             'our-approach' => [
                 'title' => 'Our Approach — Operation First, Then the System · Tolx',
@@ -101,7 +101,7 @@ if (!function_exists('tolx_get_page_meta_map')) {
             ],
             'odoo-partner-dubai' => [
                 'title' => 'Odoo Partner in Dubai — Implementation for UAE Businesses · Tolx',
-                'description' => 'Tolx is an Odoo partner in Dubai. Odoo is one of the systems we build, and our most established. Scope-led implementation for UAE businesses.',
+                'description' => 'Tolx is an Odoo partner in Dubai. Scope-led Odoo implementation, configured around how UAE businesses actually work.',
             ],
             'software-house-dubai' => [
                 'title' => 'Software House in Dubai — Business Systems for UAE Companies · Tolx',
@@ -501,7 +501,7 @@ if (!function_exists('tolx_emit_jsonld')) {
                             '@type' => 'Service',
                             'name'  => 'Odoo Configuration',
                             'url'   => home_url('/odoo/'),
-                            'description' => 'When Odoo is the right foundation, Tolx configures it around your workflows. Our most established platform, and one of several.',
+                            'description' => 'Tolx implements and configures Odoo around your workflows, from discovery to go-live.',
                         ],
                     ],
                     [
@@ -731,3 +731,78 @@ add_filter('wp_robots', function ($robots) {
     }
     return $robots;
 });
+
+/* ==========================================================
+   SEO PLUGIN GAP-FILL
+   --
+   When Yoast, Rank Math or All in One SEO owns the head, the
+   module above steps aside. If that plugin has no description or
+   social image for a page (common with a default install), fill
+   the gap from this theme so search results keep a description and
+   shared links keep the TOLX social card. Values the plugin does
+   have are never overwritten.
+   ========================================================== */
+
+if (!function_exists('tolx_social_card_url')) {
+    function tolx_social_card_url() {
+        if (is_singular() && has_post_thumbnail()) {
+            $img = get_the_post_thumbnail_url(get_queried_object_id(), 'full');
+            if ($img) return $img;
+        }
+        foreach (array('social-card-business-systems-2026.png', 'social-card.png') as $f) {
+            if (file_exists(get_template_directory() . '/' . $f)) {
+                return get_template_directory_uri() . '/' . $f . '?v=20260716';
+            }
+        }
+        return '';
+    }
+}
+
+if (!function_exists('tolx_fallback_description')) {
+    function tolx_fallback_description() {
+        $meta = tolx_resolve_meta();
+        return !empty($meta['description']) ? $meta['description'] : TOLX_DEFAULT_DESC;
+    }
+}
+
+// Yoast SEO
+add_filter('wpseo_metadesc', function ($d) { return trim((string) $d) !== '' ? $d : tolx_fallback_description(); }, 20);
+add_filter('wpseo_opengraph_desc', function ($d) { return trim((string) $d) !== '' ? $d : tolx_fallback_description(); }, 20);
+add_action('wpseo_add_opengraph_images', function ($images) {
+    if (is_object($images) && method_exists($images, 'has_images') && !$images->has_images()) {
+        $url = tolx_social_card_url();
+        if ($url) $images->add_image(array('url' => $url, 'width' => 1200, 'height' => 630));
+    }
+});
+
+// Rank Math
+add_filter('rank_math/frontend/description', function ($d) { return trim((string) $d) !== '' ? $d : tolx_fallback_description(); }, 20);
+add_filter('rank_math/opengraph/facebook/image', function ($img) { return $img ? $img : tolx_social_card_url(); }, 20);
+add_filter('rank_math/opengraph/twitter/image', function ($img) { return $img ? $img : tolx_social_card_url(); }, 20);
+
+// All in One SEO
+add_filter('aioseo_description', function ($d) { return trim((string) $d) !== '' ? $d : tolx_fallback_description(); }, 20);
+add_filter('aioseo_facebook_tags', function ($tags) {
+    if (!is_array($tags)) return $tags;
+    if (empty($tags['og:description'])) $tags['og:description'] = tolx_fallback_description();
+    if (empty($tags['og:image'])) {
+        $url = tolx_social_card_url();
+        if ($url) {
+            $tags['og:image'] = $url;
+            $tags['og:image:secure_url'] = $url;
+            $tags['og:image:width'] = 1200;
+            $tags['og:image:height'] = 630;
+        }
+    }
+    return $tags;
+}, 20);
+add_filter('aioseo_twitter_tags', function ($tags) {
+    if (!is_array($tags)) return $tags;
+    if (empty($tags['twitter:image'])) {
+        $url = tolx_social_card_url();
+        if ($url) $tags['twitter:image'] = $url;
+    }
+    if (empty($tags['twitter:card'])) $tags['twitter:card'] = 'summary_large_image';
+    return $tags;
+}, 20);
+

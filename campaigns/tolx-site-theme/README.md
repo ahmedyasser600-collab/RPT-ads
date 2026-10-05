@@ -54,3 +54,11 @@ Live PageSpeed before this (1.3.0, mobile): Performance 77 (FCP 3.4 s, LCP 4.3 s
 - Accessibility: a `<main>` landmark, a skip link, and heading order fixed (card and footer titles changed from h4 to h3, same styling).
 Local Lighthouse (mobile, Moto G emulation, no plugins): Performance 95 → 96, FCP 2.4 → 2.0 s, Accessibility 96 → 100.
 The live score also depends on hosting and plugins. See the delivery notes for page caching and the cookie banner.
+
+## 1.3.2 (5 Oct 2026): link preview + meta description
+Live PageSpeed (1.3.1) flagged "Document does not have a meta description", and the link-preview picture had stopped showing.
+The theme's SEO module outputs both, but it switches itself off when an SEO plugin (Yoast / Rank Math / All in One SEO) is active.
+If that plugin has no description or image set, the page ends up with neither.
+- New gap-fill (end of `partials/seo.php`): with one of those plugins active, the theme supplies the description and the social card
+  (`social-card-business-systems-2026.png`, 1200×630) only where the plugin left them empty. It never overrides plugin values.
+- Search descriptions and the Organization schema reworded to lead with Odoo (diplomatic positioning).
