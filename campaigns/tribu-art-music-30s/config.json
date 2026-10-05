@@ -1,5 +1,5 @@
 {
-  "_readme": "Single source of truth for the Tribu del Alma Art & Music Retreat reel. Times are seconds on the film timeline (frame = round(t * fps)). Edit copy/dates here, then re-run the commands in README.md. Image focus points are fractions of the image (0-1); zoom 1.0 = photo just covers the panel.",
+  "_readme": "Single source of truth for the Tribu del Alma Art & Music Retreat reel. Times are seconds on the film timeline (frame = round(t * fps)). Edit copy/dates here, then re-run the commands in README.md. This version uses no photographs: each scene is a brand-colour field with a simple line drawing that draws itself.",
 
   "video": {"width": 1080, "height": 1920, "fps": 30, "duration": 30.0},
 
@@ -34,99 +34,57 @@
   "safe_area": {"x0": 100, "x1": 900, "y0": 250, "y1": 1500},
 
   "assets": {
-    "_note": "The renderer uses 'original' when that file exists, otherwise 'standin'. Originals are the website files named in the brief; stand-ins were cut from the supplied screenshot PDF because tribudelalma.com was blocked in the render environment (see tools/extract_standins.py). After adding originals, re-check focus points on the contact sheet.",
-    "painting": {
-      "original": "assets/originals/IMG_8033.jpg",
-      "standin": "assets/standin/painting-outdoors.jpg",
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2023/03/IMG_8033.jpg"
-    },
-    "finca_tall": {
-      "original": "assets/originals/vinca-pura-vida-2.jpg",
-      "standin": "assets/standin/finca-tall.jpg",
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2022/09/vinca-pura-vida-2.jpg"
-    },
-    "finca_wide": {
-      "original": "assets/originals/vinca-pura-vida-2.jpg",
-      "standin": "assets/standin/finca-wide.jpg",
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2022/09/vinca-pura-vida-2.jpg"
-    },
-    "music": {
-      "original": "assets/originals/Ray-Miek-Live-tribudelalma.jpg",
-      "standin": "assets/standin/music-terrace.jpg",
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2024/06/Ray-Miek-Live-tribudelalma.jpg",
-      "_people_note": "Do not label anyone in this photo; it is not a portrait of the hosts."
-    },
-    "creative_setting": {
-      "original": "assets/originals/artists-in-residence.jpg",
-      "standin": null,
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2024/06/artists-in-residence.jpg"
-    },
-    "bedroom": {
-      "original": "assets/originals/Retreat-venue-Spain.jpg",
-      "standin": null,
-      "source_url": "https://tribudelalma.com/wp-content/uploads/2024/04/Retreat-venue-Spain.jpg"
-    },
     "logo": {
       "original": "assets/originals/tribu-del-alma-logo.final_.png",
       "standin": "assets/standin/emblem-screenshot.png",
       "source_url": "https://www.tribudelalma.com/wp-content/uploads/2022/08/tribu-del-alma-logo.final_.png",
-      "standin_display_px": 176,
-      "original_box": [560, 200]
+      "standin_display_px": 196,
+      "original_box": [560, 220]
     }
   },
 
-  "_shots_readme": "Each shot fills its panel. Panels: x, y, w, h, corner radius of the top-left 'arch' corner. Shots cross-dissolve over 'xfade' seconds at their start unless 'transition' says otherwise.",
-  "panels": {
-    "tall":  [60, 110, 960, 1140, 230],
-    "music": [60, 110, 960, 1000, 60],
-    "wide":  [60, 250, 960, 760, 230],
-    "band":  [0, 0, 1080, 760, 0]
-  },
-  "shots": [
-    {"id": "hook",      "image": "painting",   "panel": "tall",  "start": 0.0,  "end": 4.0,
-     "zoom": [1.36, 1.18], "focus": [[0.50, 0.63], [0.50, 0.58]]},
-    {"id": "finca",     "image": "finca_tall", "panel": "tall",  "start": 4.0,  "end": 8.0,
-     "zoom": [1.0, 1.05], "focus": [[0.45, 0.55], [0.40, 0.52]], "transition": "open", "xfade": 0.7},
-    {"id": "paint_a",   "image": "painting",   "panel": "tall",  "start": 8.0,  "end": 10.6,
-     "zoom": [1.0, 1.05], "focus": [[0.66, 0.50], [0.62, 0.52]], "xfade": 0.4},
-    {"id": "paint_b",   "image": "painting",   "panel": "tall",  "start": 10.6, "end": 13.0,
-     "zoom": [1.06, 1.0], "focus": [[0.30, 0.52], [0.26, 0.50]], "xfade": 0.3},
-    {"id": "music",     "image": "music",      "panel": "music", "start": 13.0, "end": 18.0,
-     "zoom": [1.04, 1.0], "focus": [[0.25, 0.50], [0.58, 0.50]], "xfade": 0.5},
-    {"id": "studio",    "image": "painting",   "panel": "wide",  "start": 18.0, "end": 21.0,
-     "zoom": [1.0, 1.04], "focus": [[0.50, 0.50], [0.47, 0.50]], "xfade": 0.5},
-    {"id": "garden",    "image": "finca_wide", "panel": "wide",  "start": 21.0, "end": 24.0,
-     "zoom": [1.06, 1.0], "focus": [[0.45, 0.50], [0.50, 0.50]], "xfade": 0.5},
-    {"id": "endcard",   "image": "finca_wide", "panel": "band",  "start": 24.0, "end": 30.0,
-     "zoom": [1.0, 1.0], "focus": [[0.5, 0.5], [0.5, 0.5]], "transition": "morph", "xfade": 0.8}
+  "_scenes_readme": "Background colour per scene; colours cross-fade over 'fade' s at the scene start ('doors' opens the new colour from the centre outward). 'ink' is the text colour, 'accent' the accent-line colour. 'motif' names a line drawing in render.py; its strokes draw in at the 'draw' times.",
+  "scenes": [
+    {"id": "recognition", "start": 0.0,  "end": 4.0,  "bg": "cream",      "ink": "deep_green", "accent": "rust",
+     "motif": "unfinished_stroke", "draw": [0.0, 2.6]},
+    {"id": "possibility", "start": 4.0,  "end": 8.0,  "bg": "deep_green", "ink": "cream",      "accent": "gold",
+     "transition": "doors", "fade": 0.7, "motif": "hills", "draw": [4.3, 6.8]},
+    {"id": "creative",    "start": 8.0,  "end": 13.0, "bg": "cream",      "ink": "deep_green", "accent": "rust",
+     "fade": 0.5, "motif": "paint_write_music", "draw": [8.35, 9.55, 10.75]},
+    {"id": "connection",  "start": 13.0, "end": 18.0, "bg": "sage",       "ink": "cream",      "accent": "cream",
+     "fade": 0.5, "motif": "two_rhythms", "draw": [13.6, 15.9]},
+    {"id": "experience",  "start": 18.0, "end": 24.0, "bg": "cream",      "ink": "deep_green", "accent": "rust",
+     "fade": 0.5, "motif": "arch_and_sun", "draw": [18.4, 21.35]},
+    {"id": "invitation",  "start": 24.0, "end": 30.0, "bg": "cream",      "ink": "deep_green", "accent": "rust",
+     "fade": 0.5, "motif": "endcard"}
   ],
 
-  "_text_readme": "On-screen designed text. Lines appear in order; 'at' is when each line arrives. 'accent' lines use rust. Text sits below the current panel.",
+  "_text_readme": "On-screen designed text. Lines appear at 'at'; 'accent' lines use the scene's accent colour. 'y' is the top of the first line.",
   "text": [
-    {"start": 0.0,  "end": 3.85, "size": 92, "lines": [
+    {"start": 0.0,  "end": 3.85, "size": 104, "y": 1010, "lines": [
       {"t": "That project you", "at": 0.0},
       {"t": "keep postponing?", "at": 0.0, "accent": true}]},
-    {"start": 4.35, "end": 7.85, "size": 92, "label": {"t": "Gaucín · Andalusia", "at": 4.35}, "lines": [
+    {"start": 4.35, "end": 7.85, "size": 104, "y": 1040, "label": {"t": "Gaucín · Andalusia", "at": 4.35}, "lines": [
       {"t": "Make room for it.", "at": 4.55}]},
-    {"start": 8.35, "end": 12.85, "size": 92, "lines": [
+    {"start": 8.35, "end": 12.85, "size": 104, "y": 1040, "lines": [
       {"t": "Paint.  Write.", "at": 8.35, "words": [8.35, 9.55]},
       {"t": "Make music.", "at": 10.75, "accent": true}]},
-    {"start": 13.6, "end": 17.85, "size": 92, "lines": [
+    {"start": 13.6, "end": 17.85, "size": 104, "y": 1040, "lines": [
       {"t": "Your own rhythm.", "at": 13.6},
       {"t": "Shared moments.", "at": 15.9, "accent": true}]},
-    {"start": 18.4, "end": 20.85, "size": 92, "lines": [
+    {"start": 18.4, "end": 20.85, "size": 104, "y": 1060, "lines": [
       {"t": "Space to create.", "at": 18.4}]},
-    {"start": 21.35, "end": 23.7, "size": 92, "lines": [
+    {"start": 21.35, "end": 23.7, "size": 104, "y": 1060, "lines": [
       {"t": "Time to simply be.", "at": 21.35, "accent": true}]}
   ],
 
   "endcard": {
-    "title_at": 24.35, "dates_at": 25.2, "place_at": 25.45, "cta_at": 25.8, "url_at": 26.15,
+    "logo_at": 24.35, "title_at": 24.6, "dates_at": 25.2, "place_at": 25.45, "cta_at": 25.8, "url_at": 26.15,
     "brand_label_with_standin_logo": "TRIBU DEL ALMA"
   },
 
   "voiceover": {
-    "_note": "Synthetic narration (Kokoro-82M, Apache-2.0, preset voice af_heart, run locally). Not a host recording and not a clone of anyone's voice. Sentence 2 and 3 of the brief's script are swapped so the narration matches the storyboard; every word is kept.",
+    "_note": "Synthetic narration (Kokoro-82M, Apache-2.0, preset voice af_heart, run locally). Not a host recording and not a clone of anyone's voice. Sentences 2 and 3 of the brief's script are swapped so the narration matches the storyboard; every word is kept.",
     "engine": "kokoro-onnx 0.6.1 / Kokoro-82M v1.0",
     "voice": "af_heart",
     "speed": 0.94,
@@ -154,13 +112,18 @@
     {"start": 25.25, "end": 27.6,  "t": "{dates_caption}."},
     {"start": 27.95, "end": 29.5,  "t": "Ask us about joining."}
   ],
+  "caption_bottom": 1490,
 
   "audio": {
-    "music": "audio/music.wav",
+    "music": "assets/music/the-heros-journey-audio-library.mp3",
+    "music_title": "The Hero's Journey",
+    "music_credit": "Music: The Hero's Journey by Audio Library Beats Group\nFree Download / Stream: https://links.al/qTd\nMusic promoted by Audio Library: https://links.al/youtube",
+    "music_source_start": 0.0,
+    "music_fade_out": 2.0,
     "vo_dir": "audio/vo",
     "vo_loudness_lufs": -16,
-    "music_gain_db": -8,
-    "music_gain_without_vo_db": -6,
-    "duck": true
+    "music_gain_db": -7,
+    "music_gain_without_vo_db": -2,
+    "duck_db": 5
   }
 }

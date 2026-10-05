@@ -1,91 +1,99 @@
 # Tribu del Alma — Art & Music Retreat · 30 s vertical reel
 
-The hook is "That creative project you keep postponing." The reel shows the real finca, real people
-painting outdoors and real music on the terrace, then ends with a clear invitation to ask about joining.
-It is 1080 × 1920, 30 fps, 30.0 s, H.264 High, yuv420p, AAC 48 kHz, and is built for Instagram Reels.
+The reel follows the hook "That creative project you keep postponing." It turns that recognition into an
+invitation to ask about joining. It is 1080 × 1920, 30 fps, 30.0 s, H.264 High, yuv420p, AAC 48 kHz, and is built
+for Instagram Reels.
+
+**This version uses no photographs.** At the client's request the stand-in photos were removed until good
+photography is supplied. Each beat is a brand-colour field with a simple line drawing that draws itself.
+The section *Photos wanted* below lists the shots that would replace or join these drawings.
 
 ## Deliverables (`out/`)
 
 | File | What it is |
 |---|---|
-| `tribu-art-music-30s.mp4` | **Main video.** Sparse designed text, narration and music |
+| `tribu-art-music-30s.mp4` | **Main video.** Designed text, narration and music |
 | `tribu-art-music-30s-captioned.mp4` | Same video with burned-in narration captions |
 | `tribu-art-music-30s-music-only.mp4` | Designed text and music, no narration. Use it as the base if a host records the voiceover |
-| `tribu-art-music-30s.srt` | Narration captions. Upload them to Instagram with the main video, or keep them for accessibility |
+| `tribu-art-music-30s.srt` | Narration captions. Upload them with the main video, or keep them for accessibility |
 | `contact-sheet.png` | Six frames, one per storyboard beat |
-
-## ⚠️ Facts and items needing owner confirmation
-
-1. **Dates.** On screen and in the narration it reads "19–25 October" / "nineteenth to twenty-fifth October".
-   Year 2026 is the working campaign year. These dates come from the campaign brief and the Week 1 & 2 sprint
-   document; the owner has not confirmed them. To change them, edit `event` in `config.json` and re-render.
-   If the spoken date changes, re-run `audio/make_vo.py`.
-2. **Photos are stand-ins cut from your website screenshot, not the original files.** The render environment's
-   network policy blocked `tribudelalma.com` (HTTP 403 at the proxy), so none of the seven asset URLs could be
-   downloaded. The three real Tribu photographs visible in the supplied screenshot PDF were cut out pixel for
-   pixel instead (`tools/extract_standins.py`). No upscaling, retouching or generation was done when cutting them:
-   - finca and landscape (`vinca-pura-vida-2.jpg`): two clean crops, avoiding the demo page's rounded corner and caption
-   - people painting outdoors (`IMG_8033.jpg`)
-   - music on the terrace (`Ray-Miek-Live-tribudelalma.jpg`), slightly cropped by the page layout
-3. **Two of the seven requested assets are not in the video: the bedroom and "artists in residence" photos.**
-   The screenshot does not contain them and they could not be downloaded. The 18–24 s "experience" beat therefore
-   uses the full outdoor-studio photo and the finca garden, and there is no bedroom shot.
-4. **Logo is a stand-in.** The original transparent logo PNG could not be downloaded. The end card uses the
-   round emblem from the screenshot header (about 118 px, shown at 176 px on a cream seal, so it is slightly soft).
-   It also has a typeset label "TRIBU DEL ALMA" in Asul. The label is not a reconstruction of the logo, and it
-   disappears automatically when the original logo is supplied.
-5. **The voice is synthetic.** See *Voiceover* below. Please listen before publishing. I could not audition
-   the audio myself: the render environment has no playback, so audio was checked by measurement only.
-6. **People.** Nobody is named or labelled. The terrace music photo is **not** presented as Danielle and Ray.
-7. Not included, as instructed: prices, remaining places, discounts, testimonials, booking deadlines and any claims
-   about healing or transformation.
-
-### Swapping in the original files (recommended before publishing)
-
-Download these into `assets/originals/` with the exact file names below, then re-render:
-`IMG_8033.jpg`, `vinca-pura-vida-2.jpg`, `Ray-Miek-Live-tribudelalma.jpg`,
-`tribu-del-alma-logo.final_.png` (optional for now: `artists-in-residence.jpg`, `Retreat-venue-Spain.jpg`).
-The renderer uses an original file whenever it exists and falls back to the stand-in otherwise.
-Originals have different dimensions and framing from the screenshot cut-outs, so check `contact-sheet.png`
-afterwards and adjust the `focus` and `zoom` values in `config.json` where needed. To let a cloud session
-download them itself, add `tribudelalma.com` and `www.tribudelalma.com` to the environment's allowed domains.
 
 ## Storyboard as built
 
 | Time | Beat | Picture | On-screen text | Narration |
 |---|---|---|---|---|
-| 0–4 s | Recognition | Close crop of the painting table, slow pull-back | **That project you / keep postponing?** (readable on frame 0; a gold rule draws in) | "That creative project you keep postponing." |
-| 4–8 s | Possibility | The finca opens from the centre outward like doors, then a slow push | GAUCÍN · ANDALUSIA / **Make room for it.** | "What if you gave it a week?" |
-| 8–13 s | Creative freedom | Outdoor painting photo in two crops (table and painting, then easel) | **Paint.  Write.** / **Make music.**, word by word, each word on its spoken cue | "The painting, … the story, … the song." |
-| 13–18 s | Connection | Terrace music photo, slow pan from the guitarist to the singer | **Your own rhythm.** / **Shared moments.** | "At Tribu del Alma, there's space to follow your own rhythm, create alongside others," |
-| 18–24 s | The experience | Whole outdoor studio, then the finca garden | **Space to create.** → **Time to simply be.** | "…and enjoy the quieter moments in between." |
-| 24–30 s | Invitation | The garden photo grows into the end-card band, then emblem, title, dates, place, CTA, website | Art & Music Retreat · 19–25 October · Gaucín, Andalusia · **Ask us about joining** · tribudelalma.com | "Join our Art and Music Retreat in Andalusia, nineteenth to twenty-fifth October. Ask us about joining." |
+| 0–4 s | Recognition | Cream. A rust dry-brush stroke moves across, then stops unfinished | **That project you / keep postponing?** (readable on frame 0; a gold rule draws in) | "That creative project you keep postponing." |
+| 4–8 s | Possibility | Deep green opens from the centre like doors. Gold hill lines draw in, and the land fills in softly | GAUCÍN · ANDALUSIA / **Make room for it.** | "What if you gave it a week?" |
+| 8–13 s | Creative freedom | Cream. A paint stroke, then a looping hand, then a sound wave, each on its word | **Paint.  Write.** / **Make music.** (word by word, on the spoken cues) | "The painting, … the story, … the song." |
+| 13–18 s | Connection | Sage. A cream wave keeps its own rhythm; a green wave arrives out of step, then falls into step with it | **Your own rhythm.** / **Shared moments.** | "At Tribu del Alma, there's space to follow your own rhythm, create alongside others," |
+| 18–24 s | The experience | Cream. An open arch fills with a warm wash. A horizon line, then a low sun rising | **Space to create.** → **Time to simply be.** | "…and enjoy the quieter moments in between." |
+| 24–30 s | Invitation | End card: emblem, title, dates, place, CTA, website, a small gold hill line | Art & Music Retreat · 19–25 October · Gaucín, Andalusia · **Ask us about joining** · tribudelalma.com | "Join our Art and Music Retreat in Andalusia, nineteenth to twenty-fifth October. Ask us about joining." |
 
-The CTA is on screen from 25.8 s to 30 s (4.2 s). Essential text stays inside x 100–900 and y 250–1500.
-`render.py` runs `check_layout()` and fails the build if text leaves that area, if a block has more than two
-lines, or if the CTA is on screen for less than 4 s. Centred elements are centred on the safe area (x = 500),
-not on the frame, so they clear Instagram's right-hand buttons.
+Scene changes are a soft colour wipe rising from the bottom, except the "doors" opening at 4 s. The CTA is on
+screen from 25.8 s to 30 s (4.2 s).
+
+Essential text stays inside x 100–900 and y 250–1500. `render.py` runs `check_layout()` and fails the build if:
+- text leaves that area
+- a block has more than two lines
+- a caption overlaps designed text
+- the CTA is shown for less than 4 s
+
+Centred elements are centred on the safe area (x = 500), not on the frame, so they clear Instagram's
+right-hand buttons.
+
+## ⚠️ Items needing owner confirmation
+
+1. **Dates.** On screen it reads "19–25 October"; the narration says "nineteenth to twenty-fifth October".
+   Year 2026 is the working campaign year. The dates come from the campaign brief and the sprint document;
+   the owner has not confirmed them. Edit `event` in `config.json` and re-render. If the spoken date changes,
+   re-run `audio/make_vo.py`.
+2. **The logo is a stand-in.** `tribudelalma.com` was blocked in the render environment, so the original
+   transparent logo PNG could not be downloaded. The end card uses the round emblem cut pixel for pixel from the
+   supplied website screenshot. It is about 118 px, shown at 196 px, so it is slightly soft. It also has a typeset
+   "TRIBU DEL ALMA" label in Asul; this is a label, not a reconstruction of the logo. Put the original at
+   `assets/originals/tribu-del-alma-logo.final_.png` and the renderer uses it, scaled proportionally only,
+   and drops the label.
+3. **The voice is synthetic.** See *Voiceover*. Please listen before publishing. I could not audition audio in
+   the render environment, so the mix was checked by measurement.
+4. **Music licence.** See *Music*. The credit lines must go in the post caption.
+5. Not included, as instructed: prices, remaining places, discounts, testimonials, booking deadlines and any
+   claims about healing or transformation.
+
+## Music
+
+**"The Hero's Journey" by Audio Library Beats Group**, supplied by the client
+(`assets/music/the-heros-journey-audio-library.mp3`). The edit uses the track's opening, 0:00–0:30, unchanged
+except for a 2 s fade-out at the end. Its quiet intro sits under the hook. The orchestral swell grows from about
+20 s and peaks under the invitation. The music stays under the narration and ducks 5 dB while she speaks.
+
+Put this credit in the Instagram caption (it is also stored in `config.json → audio.music_credit`):
+
+```
+Music: The Hero's Journey by Audio Library Beats Group
+Free Download / Stream: https://links.al/qTd
+Music promoted by Audio Library: https://links.al/youtube
+```
+
+The file's metadata says "all-rights-reserved", and Audio Library's free licence is written mainly with YouTube
+in mind. Before running this as a paid ad, confirm that their terms cover promotional use on Instagram.
 
 ## Voiceover
 
-- **Engine:** Kokoro-82M v1.0 (Apache-2.0) via `kokoro-onnx`, preset voice `af_heart`, speed 0.94. It ran locally
-  on CPU with no account, API or paid service. It is a stock synthetic voice. It does not clone or imitate any
-  real person, and it must not be described as a host recording.
+- **Engine:** Kokoro-82M v1.0 (Apache-2.0) via `kokoro-onnx` (MIT), preset voice `af_heart`, speed 0.94.
+  It runs locally on CPU with no account, API or paid service. It is a stock synthetic voice. It does not clone or
+  imitate any real person, and it must not be described as a host recording.
 - "Tribu del Alma" is forced to Spanish pronunciation ("TREE-boo del AHL-ma") through a phoneme override.
-  The model's default was "TRIB-oo… OL-ma".
-- **Script change:** the brief's sentences 2 and 3 are swapped so the narration lines up with the storyboard.
-  The finca reveal now carries "What if you gave it a week?", and "Paint. Write. Make music." now carries "The
-  painting, the story, the song." Every word of the brief's script is kept. Nothing is sped up: there is 20.1 s
-  of speech in the 30 s film.
-- Mix (measured on the final MP4): narrated sections are about −17 LUFS. Music sits about 8 LU under the
-  narration level and ducks a further 5 dB while she speaks, so it is clearly beneath the voice but still present
-  in the pauses (about −28 LUFS). Integrated loudness is −17.6 LUFS and true peak is −1.5 dBFS, so nothing clips.
-  Instagram normalises playback loudness, so there is no need to push it louder.
+- **Script change:** the brief's sentences 2 and 3 are swapped so the narration matches the storyboard. Every word
+  is kept, and nothing is sped up: there is 20.1 s of speech in the 30 s film.
+- Mix, measured on the final MP4:
+  - narrated passages are about −13 LUFS
+  - music in the pauses is about −25 LUFS, rising to about −20 LUFS as the swell arrives
+  - integrated −13.8 LUFS; true peak −1.4 dBFS, so nothing clips
 
 ### Timed narration script (for a host recording)
 
-Record it as one relaxed take and the edit will be re-timed to it. If you replace `audio/vo/*.wav`, the clip
-names and start times are in `config.json → voiceover.clips`.
+Record it as one relaxed take; the edit will be re-timed to it. To replace the voice, swap `audio/vo/*.wav`.
+Clip names and start times are in `config.json → voiceover.clips`.
 
 ```
 00:00.45  That creative project you keep postponing.
@@ -99,33 +107,49 @@ names and start times are in `config.json → voiceover.clips`.
 00:27.95  Ask us about joining.        (ends by ~29.3 s)
 ```
 
-## Music
+## Photos wanted
 
-`audio/music.wav` is an original instrumental composed and synthesised for this project in
-`audio/compose_music.py`. It uses no samples, loops or recordings, so **no third-party licence applies**.
-It is a fingerpicked nylon-string guitar (Karplus–Strong physical model) at 60 BPM in D major. Soft bass enters
-at 4 s, a shaker at 8 s and a frame drum at 12 s. The parts thin out under the end card and the piece resolves on
-D. There are no impacts, whooshes, risers or "spiritual" sound effects. Guitar tuning was checked numerically
-(within ±3 cents).
+Real photos of the place and the people will make this far stronger than drawings or generated images. Ideal
+specs: vertical 9:16 (or a frame that crops cleanly to it), at least 1080 × 1920 (2160 × 3840 is better), natural
+light, warm and unposed, no heavy filters. Leave room near the bottom third for text.
+
+| Beat | Shot |
+|---|---|
+| 0–4 s Hook | Close-up of an **unfinished** piece: a half-painted canvas on an easel, an open notebook with a pen resting on it, or a guitar leaning on a chair. No face needed |
+| 4–8 s Possibility | **Finca Pura Vida and the Gaucín hills**, wide, early morning or golden hour. Ideally a slow 4–5 s handheld or tripod clip |
+| 8–13 s Paint | Hands painting at an outdoor table: brush, palette, colour on paper |
+| 8–13 s Write | Someone writing in a notebook in the shade, on the terrace or under a tree |
+| 8–13 s Make music | Hands on a guitar or another instrument, close |
+| 13–18 s Connection | The group on the terrace: music, laughter, a shared moment. Several people, natural and candid |
+| 18–24 s Space to create | The creative space or studio corner, uncluttered, with materials laid out |
+| 18–24 s Time to simply be | A quiet moment: a bedroom with morning light, a hammock, a view from the terrace, or tea at a table |
+| 24–30 s End card | A calm landscape or a detail of the finca to sit behind or above the logo |
+
+Also needed: the original **transparent logo PNG**, and permission from everyone who is recognisable.
+
+**About generating these with AI:** the safe use is for close, non-identifying details, such as hands with a
+brush, a notebook, a guitar neck or a palette. Do not generate the finca, the landscape or "participants", and do
+not present generated images as the real venue or real guests. People booking a retreat will reasonably take
+those images as what they are buying. If any generated image is used, keep it to details, and consider a small
+"illustrative image" note.
 
 ## Render
 
-Requirements are Python 3.10+ and the packages below. ffmpeg comes with `imageio-ffmpeg`.
+You need Python 3.10+ and the packages below. ffmpeg comes with `imageio-ffmpeg`.
 
 ```sh
 pip install pillow numpy scipy imageio-ffmpeg soundfile pyloudnorm
-python render.py                      # all deliverables into out/ (~15–20 min on CPU)
+python render.py                      # all deliverables into out/ (~2–3 min on CPU)
 python render.py --frames 0,450,840   # QA: single frames (plain + captioned) as PNG
 python render.py --sheet-only         # contact sheet + SRT only
 ```
 
-Optional regeneration steps:
+Optional:
 
 ```sh
-python audio/compose_music.py                      # rebuild the music bed
 pip install kokoro-onnx                            # narration: download the two model files listed in
 python audio/make_vo.py <dir-with-model-files>     #   audio/make_vo.py, then regenerate audio/vo/*.wav
-python tools/extract_standins.py <screenshot.pdf>  # recreate stand-ins (needs poppler pdfimages)
+python tools/extract_standins.py <screenshot.pdf>  # recreate the stand-in emblem (needs poppler)
 ```
 
 Frame n is shown at n/30 s and is computed from that time alone, so renders are deterministic.
@@ -133,24 +157,24 @@ Frame n is shown at n/30 s and is computed from that time alone, so renders are 
 ## Project layout
 
 ```
-config.json            copy, dates, colours, fonts, assets, panels, shot timings, text cues, narration, captions
-render.py              compositor, layout check, audio mix, encoding, SRT, contact sheet
-audio/compose_music.py original music bed  → audio/music.wav
+config.json            copy, dates, colours, fonts, logo, scenes, text cues, narration, captions, music
+render.py              backgrounds and line drawings, text, end card, layout check, audio mix, encoding
 audio/make_vo.py       local TTS narration → audio/vo/*.wav
-tools/extract_standins.py
-assets/standin/        photos and emblem cut from the supplied screenshot
-assets/originals/      put the original website files here (empty)
+assets/music/          the supplied track
+assets/standin/        emblem cut from the supplied screenshot
+assets/originals/      put the original logo here (empty)
 assets/fonts/          Goudy Bookletter 1911, ABeeZee, Asul (SIL OFL 1.1, licences alongside)
+tools/extract_standins.py
 out/                   rendered deliverables
 ```
 
 ## Attribution
 
-- Photographs and emblem: © Tribu del Alma, taken from the brand's own website as captured in the supplied
-  screenshot. The original URLs are listed in `config.json → assets`. They are used for Tribu del Alma's own promotion.
+- Music: "The Hero's Journey" by Audio Library Beats Group (credit lines above).
+- Logo emblem: © Tribu del Alma, from the brand's website as captured in the supplied screenshot.
 - Fonts: Goudy Bookletter 1911 (Barry Schwartz), ABeeZee (The ABeeZee Project Authors) and Asul (Mariela Monsalve),
   all under the SIL Open Font License 1.1 and obtained from the @fontsource npm packages.
 - Narration: Kokoro-82M (hexgrad, Apache-2.0) via kokoro-onnx (MIT).
-- Music: original, created in this project.
+- Line drawings: created in code for this project.
 - Brand colours as supplied in the brief: cream #F0EEE2, sage #5A8073, muted gold #B3AE86, rust #9B4B01 and
   deep green #243F36.

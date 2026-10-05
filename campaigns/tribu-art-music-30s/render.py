@@ -1,12 +1,13 @@
-"""Render the 30 s vertical reel for Tribu del Alma's Art & Music Retreat.
+"""Render the 30 s vertical reel for Tribu del Alma's Art & Music Retreat (photo-free version).
 
-Everything (copy, dates, colours, fonts, assets, shot timings, narration placement,
-captions) comes from config.json. Frame n (zero-based) shows time n / fps; every frame is
-computed from that time alone, so any frame can be rendered on its own.
+Everything (copy, dates, colours, fonts, scenes, narration placement, captions, music) comes
+from config.json. Frame n (zero-based) shows time n / fps; every frame is computed from that
+time alone, so any frame can be rendered on its own.
 
-Photos are real Tribu del Alma photographs. They are only cropped, scaled (aspect ratio
-preserved) and slowly panned/zoomed; nothing is generated, retouched or animated inside
-them. Copy and logo are separate 2D layers.
+No photographs: each scene is a brand-colour field with a simple line drawing that draws
+itself (an unfinished brushstroke, the hills on the horizon, a paint stroke / handwriting
+loop / sound wave, two rhythms falling into step, an arch with a low sun). The logo is the
+supplied artwork, resized proportionally only.
 
 Outputs (one pass):
   <out>/tribu-art-music-30s.mp4             designed text, narration + music
@@ -20,6 +21,7 @@ Usage:
 """
 import argparse
 import json
+import math
 import os
 import subprocess
 import tempfile
@@ -28,7 +30,8 @@ import imageio_ffmpeg
 import numpy as np
 import pyloudnorm
 import soundfile as sf
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFont
+from scipy.ndimage import minimum_filter1d, uniform_filter1d
 from scipy.signal import resample_poly
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -62,53 +65,40 @@ def font(kind, size):
     return ImageFont.truetype(path(CFG["fonts"][kind]), size)
 
 
-F_TITLE = {}
+_title_fonts = {}
 
 
 def title_font(size):
-    if size not in F_TITLE:
-        F_TITLE[size] = font("title", size)
-    return F_TITLE[size]
+    if size not in _title_fonts:
+        _title_fonts[size] = font("title", size)
+    return _title_fonts[size]
 
 
-F_LABEL = font("label", 30)
+F_LABEL = font("label", 32)
 F_CAPTION = font("body", 40)
-F_END_TITLE = font("title", 90)
-F_END_DATES = font("body", 54)
+F_END_TITLE = font("title", 92)
+F_END_DATES = font("body", 56)
 F_END_PLACE = font("body", 42)
 F_END_CTA = font("body", 46)
 F_END_URL = font("body", 42)
 F_END_BRAND = font("label", 28)
 
 
-# ------------------------------------------------------------------ assets
-USED = {}
-
-
-def asset(key):
-    a = CFG["assets"][key]
-    if os.path.exists(path(a["original"])):
-        USED[key] = a["original"]
-    elif a.get("standin") and os.path.exists(path(a["standin"])):
-        USED[key] = a["standin"]
-    else:
-        raise SystemExit(f"asset '{key}' missing: add {a['original']}")
-    return Image.open(path(USED[key]))
-
-
-IMAGES = {s["image"]: asset(s["image"]).convert("RGB") for s in CFG["shots"]}
-LOGO_IS_ORIGINAL = os.path.exists(path(CFG["assets"]["logo"]["original"]))
+# ------------------------------------------------------------------ logo
+LOGO_CFG = CFG["assets"]["logo"]
+LOGO_IS_ORIGINAL = os.path.exists(path(LOGO_CFG["original"]))
+LOGO_PATH = LOGO_CFG["original"] if LOGO_IS_ORIGINAL else LOGO_CFG["standin"]
 
 
 def load_logo():
-    im = asset("logo").convert("RGBA")
+    im = Image.open(path(LOGO_PATH)).convert("RGBA")
     if LOGO_IS_ORIGINAL:
-        bw, bh = CFG["assets"]["logo"]["original_box"]
+        bw, bh = LOGO_CFG["original_box"]
         s = min(bw / im.width, bh / im.height)            # proportional only
         return im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
     # Stand-in: the emblem cut from the screenshot sits on the page's cream (#F0EEE2,
     # identical to our background). A soft circular mask removes the square edge.
-    d = CFG["assets"]["logo"]["standin_display_px"]
+    d = LOGO_CFG["standin_display_px"]
     im = im.resize((d, d), Image.LANCZOS)
     m = Image.new("L", (d * 4, d * 4), 0)
     ImageDraw.Draw(m).ellipse((6, 6, d * 4 - 6, d * 4 - 6), fill=255)
@@ -131,121 +121,249 @@ def ease(x):                      # ease-out cubic
 
 def ease_io(x):                   # ease-in-out sine
     x = clamp(x)
-    return 0.5 - 0.5 * np.cos(np.pi * x)
+    return 0.5 - 0.5 * math.cos(math.pi * x)
 
 
 def lerp(a, b, p):
     return a + (b - a) * p
 
 
-# ------------------------------------------------------------------ canvas
-_grain = np.random.default_rng(7).normal(0, 1.6, (H, W, 1))
-CANVAS = Image.fromarray(np.clip(np.array(C["cream"], np.float32)[None, None] + _grain, 0, 255).astype("uint8"))
+# ------------------------------------------------------------------ scenes and background
+SCENES = CFG["scenes"]
+GRAIN = np.random.default_rng(7).normal(0, 1.6, (H, W, 1)).astype(np.float32)
 
 
-# ------------------------------------------------------------------ panels and shots
-PANELS = {k: tuple(v) for k, v in CFG["panels"].items()}
-SHOTS = CFG["shots"]
-SMALL_R = 22
-
-
-def panel_geom(t):
-    """Interpolated panel (x, y, w, h, arch radius, small radius) at time t."""
-    for i, s in enumerate(SHOTS):
-        if s["start"] <= t < s["end"] or (i == len(SHOTS) - 1 and t >= s["start"]):
-            cur = PANELS[s["panel"]] + ((0 if s["panel"] == "band" else SMALL_R),)
-            if i == 0:
-                return cur
-            prev_s = SHOTS[i - 1]
-            prev = PANELS[prev_s["panel"]] + ((0 if prev_s["panel"] == "band" else SMALL_R),)
-            p = ease_io((t - s["start"]) / max(s.get("xfade", 0.4), 1e-6))
-            return tuple(lerp(a, b, p) for a, b in zip(prev, cur))
-    raise ValueError(t)
-
-
-_mask_cache = {}
-
-
-def panel_mask(w, h, big, small):
-    key = (w, h, int(round(big)), int(round(small)))
-    if key not in _mask_cache:
-        ss = 3
-        m = Image.new("L", (w * ss, h * ss), 0)
-        d = ImageDraw.Draw(m)
-        r, R = key[3] * ss, key[2] * ss
-        if r:
-            d.rounded_rectangle((0, 0, w * ss - 1, h * ss - 1), r, fill=255)
-        else:
-            d.rectangle((0, 0, w * ss, h * ss), fill=255)
-        if R:
-            d.rectangle((0, 0, R, R), fill=0)
-            d.pieslice((0, 0, 2 * R, 2 * R), 180, 270, fill=255)
-        _mask_cache[key] = m.resize((w, h), Image.LANCZOS)
-        if len(_mask_cache) > 64:
-            _mask_cache.pop(next(iter(_mask_cache)))
-    return _mask_cache[key]
-
-
-UPSCALE = {}
-
-
-def shot_frame(s, t, w, h):
-    """Shot s at time t, covering a w x h panel. Linear Ken Burns so the motion can
-    continue smoothly into the next shot's dissolve."""
-    im = IMAGES[s["image"]]
-    p = (t - s["start"]) / (s["end"] - s["start"])
-    z = max(1.0, lerp(s["zoom"][0], s["zoom"][1], p))      # never below 'cover': no stretching, no gaps
-    fx = lerp(s["focus"][0][0], s["focus"][1][0], p)
-    fy = lerp(s["focus"][0][1], s["focus"][1][1], p)
-    scale = max(w / im.width, h / im.height) * z
-    cw, ch = min(w / scale, im.width), min(h / scale, im.height)
-    cx = clamp(fx * im.width, cw / 2, im.width - cw / 2)
-    cy = clamp(fy * im.height, ch / 2, im.height - ch / 2)
-    UPSCALE[s["id"]] = max(UPSCALE.get(s["id"], 0), scale)
-    return im.resize((w, h), Image.LANCZOS, box=(cx - cw / 2, cy - ch / 2, cx + cw / 2, cy + ch / 2))
-
-
-def shot_index(t):
+def scene_index(t):
     idx = 0
-    for i, s in enumerate(SHOTS):
+    for i, s in enumerate(SCENES):
         if t >= s["start"]:
             idx = i
     return idx
 
 
-def draw_photo(frame, t):
-    x, y, w, h, R, r = panel_geom(t)
-    x, y, w, h = int(round(x)), int(round(y)), int(round(w)), int(round(h))
-    i = shot_index(t)
-    s = SHOTS[i]
-    img = shot_frame(s, t, w, h)
-    xf = s.get("xfade", 0.4)
-    if i > 0 and t < s["start"] + xf:
-        prev = shot_frame(SHOTS[i - 1], t, w, h)
-        p = ease_io((t - s["start"]) / xf)
-        if s.get("transition") == "open":
-            # The new view opens from the centre outward, like doors onto the landscape.
-            half = p * (w / 2 + 40)
-            m = Image.new("L", (w, h), 0)
-            ImageDraw.Draw(m).rectangle((w / 2 - half, 0, w / 2 + half, h), fill=255)
-            m = m.filter(ImageFilter.GaussianBlur(14))
-            img = Image.composite(img, prev, m)
+def background(t):
+    i = scene_index(t)
+    s = SCENES[i]
+    cur = np.array(C[s["bg"]], np.float32)
+    if i == 0 or t >= s["start"] + s.get("fade", 0.5):
+        base = np.broadcast_to(cur, (H, W, 3))
+    else:
+        prev = np.array(C[SCENES[i - 1]["bg"]], np.float32)
+        p = ease_io((t - s["start"]) / s.get("fade", 0.5))
+        if s.get("transition") == "doors":
+            # The new colour opens from the centre outward, like doors onto the landscape.
+            half = p * (W / 2 + 30)
+            x = np.arange(W, dtype=np.float32)
+            m = np.clip((half - np.abs(x - W / 2)) / 24 + 0.5, 0, 1)[None, :, None]
+            base = np.broadcast_to(prev, (H, W, 3)) * (1 - m) + cur * m
         else:
-            img = Image.blend(prev, img, p)
-    frame.paste(img, (x, y), panel_mask(w, h, R, r))
-    return (x, y, w, h)
+            # The new colour rises from the bottom with a soft edge (no muddy mid-blend).
+            edge = H + 80 - p * (H + 160)
+            y = np.arange(H, dtype=np.float32)
+            m = np.clip((y - edge) / 80 + 0.5, 0, 1)[:, None, None]
+            base = np.broadcast_to(prev, (H, W, 3)) * (1 - m) + cur * m
+    return Image.fromarray(np.clip(base + GRAIN, 0, 255).astype(np.uint8)).convert("RGBA")
+
+
+def scene_colors(t):
+    s = SCENES[scene_index(t)]
+    return C[s["ink"]], C[s["accent"]], s["bg"]
+
+
+# ------------------------------------------------------------------ line drawings
+SS = 2                            # motifs are drawn at 2x and downsampled for smooth lines
+
+
+class Pen:
+    """Anti-aliased drawing on a 2x layer; coordinates are frame pixels."""
+
+    def __init__(self):
+        self.im = Image.new("RGBA", (W * SS, H * SS), (0, 0, 0, 0))
+        self.d = ImageDraw.Draw(self.im)
+        self.used = False
+
+    def line(self, pts, width, color, alpha):
+        if len(pts) < 2 or alpha <= 0:
+            return
+        self.used = True
+        fill = color + (int(255 * clamp(alpha)),)
+        p2 = [(x * SS, y * SS) for x, y in pts]
+        self.d.line(p2, fill=fill, width=max(1, int(round(width * SS))), joint="curve")
+        r = width * SS / 2
+        for x, y in (p2[0], p2[-1]):
+            self.d.ellipse((x - r, y - r, x + r, y + r), fill=fill)
+
+    def disc(self, cx, cy, r, color, alpha):
+        self.used = True
+        self.d.ellipse(((cx - r) * SS, (cy - r) * SS, (cx + r) * SS, (cy + r) * SS),
+                       fill=color + (int(255 * clamp(alpha)),))
+
+    def layer(self):
+        return self.im.resize((W, H), Image.LANCZOS)
+
+
+def partial(pts, p):
+    """The first fraction p (by arc length) of a polyline."""
+    if p <= 0:
+        return []
+    pts = np.asarray(pts, np.float64)
+    seg = np.hypot(*np.diff(pts, axis=0).T)
+    cum = np.concatenate([[0], np.cumsum(seg)])
+    target = cum[-1] * clamp(p)
+    k = int(np.searchsorted(cum, target))
+    if k == 0:
+        return [tuple(pts[0])]
+    k = min(k, len(pts) - 1)
+    f = (target - cum[k - 1]) / max(seg[k - 1], 1e-9)
+    end = pts[k - 1] + (pts[k] - pts[k - 1]) * f
+    return [tuple(q) for q in pts[:k]] + [tuple(end)]
+
+
+def curve(fx, fy, n=240):
+    return [(fx(u), fy(u)) for u in np.linspace(0, 1, n)]
+
+
+def brush(pen, pts, p, color, alpha, spread=22, seed=3, bristles=16, wmin=2.5, wmax=6.5):
+    """A dry-brush stroke: parallel bristles with slightly different lengths and opacity."""
+    rng = np.random.default_rng(seed)
+    pts = np.asarray(pts, np.float64)
+    tang = np.gradient(pts, axis=0)
+    norm = np.stack([-tang[:, 1], tang[:, 0]], 1)
+    norm /= np.linalg.norm(norm, axis=1, keepdims=True) + 1e-9
+    for b in range(bristles):
+        o = lerp(-spread, spread, b / (bristles - 1)) + rng.normal(0, 1.5)
+        length = 1 - abs(o) / spread * 0.18 - rng.uniform(0, 0.08)
+        width = rng.uniform(wmin, wmax)
+        a = alpha * rng.uniform(0.45, 0.95)
+        swell = 1 - (abs(o) / spread) ** 2 * 0.5
+        pen.line(partial(pts + norm * o * swell, p * length), width, color, a)
+
+
+def stroke_alpha(t, s, out=0.35):
+    return 1 - ease_io((t - (s["end"] - out)) / out)
+
+
+def motif_unfinished_stroke(pen, t, s):
+    # Starts already part-way (readable cover frame), moves on, then stops unfinished.
+    t0, t1 = s["draw"]
+    p = 0.30 + 0.38 * ease((t - t0) / (t1 - t0))
+    pts = curve(lambda u: lerp(130, 950, u), lambda u: 660 - 90 * math.sin(math.pi * (u * 0.9 + 0.05)) + 24 * u)
+    brush(pen, pts, p, C["rust"], 0.92 * stroke_alpha(t, s), spread=58, seed=11, bristles=34, wmin=6, wmax=13)
+
+
+def hills(u, base, k):
+    return base - (46 * math.sin(2 * math.pi * (0.75 * u) + 0.6 + k) + 22 * math.sin(2 * math.pi * 2.1 * u + k)
+                   + 8 * math.sin(2 * math.pi * 5.3 * u + 2 * k))
+
+
+def motif_hills(pen, t, s):
+    t0, t1 = s["draw"]
+    a = stroke_alpha(t, s)
+    back = curve(lambda u: lerp(60, 1020, u), lambda u: hills(u, 690, 1.7))
+    front = curve(lambda u: lerp(60, 1020, u), lambda u: hills(u, 790, 0.0))
+    fill = ease_io((t - t0 - 0.8) / 1.6)
+    if fill > 0:                                   # the land below the front ridge, softly filled in
+        poly = [(x * SS, y * SS) for x, y in front] + [(1020 * SS, 1000 * SS), (60 * SS, 1000 * SS)]
+        layer = Image.new("RGBA", pen.im.size, (0, 0, 0, 0))
+        ImageDraw.Draw(layer).polygon(poly, fill=C["sage"] + (int(110 * fill * a),))
+        fade = Image.linear_gradient("L").resize((pen.im.width, 210 * SS))
+        mask = Image.new("L", pen.im.size, 255)
+        mask.paste(fade.transpose(Image.FLIP_TOP_BOTTOM), (0, 790 * SS))
+        mask.paste(0, (0, 1000 * SS, pen.im.width, pen.im.height))
+        layer.putalpha(Image.composite(layer.getchannel("A"), Image.new("L", pen.im.size, 0), mask))
+        pen.im.alpha_composite(layer)
+    pen.line(partial(back, ease_io((t - t0) / (t1 - t0))), 5, C["gold"], 0.55 * a)
+    pen.line(partial(front, ease_io((t - t0 - 0.35) / (t1 - t0))), 9, C["gold"], 0.95 * a)
+
+
+def motif_paint_write_music(pen, t, s):
+    a = stroke_alpha(t, s)
+    tp, tw, tm = s["draw"]
+    # Paint: a short brushstroke.
+    paint = curve(lambda u: lerp(110, 860, u), lambda u: 370 - 44 * math.sin(math.pi * u) + 14 * u)
+    brush(pen, paint, ease((t - tp) / 0.9), C["rust"], 0.92 * a, spread=40, seed=5, bristles=26, wmin=5, wmax=11)
+
+    # Write: a loose, looping hand (abstract loops, not letters).
+    def wx(u):
+        return 110 + 700 * u - 30 * math.sin(u * 2 * math.pi * 7)
+
+    def wy(u):
+        th = u * 2 * math.pi * 7
+        return 585 - 44 * math.cos(th) * (0.75 + 0.25 * math.sin(3 * u)) + 12 * math.sin(2 * math.pi * u)
+
+    pen.line(partial(curve(wx, wy, 700), ease_io((t - tw) / 1.0)), 7, C["deep_green"], 0.95 * a)
+
+    # Make music: a sound wave that swells and settles.
+    def my(u):
+        env = math.sin(math.pi * u) ** 0.9 * (0.65 + 0.35 * math.sin(2 * math.pi * 1.5 * u))
+        return 800 + 84 * env * math.sin(2 * math.pi * 9 * u + 2.5 * (t - tm))
+
+    pen.line(partial(curve(lambda u: lerp(110, 900, u), my, 500), ease_io((t - tm) / 1.0)), 7, C["sage"], 0.95 * a)
+
+
+def motif_two_rhythms(pen, t, s):
+    a = stroke_alpha(t, s)
+    ta, tb = s["draw"]
+    # Line A keeps its own steady rhythm; line B arrives out of step and falls into step with it.
+    fa, pa = 2.6, -1.4 * (t - ta)
+    ya = curve(lambda u: lerp(60, 1020, u), lambda u: 520 + 85 * math.sin(2 * math.pi * fa * u + pa), 400)
+    pen.line(partial(ya, ease_io((t - ta) / 1.0)), 9, C["cream"], 0.95 * a)
+    k = ease_io((t - tb - 0.4) / 1.6)                  # 0 = own rhythm, 1 = in step
+    fb = lerp(3.7, fa, k)
+    pb = lerp(-2.3 * (t - tb) + 1.9, pa, k)
+    yb = curve(lambda u: lerp(60, 1020, u), lambda u: 660 + lerp(60, 85, k) * math.sin(2 * math.pi * fb * u + pb), 400)
+    pen.line(partial(yb, ease_io((t - tb) / 1.0)), 9, C["deep_green"], 0.9 * a)
+
+
+def arch_path(cx=500, half=250, top=520, bottom=930):
+    arc = [(cx - half * math.cos(th), top - half * math.sin(th)) for th in np.linspace(0, math.pi, 120)]
+    return [(cx - half, bottom)] + arc + [(cx + half, bottom)]
+
+
+def motif_arch_and_sun(pen, t, s):
+    a = stroke_alpha(t, s)
+    t_arch, t_sun = s["draw"]
+    wash = ease_io((t - t_arch - 0.9) / 1.2)
+    if wash > 0:                                   # a warm wash fills the open arch: space
+        layer = Image.new("RGBA", pen.im.size, (0, 0, 0, 0))
+        ImageDraw.Draw(layer).polygon([(x * SS, y * SS) for x, y in arch_path()], fill=C["gold"] + (int(70 * wash * a),))
+        pen.im.alpha_composite(layer)
+        pen.used = True
+    pen.line(partial(arch_path(), ease_io((t - t_arch) / 1.4)), 8, C["deep_green"], 0.95 * a)
+    horizon = 830
+    pen.line(partial([(250, horizon), (750, horizon)], ease_io((t - t_sun) / 0.7)), 6, C["gold"], a)
+    rise = ease_io((t - t_sun - 0.3) / 1.8)
+    if rise > 0:                                   # a low sun rising behind the horizon line
+        sun = Pen()
+        sun.disc(500, lerp(horizon + 95, horizon - 22, rise), 88, C["rust"], 0.9 * a)
+        lay = sun.im
+        clip = Image.new("L", lay.size, 0)
+        ImageDraw.Draw(clip).rectangle((0, 0, lay.width, (horizon - 3) * SS), fill=255)
+        lay.putalpha(Image.composite(lay.getchannel("A"), Image.new("L", lay.size, 0), clip))
+        pen.im.alpha_composite(lay)
+        pen.used = True
+
+
+def motif_endcard(pen, t, s):
+    p = ease_io((t - (EC["url_at"] + 0.3)) / 1.4)
+    pts = curve(lambda u: lerp(250, 750, u), lambda u: hills(u, 1290, 0.0) * 0.35 + 1290 * 0.65)
+    pen.line(partial(pts, p), 3, C["gold"], 0.9)
+
+
+MOTIFS = {"unfinished_stroke": motif_unfinished_stroke, "hills": motif_hills,
+          "paint_write_music": motif_paint_write_music, "two_rhythms": motif_two_rhythms,
+          "arch_and_sun": motif_arch_and_sun, "endcard": motif_endcard}
+
+
+def draw_motifs(frame, t):
+    pen = Pen()
+    s = SCENES[scene_index(t)]
+    MOTIFS[s["motif"]](pen, t, s)
+    if pen.used:
+        frame.alpha_composite(pen.layer())
 
 
 # ------------------------------------------------------------------ designed text
-def panel_bottom_at(t):
-    s = SHOTS[shot_index(t)]
-    x, y, w, h, _ = PANELS[s["panel"]]
-    return y + h
-
-
-TEXT_GAP = 46
-
-
 def tracked(draw, xy, text, fnt, fill, spacing):
     x, y = xy
     for ch in text:
@@ -259,14 +377,12 @@ def tracked_width(text, fnt, spacing):
 
 
 def block_layout(b):
-    """Positions of the label and lines of a text block (no animation)."""
     fnt = title_font(b["size"])
-    lh = round(b["size"] * 1.1)
-    y = panel_bottom_at(b["start"] + 0.01) + TEXT_GAP
+    lh = round(b["size"] * 1.08)
+    y = b["y"]
     items = []
     if "label" in b:
-        items.append(("label", b["label"], SAFE["x0"], y))
-        y += 52
+        items.append(("label", b["label"], SAFE["x0"], y - 62))
     for ln in b["lines"]:
         items.append(("line", ln, SAFE["x0"], y))
         y += lh
@@ -288,18 +404,18 @@ def draw_text(layer, t):
     for b in CFG["text"]:
         if not (b["start"] - 0.01 <= t < b["end"]) and not (b["start"] <= 0 and t < b["end"]):
             continue
+        ink, accent, _ = scene_colors(b["start"] + 0.01)
         fnt, items = block_layout(b)
         for kind, it, x, y in items:
             if kind == "label":
                 a, dy = appear(t, it["at"], b["end"])
-                tracked(d, (x, y + dy), fmt(it["t"]).upper(), F_LABEL, C["rust"] + (int(255 * a),), 4)
+                tracked(d, (x, y + dy), fmt(it["t"]).upper(), F_LABEL, C["gold"] + (int(255 * a),), 5)
                 continue
-            col = C["rust"] if it.get("accent") else C["deep_green"]
+            col = accent if it.get("accent") else ink
             words = it.get("words")
             if words:
-                parts = it["t"].split("  ")
                 cx = x
-                for part, at in zip(parts, words):
+                for part, at in zip(it["t"].split("  "), words):
                     a, dy = appear(t, at, b["end"])
                     if a > 0:
                         d.text((cx, y + dy), part, font=fnt, fill=col + (int(255 * a),))
@@ -309,14 +425,12 @@ def draw_text(layer, t):
                 if a > 0:
                     d.text((x, y + dy), fmt(it["t"]), font=fnt, fill=col + (int(255 * a),))
         if b["start"] <= 0:         # hook: a gold rule draws itself under the question
-            _, _, x, y = items[-1]
-            ln = items[-1][1]["t"]
+            _, ln, x, y = items[-1]
             p = ease_io((t - 0.5) / 1.1)
             a, _ = appear(t, 0, b["end"])
             if p > 0 and a > 0:
-                wline = fnt.getlength(ln) * p
-                yy = y + round(b["size"] * 1.02)
-                d.rounded_rectangle((x, yy, x + wline, yy + 5), 2, fill=C["gold"] + (int(255 * a),))
+                yy = y + round(b["size"] * 1.0)
+                d.rounded_rectangle((x, yy, x + fnt.getlength(ln["t"]) * p, yy + 5), 2, fill=C["gold"] + (int(255 * a),))
 
 
 # ------------------------------------------------------------------ end card
@@ -324,37 +438,32 @@ EC = CFG["endcard"]
 
 
 def endcard_layout():
-    """Element boxes for the end card, top to bottom (centered)."""
-    band_bottom = PANELS["band"][1] + PANELS["band"][3]
     els = []
-    if LOGO_IS_ORIGINAL:
-        y = band_bottom + 36
-        els.append(("logo", None, y, LOGO.height))
-        y += LOGO.height + 44
-    else:
-        y = band_bottom - LOGO.height // 2
-        els.append(("logo", None, y, LOGO.height))
-        y += LOGO.height + 22
+    y = 330
+    els.append(("logo", None, y, LOGO.height))
+    y += LOGO.height + 30
+    if not LOGO_IS_ORIGINAL:
         els.append(("brand", EC["brand_label_with_standin_logo"], y, 30))
-        y += 30 + 40
-    els.append(("title", EV["name"], y, 90))
-    y += 90 + 46
-    els.append(("dates", EV["dates_display"], y, 54))
-    y += 54 + 22
+        y += 30 + 56
+    else:
+        y += 26
+    els.append(("title", EV["name"], y, 92))
+    y += 92 + 52
+    els.append(("dates", EV["dates_display"], y, 56))
+    y += 56 + 24
     els.append(("place", EV["location_endcard"], y, 42))
-    y += 42 + 62
+    y += 42 + 70
     els.append(("cta", EV["cta"], y, 46 + 2 * 28))
-    y += 46 + 2 * 28 + 44
+    y += 46 + 2 * 28 + 48
     els.append(("url", EV["website"], y, 42))
     return els
 
 
 def draw_endcard(frame, layer, t):
-    start = SHOTS[-1]["start"]
-    if t < start:
+    if t < SCENES[-1]["start"]:
         return
     d = ImageDraw.Draw(layer)
-    times = {"logo": start + 0.35, "brand": start + 0.5, "title": EC["title_at"], "dates": EC["dates_at"],
+    times = {"logo": EC["logo_at"], "brand": EC["logo_at"] + 0.15, "title": EC["title_at"], "dates": EC["dates_at"],
              "place": EC["place_at"], "cta": EC["cta_at"], "url": EC["url_at"]}
     for kind, text, y, h in endcard_layout():
         a = ease((t - times[kind]) / 0.6)
@@ -362,12 +471,6 @@ def draw_endcard(frame, layer, t):
             continue
         dy = (1 - a) * 16
         if kind == "logo":
-            if not LOGO_IS_ORIGINAL:   # cream seal so the emblem reads over the photo edge
-                cx, cy, r = int(CX), y + h // 2, h // 2 + 22
-                seal = Image.new("RGBA", (4 * r, 4 * r), (0, 0, 0, 0))
-                ImageDraw.Draw(seal).ellipse((0, 0, 4 * r - 1, 4 * r - 1), fill=C["cream"] + (int(255 * a),))
-                seal = seal.resize((2 * r, 2 * r), Image.LANCZOS)
-                frame.alpha_composite(seal, (cx - r, int(cy - r + dy)))
             lg = LOGO.copy()
             lg.putalpha(lg.getchannel("A").point(lambda v: int(v * a)))
             frame.alpha_composite(lg, (int(CX - LOGO.width / 2), int(y + dy)))
@@ -384,48 +487,34 @@ def draw_endcard(frame, layer, t):
                         "place": (F_END_PLACE, C["sage"]), "url": (F_END_URL, C["deep_green"])}[kind]
             tw = fnt.getlength(text)
             d.text((CX - tw / 2, y + dy), text, font=fnt, fill=col + (int(255 * a),))
-            if kind == "url":
-                uw = tw * ease_io((t - times[kind] - 0.2) / 0.8)
-                d.rectangle((CX - tw / 2, y + 58, CX - tw / 2 + uw, y + 61), fill=C["gold"] + (int(255 * a),))
 
 
 # ------------------------------------------------------------------ captions
 CAPS = [dict(c, t=fmt(c["t"])) for c in CFG["captions"]]
 CAP_LH = 52
+CAP_BOTTOM = CFG["caption_bottom"]
 
 
-def caption_box(text, bottom):
+def caption_box(text):
     lines = text.split("\n")
     tw = max(F_CAPTION.getlength(l) for l in lines)
     h = CAP_LH * len(lines) + 30
     x0 = CX - tw / 2 - 26
-    return lines, (x0, bottom - h, 2 * CX - x0, bottom)
-
-
-def caption_bottom(t):
-    """Captions sit just inside the bottom of the photo; into the end card they glide up
-    with the panel into the band, above the logo seal."""
-    y, h = panel_geom(t)[1], panel_geom(t)[3]
-    last = SHOTS[-1]
-    if t >= last["start"]:
-        p = ease_io((t - last["start"]) / last.get("xfade", 0.4))
-        band = PANELS["band"][1] + PANELS["band"][3] - 150
-        before = PANELS[SHOTS[-2]["panel"]][1] + PANELS[SHOTS[-2]["panel"]][3] - 34
-        return lerp(before, band, p)
-    return y + h - 34
+    return lines, (x0, CAP_BOTTOM - h, 2 * CX - x0, CAP_BOTTOM)
 
 
 def draw_captions(layer, t):
     d = ImageDraw.Draw(layer)
+    _, _, bg = scene_colors(t)
+    box, ink = (C["cream"], C["deep_green"]) if bg in ("deep_green", "sage") else (C["deep_green"], C["cream"])
     for c in CAPS:
         if not (c["start"] <= t < c["end"]):
             continue
         a = ease((t - c["start"]) / 0.12) * (1 - ease((t - (c["end"] - 0.12)) / 0.12))
-        lines, (x0, y0, x1, y1) = caption_box(c["t"], caption_bottom(t))
-        d.rounded_rectangle((x0, y0, x1, y1), 16, fill=C["deep_green"] + (int(215 * a),))
+        lines, (x0, y0, x1, y1) = caption_box(c["t"])
+        d.rounded_rectangle((x0, y0, x1, y1), 16, fill=box + (int(225 * a),))
         for i, ln in enumerate(lines):
-            d.text((CX - F_CAPTION.getlength(ln) / 2, y0 + 14 + i * CAP_LH), ln, font=F_CAPTION,
-                   fill=C["cream"] + (int(255 * a),))
+            d.text((CX - F_CAPTION.getlength(ln) / 2, y0 + 14 + i * CAP_LH), ln, font=F_CAPTION, fill=ink + (int(255 * a),))
 
 
 def write_srt(fn):
@@ -438,21 +527,17 @@ def write_srt(fn):
 
 
 # ------------------------------------------------------------------ layout check
-def check_layout():
-    """Fail the build if essential text leaves the safe area or text blocks collide."""
-    x0, x1, y0, y1 = SAFE["x0"], SAFE["x1"], SAFE["y0"], SAFE["y1"]
-    problems = []
+def text_boxes():
+    """(name, x0, y0, x1, y1, t0, t1) of every piece of essential text."""
+    boxes = []
     for b in CFG["text"]:
         fnt, items = block_layout(b)
         for kind, it, x, y in items:
             if kind == "label":
-                w, hh = tracked_width(fmt(it["t"]).upper(), F_LABEL, 4), 34
+                w, hh = tracked_width(fmt(it["t"]).upper(), F_LABEL, 5), 36
             else:
                 w, hh = fnt.getlength(fmt(it["t"])), round(b["size"] * 1.05)
-            if x + w > x1 or y < y0 or y + hh > y1:
-                problems.append(f"text '{it['t']}' box ({x},{y})-({x + w:.0f},{y + hh}) outside safe area")
-        if len([i for i in items if i[0] == "line"]) > 2:
-            problems.append(f"text block at {b['start']} has more than two lines")
+            boxes.append((it["t"], x, y, x + w, y + hh, b["start"], b["end"]))
     for kind, text, y, h in endcard_layout():
         if kind == "logo":
             w = LOGO.width
@@ -462,14 +547,29 @@ def check_layout():
             w = tracked_width(text, F_END_BRAND, 6)
         else:
             w = {"title": F_END_TITLE, "dates": F_END_DATES, "place": F_END_PLACE, "url": F_END_URL}[kind].getlength(text)
-        if CX - w / 2 < x0 or CX + w / 2 > x1 or y + h > y1 or (kind != "logo" and y < y0):
-            problems.append(f"end card '{kind}' outside safe area (w {w:.0f}, y {y}-{y + h})")
+        boxes.append((f"end card {kind}", CX - w / 2, y, CX + w / 2, y + h, SCENES[-1]["start"], DUR))
+    return boxes
+
+
+def check_layout():
+    """Fail the build if essential text leaves the safe area, blocks have >2 lines, captions
+    collide with designed text, or the CTA is on screen for less than 4 s."""
+    x0, x1, y0, y1 = SAFE["x0"], SAFE["x1"], SAFE["y0"], SAFE["y1"]
+    problems = []
+    boxes = text_boxes()
+    for name, bx0, by0, bx1, by1, *_ in boxes:
+        if bx0 < x0 or bx1 > x1 or by0 < y0 or by1 > y1:
+            problems.append(f"'{name}' ({bx0:.0f},{by0:.0f})-({bx1:.0f},{by1:.0f}) outside safe area")
+    for b in CFG["text"]:
+        if len(b["lines"]) > 2:
+            problems.append(f"text block at {b['start']} has more than two lines")
     for c in CAPS:
-        for t in np.arange(c["start"], c["end"], 1 / FPS):
-            lines, (cx0, cy0, cx1, cy1) = caption_box(c["t"], caption_bottom(t))
-            if cx0 < x0 or cx1 > x1 or cy0 < y0 or cy1 > y1 or len(lines) > 2:
-                problems.append(f"caption '{c['t']}' outside safe area at {t:.2f}s")
-                break
+        lines, (cx0, cy0, cx1, cy1) = caption_box(c["t"])
+        if cx0 < x0 or cx1 > x1 or cy0 < y0 or cy1 > y1 or len(lines) > 2:
+            problems.append(f"caption '{c['t']}' outside safe area")
+        for name, bx0, by0, bx1, by1, t0, t1 in boxes:
+            if c["start"] < t1 and t0 < c["end"] and by1 + 12 > cy0 and by0 < cy1:
+                problems.append(f"caption '{c['t']}' overlaps '{name}'")
     cta_shown = DUR - EC["cta_at"]
     if cta_shown < 4.0:
         problems.append(f"CTA visible only {cta_shown:.1f}s")
@@ -481,8 +581,8 @@ def check_layout():
 # ------------------------------------------------------------------ frames
 def render(n, captions=False):
     t = n / FPS
-    frame = CANVAS.copy().convert("RGBA")
-    draw_photo(frame, t)
+    frame = background(t)
+    draw_motifs(frame, t)
     layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     draw_endcard(frame, layer, t)
     draw_text(layer, t)
@@ -498,54 +598,63 @@ def render(n, captions=False):
 
 # ------------------------------------------------------------------ audio
 SR = 48000
+AU = CFG["audio"]
 
 
-def read_48k_stereo(fn):
+def read_mono_48k(fn):
     x, sr = sf.read(fn, always_2d=True)
     x = x.mean(1)
     if sr != SR:
-        g = np.gcd(sr, SR)
+        g = math.gcd(sr, SR)
         x = resample_poly(x, SR // g, sr // g)
     return x
 
 
+def load_music(n):
+    """The supplied track from music_source_start, 48 kHz stereo, faded out at the end."""
+    raw = subprocess.run([FFMPEG, "-nostdin", "-loglevel", "error", "-ss", str(AU["music_source_start"]), "-t", str(DUR),
+                          "-i", path(AU["music"]), "-f", "f32le", "-ac", "2", "-ar", str(SR), "-"],
+                         capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, np.float32).reshape(-1, 2).astype(np.float64)[:n]
+    x = np.pad(x, ((0, n - len(x)), (0, 0)))
+    t = np.arange(n) / SR
+    fade = np.clip((DUR - t) / AU["music_fade_out"], 0, 1)
+    return x * (np.sin(fade * np.pi / 2) ** 2)[:, None]
+
+
+def limit(x, ceiling_db=-1.5):
+    """Gentle peak limiter: gain dips only around the few peaks above the ceiling."""
+    c = 10 ** (ceiling_db / 20)
+    need = np.minimum(1.0, c / np.maximum(np.abs(x).max(1), 1e-9))
+    g = uniform_filter1d(minimum_filter1d(need, int(0.01 * SR)), int(0.01 * SR))
+    y = x * g[:, None]
+    peak = np.abs(y).max()
+    return y * (c / peak) if peak > c else y
+
+
 def build_audio(with_vo):
     n = int(SR * DUR)
-    au = CFG["audio"]
-    music = read_48k_stereo(path(au["music"]))[:n]
-    music = np.pad(music, (0, n - len(music)))
-    music_st, _ = sf.read(path(au["music"]), always_2d=True)
-    music_st = np.pad(music_st[:n], ((0, max(0, n - len(music_st))), (0, 0)))
     meter = pyloudnorm.Meter(SR)
+    music = load_music(n)
+    m_lufs = meter.integrated_loudness(music)
     if not with_vo:
-        g = 10 ** ((au["vo_loudness_lufs"] + au["music_gain_without_vo_db"] + 6 - meter.integrated_loudness(music_st)) / 20)
-        mix = music_st * g
-    else:
-        vo = np.zeros(n)
-        for clip in CFG["voiceover"]["clips"]:
-            x = read_48k_stereo(path(os.path.join(au["vo_dir"], clip["id"] + ".wav")))
-            i = int(round(clip["at"] * SR))
-            fade = int(0.008 * SR)
-            x[:fade] *= np.linspace(0, 1, fade)
-            x[-fade:] *= np.linspace(1, 0, fade)
-            assert i + len(x) <= n, f"narration clip {clip['id']} runs past the end"
-            vo[i:i + len(x)] += x
-        vo *= 10 ** ((au["vo_loudness_lufs"] - meter.integrated_loudness(vo)) / 20)
-        # Music sits under the voice and ducks a further 5 dB while she speaks.
-        g = 10 ** ((au["vo_loudness_lufs"] + au["music_gain_db"] - meter.integrated_loudness(music_st)) / 20)
-        env = np.abs(vo)
-        win = int(0.05 * SR)
-        env = np.convolve(env, np.ones(win) / win, "same")
-        speaking = (env > env.max() * 0.04).astype(float)
-        k = int(0.35 * SR)
-        speaking = np.convolve(speaking, np.ones(k) / k, "same")
-        duck = 10 ** (-5 * np.clip(speaking * 1.5, 0, 1) / 20)
-        mix = music_st * (g * duck)[:, None] + vo[:, None]
-    peak = np.abs(mix).max()
-    ceiling = 10 ** (-1.5 / 20)
-    if peak > ceiling:              # simple safety gain; the mix has no transient peaks worth limiting
-        mix *= ceiling / peak
-    return mix
+        return limit(music * 10 ** ((AU["vo_loudness_lufs"] + AU["music_gain_without_vo_db"] - m_lufs) / 20))
+    vo = np.zeros(n)
+    for clip in CFG["voiceover"]["clips"]:
+        x = read_mono_48k(path(os.path.join(AU["vo_dir"], clip["id"] + ".wav")))
+        i = int(round(clip["at"] * SR))
+        fade = int(0.008 * SR)
+        x[:fade] *= np.linspace(0, 1, fade)
+        x[-fade:] *= np.linspace(1, 0, fade)
+        assert i + len(x) <= n, f"narration clip {clip['id']} runs past the end"
+        vo[i:i + len(x)] += x
+    vo *= 10 ** ((AU["vo_loudness_lufs"] - meter.integrated_loudness(vo)) / 20)
+    # Music sits under the voice and ducks a further duck_db while she speaks.
+    g = 10 ** ((AU["vo_loudness_lufs"] + AU["music_gain_db"] - m_lufs) / 20)
+    env = uniform_filter1d(np.abs(vo), int(0.05 * SR))
+    speaking = uniform_filter1d((env > env.max() * 0.04).astype(float), int(0.35 * SR))
+    duck = 10 ** (-AU["duck_db"] * np.clip(speaking * 1.5, 0, 1) / 20)
+    return limit(music * (g * duck)[:, None] + vo[:, None])
 
 
 def audio_report(fn):
@@ -556,13 +665,13 @@ def audio_report(fn):
 
 
 # ------------------------------------------------------------------ contact sheet
-SHEET = [(1.5, "0–4 s  Recognition"), (6.2, "4–8 s  Possibility"), (12.0, "8–13 s  Creative freedom"),
-         (15.6, "13–18 s  Connection"), (22.6, "18–24 s  The experience"), (28.0, "24–30 s  Invitation")]
+SHEET = [(1.5, "0–4 s  Recognition"), (6.9, "4–8 s  Possibility"), (12.0, "8–13 s  Creative freedom"),
+         (17.4, "13–18 s  Connection"), (23.0, "18–24 s  The experience"), (28.0, "24–30 s  Invitation")]
 
 
 def contact_sheet(fn):
     tw, th, pad, head = 360, 640, 24, 54
-    sheet = Image.new("RGB", (3 * tw + 4 * pad, 2 * (th + head) + 3 * pad + 70), C["cream"])
+    sheet = Image.new("RGB", (3 * tw + 4 * pad, 2 * (th + head) + 3 * pad + 70), (255, 255, 255))
     d = ImageDraw.Draw(sheet)
     d.text((pad, 22), f"Tribu del Alma · {EV['name']} · 30 s reel · contact sheet", font=font("title", 34), fill=C["deep_green"])
     for i, (t, label) in enumerate(SHEET):
@@ -572,6 +681,7 @@ def contact_sheet(fn):
         d.text((x, y + 4), label, font=font("body", 20), fill=C["deep_green"])
         d.text((x, y + 28), f"frame {n} · {t:.1f} s", font=font("body", 15), fill=C["sage"])
         sheet.paste(render(n).resize((tw, th), Image.LANCZOS), (x, y + head))
+        d.rectangle((x - 1, y + head - 1, x + tw, y + head + th), outline=(210, 206, 190))
     sheet.save(fn)
 
 
@@ -630,8 +740,7 @@ def main():
             out = os.path.join(args.out, f"{NAME}{suffix}.mp4")
             mux(v, wav, out)
             print(f"wrote {out}  [{audio_report(out)}]")
-    print("assets used:", json.dumps(USED, indent=1))
-    print("max upscale per shot:", {k: round(v, 2) for k, v in UPSCALE.items()})
+    print("logo:", LOGO_PATH)
 
 
 if __name__ == "__main__":
