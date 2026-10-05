@@ -4,7 +4,7 @@
     <div class="cta-cmd fade-in">
       <div class="cta-cmd-tag">Next stop</div>
       <h2>Ready to replace spreadsheets with systems built around how your business runs?</h2>
-      <p>Tell us what is hard to track: orders, stock, follow-ups or team updates. We help you choose and implement a suitable system, using Odoo when it fits.</p>
+      <p>Tell us what is hard to track: orders, stock, follow-ups or team updates. We implement Odoo around how you work, or another solution if Odoo isn't the right fit.</p>
       <div class="cta-cmd-actions">
         <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Discovery Call <span>→</span></a>
         <a href="https://wa.me/971509860063" target="_blank" rel="noopener" class="btn-ghost">WhatsApp us</a>
@@ -22,7 +22,7 @@
           <?php tolx_helm(28); ?>
           <span class="nav-wordmark">TOLX<span>.</span></span>
         </a>
-        <p>A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. Suitable software, practical implementation and support for adoption, with Odoo as one possible foundation.</p>
+        <p>A Dubai software and business-systems company helping UAE SMEs organise orders, stock, customer follow-ups and team tasks. Odoo Ready Partner: Odoo-first implementation, other platforms when Odoo isn't the right fit, and support for adoption.</p>
         <a href="<?php echo home_url('/about/odoo-partnership/'); ?>" class="footer-badge" aria-label="Odoo Ready Partner">
           <span class="odoo-badge-chip odoo-badge-chip--sm">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/odoo_ready_partners_rgb.svg" alt="Odoo Ready Partner badge" width="68" height="34" loading="lazy">
@@ -79,6 +79,11 @@
     </div>
   </div>
 </footer>
+
+<a href="https://wa.me/971509860063" class="wa-float" target="_blank" rel="noopener" aria-label="Chat with Tolx on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.8 4.9-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.8a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1l-.5-.3z"/></svg>
+  <span>WhatsApp us</span>
+</a>
 
 <?php wp_footer(); ?>
 </body>

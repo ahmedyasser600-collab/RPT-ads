@@ -3,6 +3,10 @@
 This repo holds two separate video projects: **RPT** (Italian bathroom-renovation reels: `reels/`, `campaigns/rpt-*`,
 `assets/`) and **TOLX** (UAE business-systems social videos: `campaigns/tolx-*`). Keep them separate.
 
+## TOLX website theme
+- Source in `campaigns/tolx-site-theme/tolx/` (WordPress), packaged zips in `dist/`. Keep the brand (black + gold, Chakra Petch /
+  Share Tech Mono). Site positioning: **Odoo-first** (Odoo Ready Partner), other solutions only when Odoo isn't the right fit.
+
 ## TOLX videos (LinkedIn / Instagram)
 - Shared code and the series rules live in `campaigns/tolx-kit/` (read its README before making a new video).
 - **Brand pronunciation: TOLX is pronounced "Tol-x".** In any voiceover / TTS prompt write `Tolex`

@@ -10,7 +10,7 @@ get_header(); ?>
   <div class="container">
     <div class="fade-in">
       <div class="section-tag mono">Odoo Partnership</div>
-      <h1>Built on Odoo. <em>One of several foundations.</em></h1>
+      <h1>Built on Odoo. <em>Odoo-first, never Odoo-only.</em></h1>
       <p>Tolx is a UAE software house and a certified Odoo Ready Partner. Here's why <a href="<?php echo home_url('/odoo/'); ?>" style="color:inherit;border-bottom:1px solid var(--gold);text-decoration:none;">Odoo</a> is our most established foundation, one of several, and what working with a certified partner means for your project.</p>
     </div>
   </div>

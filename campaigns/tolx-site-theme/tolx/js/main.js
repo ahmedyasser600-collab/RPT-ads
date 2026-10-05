@@ -30,20 +30,15 @@ window.addEventListener('load', () => {
   }, 1200);
 });
 
-// Preloader
+// Preloader — shown on the first page view of a session only, and hidden as
+// soon as the DOM is ready (not after every image has loaded). Repeat views
+// skip it entirely via the inline check in header.php.
 const preloader = document.getElementById('preloader');
 if (preloader) {
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      preloader.classList.add('loaded');
-    }, 800); // minimum display time for the animation to feel intentional
-  });
-  // Safety fallback — hide after 3s even if load event doesn't fire
-  setTimeout(() => {
-    if (preloader && !preloader.classList.contains('loaded')) {
-      preloader.classList.add('loaded');
-    }
-  }, 3000);
+  const hidePreloader = () => preloader.classList.add('loaded');
+  setTimeout(hidePreloader, 450);
+  setTimeout(hidePreloader, 2000); // safety net
+  try { sessionStorage.setItem('tolxSeen', '1'); } catch (e) {}
 }
 
 // Word flip width calculation
@@ -138,14 +133,43 @@ const heroCmd = document.querySelector('.hero-cmd');
 if (heroCmd) {
   // Mark for staggered reveal once preloader has cleared
   window.addEventListener('load', () => {
-    setTimeout(() => heroCmd.classList.add('hero-cmd-revealed'), 1100);
+    setTimeout(() => heroCmd.classList.add('hero-cmd-revealed'), 250);
   });
-  // Safety fallback — reveal anyway after 3.5s
+  // Safety fallback — reveal anyway after 1.5s
   setTimeout(() => {
     if (heroCmd && !heroCmd.classList.contains('hero-cmd-revealed')) {
       heroCmd.classList.add('hero-cmd-revealed');
     }
-  }, 3500);
+  }, 1500);
+}
+
+// Scroll progress hairline
+const progressEl = document.querySelector('.scroll-progress');
+if (progressEl) {
+  let pTick = false;
+  const updateProgress = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progressEl.style.setProperty('--p', max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    pTick = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!pTick) { window.requestAnimationFrame(updateProgress); pTick = true; }
+  }, { passive: true });
+  updateProgress();
+}
+
+// Card spotlight + HUD corners: mark card components and track the pointer
+// (fine pointers only, so touch devices don't get a stuck highlight).
+const fxSelector = '.card, .diag-card, .sol-card, .op-block, .value-card, .step-card, .module-card, .blog-card, .pricing-card';
+document.querySelectorAll(fxSelector).forEach(el => el.classList.add('fx-card'));
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.addEventListener('pointermove', (e) => {
+    const card = e.target.closest('.fx-card');
+    if (!card) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }, { passive: true });
 }
 
 // Consent manager / analytics adapter must explicitly enable this bridge.

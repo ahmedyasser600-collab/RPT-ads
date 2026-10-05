@@ -31,7 +31,7 @@ get_header(); ?>
     <div class="fade-in">
       <div class="section-tag mono">Get in Touch</div>
       <h1>Let's find the right <em>starting point.</em></h1>
-      <p>Tell us where orders, stock, quotations, follow-ups or team updates become hard to track. We help UAE SMEs choose suitable tools, connect information and put a practical process in place.</p>
+      <p>Tell us where orders, stock, quotations, follow-ups or team updates become hard to track. We implement Odoo around how you work, or another solution when Odoo isn't the right fit, and put a practical process in place.</p>
     </div>
   </div>
 </section>

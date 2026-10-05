@@ -11,7 +11,7 @@ get_header(); ?>
     <div class="fade-in">
       <div class="section-tag mono">About Tolx</div>
       <h1>Built in the UAE. <em>Built around how you run.</em></h1>
-      <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. Software, automation, CRM, dashboards, web, and Odoo when it fits.</p>
+      <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. Odoo-first implementation, plus software, automation, CRM, dashboards and web.</p>
     </div>
   </div>
 </section>
@@ -28,7 +28,7 @@ get_header(); ?>
         <h2 class="section-title">Most software starts with the software.</h2>
         <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:16px;">Most software houses and partners in the UAE lead with the tool. They sell the same blank system to a clinic, a trading company, and a service business, then ask each one to change how they work to fit it.</p>
         <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:16px;">The result is long timelines, unclear cost, and systems that never quite fit how the business actually operates, so people drift back to spreadsheets.</p>
-        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;">Tolx starts the other way round. We map how revenue moves through your business — the assets, workflows, and data it depends on — then build the system around it. On Odoo when it fits, on something else when it doesn't.</p>
+        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;">Tolx starts the other way round. We map how revenue moves through your business — the assets, workflows, and data it depends on — then build the system around it. Usually on Odoo, and on another platform when Odoo isn't the right fit.</p>
       </div>
 
       <div class="fade-in" data-stagger="1">

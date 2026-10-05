@@ -9,6 +9,14 @@ get_header(); ?>
      HERO — split layout
      ============================================ -->
 <section class="hero"<?php echo tolx_homepage_hero_bg_style(); ?>>
+  <div class="hero-fx" aria-hidden="true">
+    <div class="hero-fx-aurora"></div>
+    <div class="hero-fx-floor"></div>
+    <div class="hero-fx-horizon"></div>
+    <?php foreach (array(6, 14, 23, 31, 42, 55, 63, 71, 79, 88, 94) as $i => $x) : ?>
+      <span class="hero-fx-p" style="--x:<?php echo $x; ?>%;--d:<?php echo 7 + ($i % 4) * 2; ?>s;--t:<?php echo ($i * 0.9) % 7; ?>s"></span>
+    <?php endforeach; ?>
+  </div>
   <div class="container">
     <div class="hero-grid">
 
@@ -27,16 +35,18 @@ get_header(); ?>
           </span>
           <span class="line">as your business grows.</span>
         </h1>
-        <p class="hero-sub">Orders in WhatsApp, stock in Excel, follow-ups in email? Tolx helps UAE SMEs organise sales, stock and team tasks. We choose suitable software, set it up, connect tools where feasible and support your team as they adopt it.</p>
+        <p class="hero-sub">Orders in WhatsApp, stock in Excel, follow-ups in email? Tolx helps UAE SMEs organise sales, stock and team tasks. As an Odoo Ready Partner we implement Odoo around how you work, or another solution when Odoo isn't the right fit, and support your team as they adopt it.</p>
         <div class="hero-actions">
-          <a href="<?php echo home_url('/solutions/'); ?>" class="btn-primary">See Our Systems <span>→</span></a>
-          <a href="<?php echo home_url('/contact/'); ?>" class="btn-ghost">Book a Discovery Call</a>
+          <a href="<?php echo home_url('/contact/'); ?>" class="btn-primary">Book a Discovery Call <span>→</span></a>
+          <a href="<?php echo home_url('/solutions/'); ?>" class="btn-ghost">See Our Systems</a>
         </div>
+        <p class="hero-alt">Prefer WhatsApp? <a href="https://wa.me/971509860063" target="_blank" rel="noopener">Message us on +971 50 986 0063</a></p>
       </div>
 
       <!-- Operational command visual (right side) -->
       <div class="hero-cmd" aria-hidden="true">
         <div class="cmd-panel">
+          <div class="cmd-scan"></div>
           <div class="cmd-panel-head">
             <div class="cmd-panel-title">Tolx · Operations Layer</div>
             <div class="cmd-panel-meta"><span class="cmd-panel-dot"></span> Live</div>
@@ -97,7 +107,7 @@ get_header(); ?>
           <!-- Route line -->
           <div class="hero-cmd-route">
             <div class="hero-cmd-route-label">Discovery</div>
-            <div class="hero-cmd-route-line"></div>
+            <div class="hero-cmd-route-line"><span class="cmd-packet"></span></div>
             <div class="hero-cmd-route-label">Go Live</div>
           </div>
         </div>
@@ -348,9 +358,9 @@ get_header(); ?>
 
       <div class="fade-in">
         <div class="section-tag mono">The Tolx Layer</div>
-        <h2 class="section-title">Odoo when it fits. One of several foundations we build on.</h2>
-        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:18px;"><a href="<?php echo home_url('/odoo/'); ?>" style="color:var(--text-sec);border-bottom:1px solid var(--gold);text-decoration:none;">Odoo</a> is an open-source ERP foundation — modular, proven across thousands of businesses, and a genuine alternative to SAP and Oracle without the enterprise overhead. It is our most established platform, and one of several.</p>
-        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:24px;">We don't sell blank Odoo licences. When Odoo is the right foundation, we configure it around how your business actually works. When it isn't, we build, connect, or automate what fits instead.</p>
+        <h2 class="section-title">Odoo first. The right fit, always.</h2>
+        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:18px;"><a href="<?php echo home_url('/odoo/'); ?>" style="color:var(--text-sec);border-bottom:1px solid var(--gold);text-decoration:none;">Odoo</a> is an open-source ERP foundation — modular, proven across thousands of businesses, and a genuine alternative to SAP and Oracle without the enterprise overhead. It is our core platform and where most of our projects start.</p>
+        <p style="font-size:16px;color:var(--text-sec);line-height:1.7;margin-bottom:24px;">We don't sell blank Odoo licences. We configure Odoo around how your business actually works. If, after discovery, Odoo genuinely isn't the right fit, we tell you and implement a solution that is.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
           <a href="<?php echo home_url('/odoo/'); ?>" class="btn-ghost">What is Odoo? →</a>
           <a href="<?php echo home_url('/odoo-partner-dubai/'); ?>" class="btn-ghost">Odoo Partner Dubai →</a>
