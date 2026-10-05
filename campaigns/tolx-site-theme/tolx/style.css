@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.3.3
+Version: 1.3.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3057,3 +3057,9 @@ html.js .page-hero .fade-in { opacity: 1; transform: none; filter: none; }
 .skip-link:focus { top: 12px; }
 main { display: block; }
 @media (prefers-reduced-motion: reduce) { .hero-cmd { animation: none; } }
+
+/* 1.3.4 — Consent banner: an empty document link (no text at all) is removed
+   with CSS too, so it is hidden from first paint, without waiting for main.js. */
+.cmplz-documents li:has(> a.cmplz-link:empty),
+.cmplz-documents a.cmplz-link:empty,
+.cmplz-links a.cmplz-link:empty { display: none !important; }
