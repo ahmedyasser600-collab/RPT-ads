@@ -62,3 +62,13 @@ If that plugin has no description or image set, the page ends up with neither.
 - New gap-fill (end of `partials/seo.php`): with one of those plugins active, the theme supplies the description and the social card
   (`social-card-business-systems-2026.png`, 1200×630) only where the plugin left them empty. It never overrides plugin values.
 - Search descriptions and the Organization schema reworded to lead with Odoo (diplomatic positioning).
+
+## 1.3.3 (5 Oct 2026): Agentic Browsing 3/3
+Live PageSpeed after 1.3.2: mobile 88, desktop 96, Agentic Browsing 2/3. The failing check, "Accessibility tree is not well-formed",
+was a single empty link in the Complianz cookie banner (`a.cmplz-link.cookie-statement` with no text, because no Cookie Policy
+document is assigned in Complianz).
+- `main.js` hides consent-banner document links that have no text, and shows them again if the plugin fills the text in later.
+  The proper fix is still to generate the Cookie Policy in Complianz (Wizard → Documents).
+- New `/llms.txt` (llmstxt.org): a Markdown guide to the site for AI agents, built from the page meta map
+  (published pages only, plus the latest 10 posts). Lighthouse audits it once it exists (needs an H1, links, and at least 50 characters).
+Tested locally: axe (link-name, heading-order, landmark-one-main) reports no violations with a mocked Complianz banner; llms.txt renders.

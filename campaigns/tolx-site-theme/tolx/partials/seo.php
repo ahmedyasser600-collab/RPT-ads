@@ -806,3 +806,60 @@ add_filter('aioseo_twitter_tags', function ($tags) {
     return $tags;
 }, 20);
 
+
+/* ==========================================================
+   LLMS.TXT
+   --
+   Serves /llms.txt (https://llmstxt.org): a short Markdown guide
+   to the site for AI agents and assistants. Built from the page
+   meta map above, so titles, descriptions and links stay in sync.
+   Only published pages are listed. Skipped if a real llms.txt
+   file exists in the web root, or via the tolx_serve_llms_txt filter.
+   ========================================================== */
+
+if (!function_exists('tolx_llms_txt')) {
+    function tolx_llms_txt() {
+        $path = strtolower(rtrim(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '', '/'));
+        if ($path !== '/llms.txt') return;
+        if (file_exists(ABSPATH . 'llms.txt') || !apply_filters('tolx_serve_llms_txt', true)) return;
+
+        $map = tolx_get_page_meta_map();
+        $link = function ($slug) use ($map) {
+            $page = get_posts(array('post_type' => 'page', 'name' => $slug, 'post_status' => 'publish', 'numberposts' => 1));
+            if (!$page && $slug !== 'scorecard') return '';
+            $url = $page ? get_permalink($page[0]) : home_url('/operations-readiness-scorecard/');
+            $title = isset($map[$slug]['title']) ? preg_replace('/\s*[·|—]\s*Tolx.*$|\s*\|\s*Tolx$/u', '', $map[$slug]['title']) : ($page ? get_the_title($page[0]) : $slug);
+            $desc = $map[$slug]['description'] ?? '';
+            return '- [' . $title . '](' . $url . ')' . ($desc ? ': ' . $desc : '') . "\n";
+        };
+        $section = function ($heading, $slugs) use ($link) {
+            $rows = '';
+            foreach ($slugs as $s) $rows .= $link($s);
+            return $rows ? "\n## $heading\n\n$rows" : '';
+        };
+
+        $out  = "# Tolx\n\n";
+        $out .= "> Tolx is a Dubai software house and certified Odoo Ready Partner. We help UAE SMEs organise orders, stock, customer follow-ups and team tasks, with Odoo implemented around how each business works, plus practical adoption support.\n\n";
+        $out .= "- Location: Dubai, United Arab Emirates (serving the UAE)\n";
+        $out .= "- Contact: [Book a discovery call](" . home_url('/contact/') . "), WhatsApp +971 50 986 0063, sales@tolx.ae\n";
+        $out .= $section('Odoo', array('odoo', 'uae-implementation', 'odoo-partner-dubai', 'odoo-partnership'));
+        $out .= $section('Systems', array('solutions', 'fleet-management-system', 'logistics-last-mile-system', 'ev-charger-operator-system', 'cpo-revenue-module', 'growth-systems'));
+        $out .= $section('Company', array('about', 'our-approach', 'software-house-dubai', 'contact'));
+
+        $posts = get_posts(array('post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 10));
+        if ($posts) {
+            $out .= "\n## Blog\n\n";
+            foreach ($posts as $p) $out .= '- [' . get_the_title($p) . '](' . get_permalink($p) . ")\n";
+        }
+        $out .= "\n## Optional\n\n";
+        $out .= "- [Operations readiness scorecard](" . home_url('/operations-readiness-scorecard/') . "): a free 2-minute assessment of where a business can save time and money.\n";
+        $out .= $link('privacy-policy') . $link('terms-of-service');
+
+        status_header(200);
+        header('Content-Type: text/plain; charset=utf-8');
+        header('X-Robots-Tag: noindex');
+        echo $out;
+        exit;
+    }
+}
+add_action('template_redirect', 'tolx_llms_txt', 0);

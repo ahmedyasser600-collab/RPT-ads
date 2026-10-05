@@ -156,6 +156,33 @@ if (window.matchMedia('(pointer: fine)').matches) {
   }, { passive: true });
 }
 
+// Cookie banner: hide document links that render with no text (e.g. the
+// cookie-policy link before that page is set up in the consent plugin).
+// An empty link is announced as nothing by screen readers and AI agents.
+(function () {
+  const fixEmptyLinks = () => {
+    document.querySelectorAll('.cmplz-documents a, .cmplz-links a').forEach(a => {
+      const box = a.closest('li') || a;
+      const empty = !a.textContent.trim() && !a.getAttribute('aria-label') && !a.querySelector('img[alt]:not([alt=""])');
+      if (empty && !a.dataset.tolxHidden) {
+        box.style.display = 'none';
+        a.setAttribute('aria-hidden', 'true');
+        a.setAttribute('tabindex', '-1');
+        a.dataset.tolxHidden = '1';
+      } else if (!empty && a.dataset.tolxHidden) {   // plugin filled it in later: show it again
+        box.style.display = '';
+        a.removeAttribute('aria-hidden');
+        a.removeAttribute('tabindex');
+        delete a.dataset.tolxHidden;
+      }
+    });
+  };
+  fixEmptyLinks();
+  const mo = new MutationObserver(fixEmptyLinks);
+  mo.observe(document.body, { childList: true, subtree: true });
+  setTimeout(() => mo.disconnect(), 8000);
+})();
+
 // Consent manager / analytics adapter must explicitly enable this bridge.
 window.tolxMeasure = function (event) {
   if (!['enquiry_saved', 'assessment_saved', 'whatsapp_click', 'phone_click'].includes(event)) return;
