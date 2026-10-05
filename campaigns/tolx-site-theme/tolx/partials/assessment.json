@@ -1,0 +1,212 @@
+[
+  {
+    "lever": "time",
+    "leverLabel": "TIME & CONTROL",
+    "q": "Where does your business data actually live?",
+    "opts": [
+      {
+        "t": "Mostly in one connected system",
+        "gap": false
+      },
+      {
+        "t": "A main system plus a few spreadsheets",
+        "gap": true,
+        "opp": {
+          "text": "Pull your scattered spreadsheets into one connected system, so data is entered once and shared everywhere.",
+          "odoo": "Unified database"
+        }
+      },
+      {
+        "t": "Lots of separate spreadsheets",
+        "gap": true,
+        "opp": {
+          "text": "Replace disconnected spreadsheets with one source of truth — no more conflicting versions or manual consolidation.",
+          "odoo": "Unified database"
+        }
+      },
+      {
+        "t": "Spreadsheets, paper, and people’s memory",
+        "gap": true,
+        "opp": {
+          "text": "Move off paper and memory entirely onto a single system your whole team works from.",
+          "odoo": "Unified database"
+        }
+      }
+    ]
+  },
+  {
+    "lever": "money",
+    "leverLabel": "MONEY VISIBILITY",
+    "q": "Can you see what you’re actually making — per job, per client, per product — right now?",
+    "opts": [
+      {
+        "t": "Yes — I can see margins live",
+        "gap": false
+      },
+      {
+        "t": "Roughly, after some digging",
+        "gap": true,
+        "opp": {
+          "text": "See true profit per job, client, and product in real time — so you stop guessing which work actually makes money.",
+          "odoo": "Analytic accounting"
+        }
+      },
+      {
+        "t": "Only the overall picture, not the detail",
+        "gap": true,
+        "opp": {
+          "text": "Break down profitability by job, client, and product instead of one blended number that hides your best and worst work.",
+          "odoo": "Analytic accounting"
+        }
+      },
+      {
+        "t": "Not really — I find out at year-end",
+        "gap": true,
+        "opp": {
+          "text": "Get live margin visibility instead of discovering profit (or loss) months later when nothing can be changed.",
+          "odoo": "Analytic accounting"
+        }
+      }
+    ]
+  },
+  {
+    "lever": "time",
+    "leverLabel": "WASTED TIME",
+    "q": "How much does your team re-enter the same information by hand?",
+    "opts": [
+      {
+        "t": "Rarely — systems are connected",
+        "gap": false
+      },
+      {
+        "t": "Occasionally",
+        "gap": true,
+        "opp": {
+          "text": "Cut the occasional double-entry that still creeps in, so data flows between sales, stock, and accounting automatically.",
+          "odoo": "Integrated modules"
+        }
+      },
+      {
+        "t": "Often — it’s part of the daily routine",
+        "gap": true,
+        "opp": {
+          "text": "Eliminate daily re-keying — enter information once and let it flow across quotes, invoices, inventory, and accounts.",
+          "odoo": "Integrated modules"
+        }
+      },
+      {
+        "t": "Constantly — double and triple entry is normal",
+        "gap": true,
+        "opp": {
+          "text": "Reclaim the hours lost to constant re-entry — one connected system means data is captured once, used everywhere.",
+          "odoo": "Integrated modules"
+        }
+      }
+    ]
+  },
+  {
+    "lever": "money",
+    "leverLabel": "LEAKED REVENUE",
+    "q": "Do things slip through the cracks — late invoices, missed follow-ups, forgotten renewals?",
+    "opts": [
+      {
+        "t": "No — the system catches everything",
+        "gap": false
+      },
+      {
+        "t": "Occasionally something slips",
+        "gap": true,
+        "opp": {
+          "text": "Stop the occasional missed invoice or follow-up with automated reminders, so revenue doesn’t quietly leak.",
+          "odoo": "CRM · invoicing automation"
+        }
+      },
+      {
+        "t": "Yes, regularly — we chase our tail",
+        "gap": true,
+        "opp": {
+          "text": "Plug the leaks: automatic invoicing, follow-up reminders, and renewal alerts so nothing billable gets forgotten.",
+          "odoo": "CRM · invoicing · subscriptions"
+        }
+      },
+      {
+        "t": "Honestly, we don’t know what we miss",
+        "gap": true,
+        "opp": {
+          "text": "Make every order, invoice, and renewal trackable — so you can see (and capture) revenue that currently slips away unseen.",
+          "odoo": "CRM · invoicing · subscriptions"
+        }
+      }
+    ]
+  },
+  {
+    "lever": "money",
+    "leverLabel": "GROWTH CEILING",
+    "q": "If your business doubled next year, could your current setup handle it?",
+    "opts": [
+      {
+        "t": "Yes — it scales",
+        "gap": false
+      },
+      {
+        "t": "Mostly, with some strain",
+        "gap": true,
+        "opp": {
+          "text": "Remove the strain points that cap your growth, so taking on more work doesn’t mean more chaos.",
+          "odoo": "Modular scaling"
+        }
+      },
+      {
+        "t": "No — we’d be overwhelmed",
+        "gap": true,
+        "opp": {
+          "text": "Build a system that grows with you — add capacity and modules as you scale, without rebuilding how you work.",
+          "odoo": "Modular scaling"
+        }
+      },
+      {
+        "t": "We’re already at breaking point",
+        "gap": true,
+        "opp": {
+          "text": "Break the ceiling you’ve already hit — a real system absorbs the volume that manual processes no longer can.",
+          "odoo": "Modular scaling"
+        }
+      }
+    ]
+  },
+  {
+    "lever": "time",
+    "leverLabel": "OWNER’S TIME",
+    "q": "How much of your week goes to admin instead of running the business?",
+    "opts": [
+      {
+        "t": "Very little — it’s mostly automated",
+        "gap": false
+      },
+      {
+        "t": "A manageable amount",
+        "gap": true,
+        "opp": {
+          "text": "Automate the manageable-but-repetitive admin so even that time goes back into the business.",
+          "odoo": "Workflow automation · approvals"
+        }
+      },
+      {
+        "t": "Too much — admin eats my days",
+        "gap": true,
+        "opp": {
+          "text": "Win back the days lost to admin — automated workflows, approvals, and reporting handle the routine for you.",
+          "odoo": "Automation · approvals · reporting"
+        }
+      },
+      {
+        "t": "Almost all of it — I’m drowning in admin",
+        "gap": true,
+        "opp": {
+          "text": "Get out from under the admin entirely, so your time goes to growing the business instead of running its paperwork.",
+          "odoo": "Automation · approvals · reporting"
+        }
+      }
+    ]
+  }
+]

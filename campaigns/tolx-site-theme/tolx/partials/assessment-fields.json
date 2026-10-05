@@ -1,0 +1,33 @@
+{
+  "sector": [
+    "Retail & E-commerce",
+    "Trading & Distribution",
+    "Logistics & Transport",
+    "Construction & Contracting",
+    "Healthcare & Clinics",
+    "Professional Services",
+    "Manufacturing & Industrial",
+    "Hospitality & F&B",
+    "EV & Energy",
+    "Real Estate & Facilities",
+    "Automotive & Fleet",
+    "Education & Training",
+    "Field Service & Maintenance",
+    "Events & Rentals",
+    "Import / Export",
+    "Agriculture & Food Production",
+    "Marine & Shipping",
+    "Government & Semi-Government",
+    "Other"
+  ],
+  "role": [
+    "Owner / Founder",
+    "CEO / Managing Director",
+    "COO / Operations Director",
+    "Operations Manager",
+    "General Manager",
+    "Finance / Admin Lead",
+    "IT / Systems Lead",
+    "Other"
+  ]
+}
