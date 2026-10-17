@@ -42,17 +42,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 get_header(); ?>
 <?php if ($form_sent && !$submission_result['duplicate']) : ?><script>window.addEventListener('load', function () { if (window.tolxMeasure) window.tolxMeasure('enquiry_saved'); if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'contact' }); });</script><?php endif; ?>
 
-<div class="container contact-v2-crumbs"><?php tolx_render_breadcrumbs(); ?></div>
-
 <section class="contact-v2">
   <div class="container contact-v2-grid">
 
     <div class="contact-v2-intro">
+      <div class="contact-v2-crumbs"><?php tolx_render_breadcrumbs(); ?></div>
       <h1 class="contact-v2-title">Tell us what's hard to track.</h1>
       <p class="contact-v2-lead">Two minutes here. A reply within one business day. Then a 30-minute call to map how your business runs, before we propose anything.</p>
     </div>
 
     <div class="contact-v2-panel" id="enquiry">
+      <div class="contact-v2-panel-head">
+        <h2>Book your discovery call</h2>
+        <p>Takes two minutes. We reply within one business day.</p>
+      </div>
+      <div class="contact-v2-panel-body">
       <?php if ($form_sent) : ?>
         <div class="cform-done" role="status">
           <span class="cform-done-mark" aria-hidden="true"><?php tolx_icon('check', 28); ?></span>
@@ -107,13 +111,14 @@ get_header(); ?>
 
           <div class="cform-field">
             <label for="message">Anything we should know? <span class="cform-opt">optional</span></label>
-            <textarea id="message" name="message" rows="3" placeholder="For example: we take about 40 orders a day on WhatsApp and lose track of follow-ups."><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
+            <textarea id="message" name="message" rows="2" placeholder="For example: we take about 40 orders a day on WhatsApp and lose track of follow-ups."><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
           </div>
 
           <button type="submit" class="cform-submit">Request my discovery call</button>
           <p class="cform-note">We use your details only to reply to you. <a href="<?php echo home_url('/privacy-policy/'); ?>">Privacy policy</a></p>
         </form>
       <?php endif; ?>
+      </div>
     </div>
 
     <div class="contact-v2-after">

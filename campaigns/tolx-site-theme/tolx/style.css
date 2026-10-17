@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.4.0
+Version: 1.4.1
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3067,21 +3067,15 @@ main { display: block; }
 /* ================================================================
    1.4.0 — CONTACT PAGE (taste-skill pass)
    ----------------------------------------------------------------
-   The form now sits in the first screen on a light panel, so it reads
-   as an invitation instead of more dark UI. Inside this section: flat
+   The form now sits in the first screen in a dark panel led by a solid
+   gold header, so it is on brand and is the first thing the eye finds. Inside this section: flat
    colour, no glows or gradients, sentence-case labels at a readable
    size, running text in full ink, surfaces split by tone, not lines.
    ================================================================ */
 .contact-v2 {
-  --c-panel: #F4F4F5;
-  --c-field: #FFFFFF;
-  --c-ink: #18181B;
-  --c-ink-2: #52525B;
-  --c-line: #D4D4D8;
-  --c-focus: #B8892C;
   position: relative;
   z-index: 1;
-  padding: clamp(24px, 4vw, 56px) 0 clamp(80px, 9vw, 140px);
+  padding: calc(var(--nav-h) + 20px) 0 clamp(80px, 9vw, 140px);
 }
 .contact-v2-grid {
   display: grid;
@@ -3092,7 +3086,7 @@ main { display: block; }
   row-gap: 56px;
   align-items: start;
 }
-.contact-v2-intro { grid-area: intro; padding-top: 12px; }
+.contact-v2-intro { grid-area: intro; padding-top: 4px; }
 .contact-v2-panel { grid-area: panel; }
 .contact-v2-after { grid-area: after; }
 
@@ -3151,24 +3145,30 @@ main { display: block; }
 .contact-v2-partner-badge { flex: none; background: #fff; border-radius: 10px; padding: 8px 12px; display: flex; }
 .contact-v2-partner-badge img { width: 96px; height: auto; }
 
-/* ---- The light form panel ---- */
+/* ---- The form panel: on-brand dark, highlighted by a solid gold header ---- */
 .contact-v2-panel {
-  background: var(--c-panel);
-  color: var(--c-ink);
+  background: #131316;
+  color: var(--text);
+  border: 1px solid rgba(212, 168, 67, 0.45);
   border-radius: 20px;
-  padding: clamp(24px, 3.4vw, 48px);
+  overflow: hidden;
 }
-.cform { display: grid; gap: 22px; }
+.contact-v2-panel-head { background: var(--gold); color: #09090B; padding: clamp(18px, 2vw, 24px) clamp(24px, 3.4vw, 40px); }
+.contact-v2-panel-head h2 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 6px; color: #09090B; }
+.contact-v2-panel-head p { font-size: 16px; margin: 0; color: #2A2005; font-weight: 500; }
+.contact-v2-panel-body { padding: clamp(20px, 2.4vw, 28px) clamp(24px, 3.4vw, 40px) clamp(24px, 3vw, 32px); }
+
+.cform { display: grid; gap: 18px; }
 .cform fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .cform legend, .cform-field label {
   font-size: 16px;
   font-weight: 600;
-  color: var(--c-ink);
-  margin-bottom: 10px;
+  color: var(--text);
+  margin-bottom: 8px;
   padding: 0;
   display: block;
 }
-.cform-opt { font-weight: 400; color: var(--c-ink-2); font-size: 14px; margin-left: 4px; }
+.cform-opt { font-weight: 400; color: var(--text-sec); font-size: 14px; margin-left: 4px; }
 .cform-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .cform-chip { position: relative; cursor: pointer; }
 .cform-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -3179,23 +3179,23 @@ main { display: block; }
   min-height: 44px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: #E4E4E7;
-  color: var(--c-ink);
+  background: #222227;
+  color: #E4E4E7;
   font-size: 15px;
   font-weight: 500;
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
-.cform-chip:hover span { background: #D4D4D8; }
+.cform-chip:hover span { background: #2D2D33; color: #fff; }
 .cform-chip:active span { transform: scale(0.97); }
-.cform-chip input:checked + span { background: var(--c-ink); color: #fff; }
+.cform-chip input:checked + span { background: var(--gold); color: #09090B; font-weight: 600; }
 .cform-chip input:checked + span::before {
   content: '';
-  width: 12px; height: 7px;
-  border-left: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
+  width: 11px; height: 6px;
+  border-left: 2px solid #09090B;
+  border-bottom: 2px solid #09090B;
   transform: rotate(-45deg) translateY(-2px);
 }
-.cform-chip input:focus-visible + span { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+.cform-chip input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .cform-field { min-width: 0; }
@@ -3203,19 +3203,20 @@ main { display: block; }
   width: 100%;
   font: inherit;
   font-size: 17px;
-  color: var(--c-ink);
-  background: var(--c-field);
-  border: 1px solid var(--c-line);
+  color: var(--text);
+  background: #1C1C21;
+  border: 1px solid #34343B;
   border-radius: 10px;
   padding: 14px 16px;
   min-height: 52px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.cform-field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
-.cform-field input::placeholder, .cform-field textarea::placeholder { color: #8A8A93; }
-.cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--c-focus); box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.35); }
-.cform-field input[aria-invalid="true"] { border-color: #B42318; }
-.cform-field-msg { font-size: 14px; color: #B42318; margin-top: 6px; }
+.cform-field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.cform-field input::placeholder, .cform-field textarea::placeholder { color: #7C7C86; }
+.cform-field input:hover, .cform-field textarea:hover { border-color: #4A4A52; }
+.cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--gold); background: #202026; box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.25); }
+.cform-field input[aria-invalid="true"] { border-color: #F97066; }
+.cform-field-msg { font-size: 14px; color: #FDA29B; margin-top: 6px; }
 
 .cform-submit {
   width: 100%;
@@ -3230,19 +3231,19 @@ main { display: block; }
   cursor: pointer;
   transition: background 0.15s ease, transform 0.15s ease;
 }
-.cform-submit:hover { background: var(--gold-hover); }
+.cform-submit:hover { background: var(--gold-hover); transform: translateY(-1px); }
 .cform-submit:active { transform: scale(0.99); }
-.cform-submit:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 3px; }
+.cform-submit:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .cform-submit[disabled] { opacity: 0.7; cursor: progress; }
-.cform-note { font-size: 14px; color: var(--c-ink-2); margin: -8px 0 0; text-align: center; }
-.cform-note a { color: var(--c-ink); text-decoration: underline; text-underline-offset: 3px; }
-.cform-error { background: #FEE4E2; color: #7A271A; border-radius: 10px; padding: 14px 16px; font-size: 16px; margin: 0; }
+.cform-note { font-size: 14px; color: var(--text-sec); margin: -8px 0 0; text-align: center; }
+.cform-note a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.cform-error { background: #3B1512; color: #FECDCA; border-radius: 10px; padding: 14px 16px; font-size: 16px; margin: 0; }
 
-.cform-done { padding: 24px 0; }
-.cform-done-mark { width: 56px; height: 56px; border-radius: 50%; background: var(--c-ink); color: var(--gold); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-.cform-done h2 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 12px; color: var(--c-ink); }
-.cform-done p { font-size: 17px; color: var(--c-ink); margin: 0 0 10px; }
-.cform-done-alt a { color: var(--c-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.cform-done { padding: 8px 0; }
+.cform-done-mark { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); color: #09090B; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.cform-done h2 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 12px; color: var(--text); }
+.cform-done p { font-size: 17px; color: var(--text); margin: 0 0 10px; }
+.cform-done-alt a { color: var(--gold); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---- Entrance: parts of the section rise in turn (content stays visible without JS) ---- */
 html.js .contact-v2-intro > *, html.js .contact-v2-panel, html.js .contact-v2-after > * {
@@ -3253,7 +3254,8 @@ html.js .contact-v2-panel { animation-delay: 0.14s; }
 html.js .contact-v2-after > :nth-child(n+2) { animation-delay: 0.21s; }
 @keyframes tolxRiseIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 
-.contact-v2-crumbs { padding-top: calc(var(--nav-h) + 20px); }
+.contact-v2-crumbs { margin-bottom: 20px; }
+.contact-v2-crumbs .tolx-breadcrumbs, .contact-v2-crumbs .tolx-breadcrumbs .container { padding: 0; margin: 0; max-width: none; }
 #enquiry { scroll-margin-top: calc(var(--nav-h) + 16px); }
 @media (max-width: 900px) {
   .contact-v2-grid { grid-template-columns: 1fr; grid-template-areas: "intro" "panel" "after"; grid-template-rows: auto; row-gap: 32px; }
@@ -3265,6 +3267,7 @@ html.js .contact-v2-after > :nth-child(n+2) { animation-delay: 0.21s; }
   .cform-chips { gap: 6px; }
   .cform-chip span { min-height: 40px; padding: 8px 12px; font-size: 14px; }
   .contact-v2-panel { border-radius: 16px; margin: 0 -6px; }
+  .contact-v2-panel-head p { font-size: 15px; }
   .contact-v2-direct a { grid-template-columns: 24px 1fr; }
   .contact-v2-direct-sub { display: none; }
 }

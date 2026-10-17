@@ -101,3 +101,13 @@ Client: Google Ads are running but no one fills the form; the page felt dark and
 
 **Before uploading 1.4.0:** the theme no longer contains the Gmail app password. Add it to `wp-config.php` first:
 `define('TOLX_SMTP_PASS', 'xxxx xxxx xxxx xxxx');` (a NEW app password; the old one was shared in a zip and should be revoked).
+
+## 1.4.1 (17 Oct 2026): form back on brand, highlighted
+Client: "it should be on brand but more highlighted" (the light panel read as off-brand).
+- The form panel is dark (#131316) with a gold-tinted edge, led by a solid gold header: "Book your discovery call / Takes two
+  minutes. We reply within one business day." Picked topic chips turn gold, inputs are dark with a gold focus ring, and the
+  button is flat gold.
+- Tighter spacing, and the breadcrumb moved into the left column: the whole form including the button fits in the first
+  screen at 1440×900 and larger (fields visible but the button just below at 1366×768).
+- Email sending (`partials/leads.php`) is unchanged from the live site apart from the password placeholder and the two
+  lead-email labels ("Source", "Came from (ad / campaign)").
