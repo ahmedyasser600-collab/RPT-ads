@@ -11,7 +11,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $form_error = 'Submission rejected.';
     } else {
         $data = [];
-        foreach (['name', 'company', 'email', 'phone', 'industry', 'message', 'source'] as $key) $data[$key] = tolx_input($key, $key === 'message' ? 5000 : 200);
+        // 'name' is a reserved WordPress query var; posting it makes WP return a 404 before this template runs.
+        foreach (['name' => 'tolx_name', 'company' => 'company', 'email' => 'email', 'phone' => 'phone', 'industry' => 'industry', 'message' => 'message', 'source' => 'source'] as $key => $field) $data[$key] = tolx_input($field, $key === 'message' ? 5000 : 200);
         if (!$data['name'] || !is_email($data['email']) || !$data['message']) $form_error = 'Enter your name, a valid email and your message.';
         else {
             $submission_result = tolx_save_submission('contact', $data);
@@ -103,7 +104,7 @@ get_header(); ?>
 
             <div class="form-group">
               <label class="form-label" for="name">Your Name *</label>
-              <input type="text" id="name" name="name" class="form-input" placeholder="Full name" required value="<?php echo esc_attr(tolx_input('name', 5000)); ?>">
+              <input type="text" id="name" name="tolx_name" class="form-input" placeholder="Full name" required value="<?php echo esc_attr(tolx_input('tolx_name', 5000)); ?>">
             </div>
             <div class="form-group">
               <label class="form-label" for="company">Company</label>
