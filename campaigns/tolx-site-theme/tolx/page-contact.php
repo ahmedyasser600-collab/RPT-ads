@@ -4,6 +4,19 @@
  */
 
 $form_sent = false; $form_error = false; $submission_result = null;
+if (!function_exists('tolx_contact_topics')) {
+    function tolx_contact_topics() {
+        return [
+            'crm'             => 'Orders and customer follow-up',
+            'revenue-assets'  => 'Stock and sales',
+            'einvoicing'      => 'Invoicing and e-invoicing',
+            'workflows'       => 'Team tasks and approvals',
+            'reporting'       => 'Reports and dashboards',
+            'marketing'       => 'Website and marketing',
+            'not-sure'        => 'Not sure yet',
+        ];
+    }
+}
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     if (!wp_verify_nonce(tolx_input('tolx_contact_nonce'), 'tolx_contact_form')) {
         $form_error = 'Security check failed. Refresh this page and try again.';
@@ -12,8 +25,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     } else {
         $data = [];
         // 'name' is a reserved WordPress query var; posting it makes WP return a 404 before this template runs.
-        foreach (['name' => 'tolx_name', 'company' => 'company', 'email' => 'email', 'phone' => 'phone', 'industry' => 'industry', 'message' => 'message', 'source' => 'source'] as $key => $field) $data[$key] = tolx_input($field, $key === 'message' ? 5000 : 200);
-        if (!$data['name'] || !is_email($data['email']) || !$data['message']) $form_error = 'Enter your name, a valid email and your message.';
+        foreach (['name' => 'tolx_name', 'company' => 'company', 'email' => 'email', 'phone' => 'phone', 'message' => 'message', 'source' => 'source'] as $key => $field) $data[$key] = tolx_input($field, $key === 'message' ? 5000 : 200);
+        // Topics: chips post improve[]; keep only known values, stored as readable labels.
+        $picked = array_intersect(array_keys(tolx_contact_topics()), array_map('sanitize_key', (array) ($_POST['improve'] ?? [])));
+        $data['industry'] = implode(', ', array_map(function ($k) { return tolx_contact_topics()[$k]; }, $picked));
+        $data['tracking'] = tolx_input('tracking', 500);
+        if (!$data['name'] || !is_email($data['email'])) $form_error = 'Please add your name and a valid email address.';
         else {
             $submission_result = tolx_save_submission('contact', $data);
             if (is_wp_error($submission_result)) $form_error = $submission_result->get_error_message();
@@ -23,190 +40,103 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 }
 
 get_header(); ?>
-<?php if ($form_sent && !$submission_result['duplicate']) : ?><script>window.addEventListener('load', function () { if (window.tolxMeasure) window.tolxMeasure('enquiry_saved'); });</script><?php endif; ?>
+<?php if ($form_sent && !$submission_result['duplicate']) : ?><script>window.addEventListener('load', function () { if (window.tolxMeasure) window.tolxMeasure('enquiry_saved'); if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form: 'contact' }); });</script><?php endif; ?>
 
-<div class="container"><?php tolx_render_breadcrumbs(); ?></div>
+<div class="container contact-v2-crumbs"><?php tolx_render_breadcrumbs(); ?></div>
 
-<section class="page-hero">
-  <div class="container">
-    <div class="fade-in">
-      <div class="section-tag mono">Get in Touch</div>
-      <h1>Let's find the right <em>starting point.</em></h1>
-      <p>Tell us where orders, stock, quotations, follow-ups or team updates become hard to track. We implement Odoo around how you work and put a practical process in place.</p>
+<section class="contact-v2">
+  <div class="container contact-v2-grid">
+
+    <div class="contact-v2-intro">
+      <h1 class="contact-v2-title">Tell us what's hard to track.</h1>
+      <p class="contact-v2-lead">Two minutes here. A reply within one business day. Then a 30-minute call to map how your business runs, before we propose anything.</p>
     </div>
-  </div>
-</section>
 
-<!-- ============================================
-     EXPECTATION PANEL
-     ============================================ -->
-<section class="section-sm">
-  <div class="container">
-    <div class="cmd-panel fade-in" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;padding:32px 36px;">
-      <div style="display:flex;align-items:center;gap:14px;">
-        <span class="cmd-panel-dot"></span>
-        <div>
-          <div class="cmd-panel-title" style="margin-bottom:4px;">What to Expect</div>
-          <div style="font-size:15px;color:var(--text);">30-minute discovery call · We map the operation before we propose anything</div>
+    <div class="contact-v2-panel" id="enquiry">
+      <?php if ($form_sent) : ?>
+        <div class="cform-done" role="status">
+          <span class="cform-done-mark" aria-hidden="true"><?php tolx_icon('check', 28); ?></span>
+          <h2>Thanks, <?php echo esc_html(strtok($data['name'], ' ')); ?>. We've got it.</h2>
+          <p>We'll reply within one business day. A confirmation is on its way to your inbox.</p>
+          <p class="cform-done-alt">Need an answer sooner? <a href="https://wa.me/971509860063" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
         </div>
-      </div>
-      <div style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-sec);">Reply within 1 business day</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================
-     CONTACT GRID
-     ============================================ -->
-<section class="section-sm" style="padding-top:0;">
-  <div class="container">
-
-    <?php
-    // Optional contact-page hero image — renders only if uploaded
-    $contact_img = get_theme_mod('tolx_img_contact_hero', '');
-    if (!empty($contact_img)):
-    ?>
-    <div class="fade-in" style="margin-bottom: 48px;">
-      <?php
-      tolx_image_slot('contact_hero', null, [
-          'alt'           => 'Tolx — Dubai software house and business systems partner',
-          'wrapper_class' => 'tolx-img-wrap--wide',
-      ]);
-      ?>
-    </div>
-    <?php endif; ?>
-
-    <div class="hero-grid">
-
-      <!-- LEFT — FORM -->
-      <div class="fade-in">
-        <h2 style="font-size:24px;font-weight:600;margin-bottom:24px;letter-spacing:-0.4px;">Send us a message</h2>
-
-        <?php if ($form_sent) : ?>
-          <div class="cmd-panel" style="padding:48px 32px;text-align:center;">
-            <div class="card-icon" style="margin:0 auto 18px;">
-              <?php tolx_icon('check', 24); ?>
-            </div>
-            <h3 style="font-size:20px;font-weight:600;margin-bottom:8px;">Enquiry saved.</h3>
-            <p style="font-size:15px;color:var(--text-sec);"><?php echo esc_html($submission_result['message']); ?></p>
-          </div>
-        <?php else : ?>
+      <?php else : ?>
+        <form method="POST" action="#enquiry" class="cform" novalidate>
+          <?php wp_nonce_field('tolx_contact_form', 'tolx_contact_nonce'); ?>
+          <div style="position:absolute;left:-9999px" aria-hidden="true"><input name="contact_website" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="tracking" value="<?php echo esc_attr(tolx_input('tracking', 500)); ?>">
+          <input type="hidden" name="source" value="<?php echo esc_attr(tolx_input('source', 200)); ?>">
 
           <?php if ($form_error) : ?>
-            <div style="background:var(--status-alert-soft);border:1px solid rgba(220,60,60,0.2);border-radius:8px;padding:16px 20px;margin-bottom:24px;">
-              <p style="font-size:14px;color:var(--text);margin:0;"><?php echo esc_html($form_error); ?></p>
-            </div>
+            <p class="cform-error" role="alert"><?php echo esc_html($form_error); ?></p>
           <?php endif; ?>
 
-          <form method="POST" action="">
-            <?php wp_nonce_field('tolx_contact_form', 'tolx_contact_nonce'); ?>
-            <div style="position:absolute;left:-9999px" aria-hidden="true"><input name="contact_website" tabindex="-1" autocomplete="off"></div>
+          <fieldset class="cform-topics">
+            <legend>What should we look at first?</legend>
+            <div class="cform-chips">
+              <?php $picked_now = array_map('sanitize_key', (array) ($_POST['improve'] ?? [])); foreach (tolx_contact_topics() as $key => $label) : ?>
+                <label class="cform-chip">
+                  <input type="checkbox" name="improve[]" value="<?php echo esc_attr($key); ?>" <?php checked(in_array($key, $picked_now, true)); ?>>
+                  <span><?php echo esc_html($label); ?></span>
+                </label>
+              <?php endforeach; ?>
+            </div>
+          </fieldset>
 
-            <div class="form-group">
-              <label class="form-label" for="name">Your Name *</label>
-              <input type="text" id="name" name="tolx_name" class="form-input" placeholder="Full name" required value="<?php echo esc_attr(tolx_input('tolx_name', 5000)); ?>">
+          <div class="cform-row">
+            <div class="cform-field">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="tolx_name" autocomplete="name" required value="<?php echo esc_attr(tolx_input('tolx_name', 200)); ?>">
             </div>
-            <div class="form-group">
-              <label class="form-label" for="company">Company</label>
-              <input type="text" id="company" name="company" class="form-input" placeholder="Company name" value="<?php echo esc_attr(tolx_input('company', 5000)); ?>">
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div class="form-group">
-                <label class="form-label" for="email">Email *</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="you@company.com" required value="<?php echo esc_attr(tolx_input('email', 5000)); ?>">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+971 5X XXX XXXX" value="<?php echo esc_attr(tolx_input('phone', 5000)); ?>">
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="industry">What do you want to improve?</label>
-              <select id="industry" name="industry" class="form-select">
-                <option value="">Select what you'd like to improve</option>
-                <option value="workflows" <?php selected(tolx_input('industry', 5000), 'workflows'); ?>>Team tasks and approvals</option>
-                <option value="revenue-assets" <?php selected(tolx_input('industry', 5000), 'revenue-assets'); ?>>Stock and sales</option>
-                <option value="website" <?php selected(tolx_input('industry', 5000), 'website'); ?>>Website / digital presence</option>
-                <option value="marketing" <?php selected(tolx_input('industry', 5000), 'marketing'); ?>>Marketing and lead generation</option>
-                <option value="crm" <?php selected(tolx_input('industry', 5000), 'crm'); ?>>Order tracking and customer follow-up</option>
-                <option value="automation" <?php selected(tolx_input('industry', 5000), 'automation'); ?>>Automation / integrations</option>
-                <option value="reporting" <?php selected(tolx_input('industry', 5000), 'reporting'); ?>>Reporting / dashboards</option>
-                <option value="odoo" <?php selected(tolx_input('industry', 5000), 'odoo'); ?>>Odoo configuration</option>
-                <option value="not-sure" <?php selected(tolx_input('industry', 5000), 'not-sure'); ?>>Not sure yet</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="message">Message *</label>
-              <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your operation and what you're looking for..." required><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="source">How did you hear about us?</label>
-              <select id="source" name="source" class="form-select">
-                <option value="">Select one</option>
-                <option value="google" <?php selected(tolx_input('source', 5000), 'google'); ?>>Google Search</option>
-                <option value="linkedin" <?php selected(tolx_input('source', 5000), 'linkedin'); ?>>LinkedIn</option>
-                <option value="referral" <?php selected(tolx_input('source', 5000), 'referral'); ?>>Referral</option>
-                <option value="odoo" <?php selected(tolx_input('source', 5000), 'odoo'); ?>>Odoo.com</option>
-                <option value="event" <?php selected(tolx_input('source', 5000), 'event'); ?>>Event / Conference</option>
-                <option value="other" <?php selected(tolx_input('source', 5000), 'other'); ?>>Other</option>
-              </select>
-            </div>
-            <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:8px;">Send Message <span>→</span></button>
-          </form>
-          <p style="font-size:13px;color:var(--text-sec);margin-top:14px;text-align:center;">We respond to all enquiries within 1 business day.</p>
-        <?php endif; ?>
-      </div>
-
-      <!-- RIGHT — CONTACT CHANNELS -->
-      <div class="fade-in" data-stagger="1">
-        <h2 style="font-size:24px;font-weight:600;margin-bottom:24px;letter-spacing:-0.4px;">Other ways to reach us</h2>
-
-        <div class="op-grid" style="grid-template-columns:1fr;gap:14px;">
-
-          <a href="tel:+971509860063" class="op-block" style="text-decoration:none;color:inherit;">
-            <div class="op-block-icon"><?php tolx_icon('phone', 18); ?></div>
-            <div>
-              <h3>Call Us</h3>
-              <p style="font-family:'Share Tech Mono',monospace;color:var(--gold);letter-spacing:0.5px;">+971 50 986 0063</p>
-            </div>
-          </a>
-
-          <a href="https://wa.me/971509860063" target="_blank" rel="noopener" class="op-block" style="text-decoration:none;color:inherit;">
-            <div class="op-block-icon"><?php tolx_icon('chat', 18); ?></div>
-            <div>
-              <h3>WhatsApp</h3>
-              <p>Message us directly. Replies same day.</p>
-            </div>
-          </a>
-
-          <a href="mailto:sales@tolx.ae" class="op-block" style="text-decoration:none;color:inherit;">
-            <div class="op-block-icon"><?php tolx_icon('mail', 18); ?></div>
-            <div>
-              <h3>Email</h3>
-              <p style="font-family:'Share Tech Mono',monospace;color:var(--gold);letter-spacing:0.5px;font-size:13px;">sales@tolx.ae</p>
-            </div>
-          </a>
-
-          <a href="https://www.linkedin.com/company/tolx1" target="_blank" rel="noopener" class="op-block" style="text-decoration:none;color:inherit;">
-            <div class="op-block-icon"><?php tolx_icon('linkedin', 18); ?></div>
-            <div>
-              <h3>LinkedIn</h3>
-              <p>Follow for industry insights and updates.</p>
-            </div>
-          </a>
-
-          <div class="op-block">
-            <div class="op-block-icon"><?php tolx_icon('pin', 18); ?></div>
-            <div>
-              <h3>Office</h3>
-              <p>Dubai, United Arab Emirates</p>
+            <div class="cform-field">
+              <label for="company">Company <span class="cform-opt">optional</span></label>
+              <input type="text" id="company" name="company" autocomplete="organization" value="<?php echo esc_attr(tolx_input('company', 200)); ?>">
             </div>
           </div>
 
-        </div>
-      </div>
+          <div class="cform-row">
+            <div class="cform-field">
+              <label for="email">Work email</label>
+              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required value="<?php echo esc_attr(tolx_input('email', 200)); ?>">
+            </div>
+            <div class="cform-field">
+              <label for="phone">Phone or WhatsApp <span class="cform-opt">optional</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+971" value="<?php echo esc_attr(tolx_input('phone', 200)); ?>">
+            </div>
+          </div>
 
+          <div class="cform-field">
+            <label for="message">Anything we should know? <span class="cform-opt">optional</span></label>
+            <textarea id="message" name="message" rows="3" placeholder="For example: we take about 40 orders a day on WhatsApp and lose track of follow-ups."><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
+          </div>
+
+          <button type="submit" class="cform-submit">Request my discovery call</button>
+          <p class="cform-note">We use your details only to reply to you. <a href="<?php echo home_url('/privacy-policy/'); ?>">Privacy policy</a></p>
+        </form>
+      <?php endif; ?>
     </div>
+
+    <div class="contact-v2-after">
+      <h2 class="contact-v2-h2">What happens next</h2>
+      <ol class="contact-v2-steps">
+        <li><strong>We reply within one business day,</strong> by email or WhatsApp, whichever you prefer.</li>
+        <li><strong>A 30-minute discovery call.</strong> You walk us through how orders, stock and tasks move today.</li>
+        <li><strong>A clear proposal.</strong> We map your operation first, then show how Odoo would run it.</li>
+      </ol>
+
+      <h2 class="contact-v2-h2">Rather talk now?</h2>
+      <ul class="contact-v2-direct">
+        <li><a href="https://wa.me/971509860063" target="_blank" rel="noopener"><?php tolx_icon('chat', 20); ?><span>WhatsApp us</span><span class="contact-v2-direct-sub">Replies the same day</span></a></li>
+        <li><a href="tel:+971509860063"><?php tolx_icon('phone', 20); ?><span>+971 50 986 0063</span><span class="contact-v2-direct-sub">Call us</span></a></li>
+        <li><a href="mailto:sales@tolx.ae"><?php tolx_icon('mail', 20); ?><span>sales@tolx.ae</span><span class="contact-v2-direct-sub">Email</span></a></li>
+      </ul>
+
+      <a href="<?php echo home_url('/about/odoo-partnership/'); ?>" class="contact-v2-partner">
+        <span class="contact-v2-partner-badge"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/odoo_ready_partners_rgb.svg" alt="Odoo Ready Partner badge" width="120" height="60" loading="lazy"></span>
+        <span>Certified Odoo Ready Partner, based in Dubai.</span>
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -223,7 +153,7 @@ get_header(); ?>
           <?php tolx_helm(28); ?>
           <span class="nav-wordmark">TOLX<span>.</span></span>
         </a>
-        <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. Odoo is our most established foundation, and one of several.</p>
+        <p>A UAE software house and business systems partner. We build systems around the assets, workflows, data, and digital channels that generate revenue. As an Odoo Ready Partner, we implement Odoo around how each business works.</p>
         <a href="<?php echo home_url('/about/odoo-partnership/'); ?>" class="footer-badge" aria-label="Odoo Ready Partner">
           <span class="odoo-badge-chip odoo-badge-chip--sm">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/odoo_ready_partners_rgb.svg" alt="Odoo Ready Partner badge" width="68" height="34" loading="lazy">

@@ -183,6 +183,68 @@ if (window.matchMedia('(pointer: fine)').matches) {
   setTimeout(() => mo.disconnect(), 8000);
 })();
 
+// Ad attribution: remember the campaign tags / Google Ads click id from the
+// landing URL (for 30 days, in this browser only) so an enquiry made a few
+// pages later still says which ad or campaign brought the visitor.
+(function () {
+  const KEY = 'tolxAttribution';
+  const params = new URLSearchParams(location.search);
+  const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'];
+  const found = {};
+  keys.forEach(k => { const v = params.get(k); if (v) found[k] = v.slice(0, 120); });
+  try {
+    if (Object.keys(found).length) {
+      found.landing = location.pathname.slice(0, 120);
+      localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), v: found }));
+    }
+  } catch (e) {}
+  const form = document.querySelector('form.cform');
+  if (!form) return;
+  let saved = null;
+  try {
+    const raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (raw && Date.now() - raw.t < 30 * 864e5) saved = raw.v;
+  } catch (e) {}
+  if (!saved) return;
+  const tracking = form.querySelector('input[name="tracking"]');
+  const source = form.querySelector('input[name="source"]');
+  if (tracking && !tracking.value) tracking.value = Object.entries(saved).map(([k, v]) => k + '=' + v).join('; ');
+  if (source && !source.value) {
+    const paid = saved.gclid || saved.gbraid || saved.wbraid || /cpc|ppc|paid/i.test(saved.utm_medium || '');
+    source.value = paid && /google/i.test(saved.utm_source || 'google') ? 'google-ads' : (saved.utm_source || '');
+  }
+})();
+
+// Contact form: inline checks for the two required fields, one submit only.
+(function () {
+  const form = document.querySelector('form.cform');
+  if (!form) return;
+  const rules = [
+    { el: form.querySelector('#name'), ok: v => v.trim().length > 0, msg: 'Please add your name.' },
+    { el: form.querySelector('#email'), ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()), msg: 'Please add a valid email, like name@company.com.' },
+  ].filter(r => r.el);
+  const show = (r, bad) => {
+    let m = r.el.parentNode.querySelector('.cform-field-msg');
+    if (bad) {
+      r.el.setAttribute('aria-invalid', 'true');
+      if (!m) { m = document.createElement('p'); m.className = 'cform-field-msg'; m.id = r.el.id + '-msg'; r.el.parentNode.appendChild(m); r.el.setAttribute('aria-describedby', m.id); }
+      m.textContent = r.msg;
+    } else {
+      r.el.removeAttribute('aria-invalid');
+      if (m) m.remove();
+    }
+  };
+  rules.forEach(r => r.el.addEventListener('blur', () => { if (r.el.value) show(r, !r.ok(r.el.value)); }));
+  rules.forEach(r => r.el.addEventListener('input', () => { if (r.el.getAttribute('aria-invalid')) show(r, !r.ok(r.el.value)); }));
+  form.addEventListener('submit', (e) => {
+    let first = null;
+    rules.forEach(r => { const bad = !r.ok(r.el.value); show(r, bad); if (bad && !first) first = r.el; });
+    if (first) { e.preventDefault(); first.focus(); return; }
+    const btn = form.querySelector('.cform-submit');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  });
+})();
+
 // Consent manager / analytics adapter must explicitly enable this bridge.
 window.tolxMeasure = function (event) {
   if (!['enquiry_saved', 'assessment_saved', 'whatsapp_click', 'phone_click'].includes(event)) return;

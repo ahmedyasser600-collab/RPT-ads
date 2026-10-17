@@ -1,0 +1,1 @@
+Source: https://github.com/Leonxlnx/taste-skill (MIT), commit f624f37, copied 2026-10-17.

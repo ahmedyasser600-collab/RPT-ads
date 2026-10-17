@@ -108,7 +108,7 @@ function tolx_lead_subject($kind, $data, $id) {
     return ($kind === 'assessment' ? 'New scorecard lead: ' : 'New enquiry: ') . $who . ' #' . $id;
 }
 function tolx_lead_email_body($kind, $data, $summary, $id) {
-    $labels = ['name' => 'Name', 'company' => 'Company', 'email' => 'Email', 'phone' => 'Phone', 'industry' => 'Wants to improve', 'source' => 'Heard about us', 'sector' => 'Sector', 'role' => 'Role', 'consent' => 'Consent'];
+    $labels = ['name' => 'Name', 'company' => 'Company', 'email' => 'Email', 'phone' => 'Phone', 'industry' => 'Wants to improve', 'source' => 'Source', 'tracking' => 'Came from (ad / campaign)', 'sector' => 'Sector', 'role' => 'Role', 'consent' => 'Consent'];
     $lines = ['New ' . $kind . ' from tolx.ae', ''];
     foreach ($labels as $key => $label) {
         if (isset($data[$key]) && $data[$key] !== '') $lines[] = $label . ': ' . $data[$key];

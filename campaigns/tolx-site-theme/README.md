@@ -78,3 +78,26 @@ After 1.3.3, the client reported mobile 78 and Agentic Browsing still 2/3. The C
 - CSS now hides an empty consent-banner document link from first paint (`a.cmplz-link:empty`), independent of JS timing.
   Verified with axe with `main.js` blocked: no link-name violation.
 - The live report still has to confirm which agentic check fails and whether 1.3.3/1.3.4 is actually being served (cache).
+
+## 1.4.0 (17 Oct 2026): contact form redesign (taste-skill pass)
+Client: Google Ads are running but no one fills the form; the page felt dark and uninviting. Built on the client's live 1.3.4
+(which had their own `tolx_name` field fix and SMTP lead mail; synced into the repo with the SMTP password removed).
+- **The form is in the first screen,** on a light panel (#F4F4F5) beside a large headline: "Tell us what's hard to track."
+  The old hero, "What to expect" strip and five contact cards are gone; their content moved into "What happens next"
+  (a real ordered list) and "Rather talk now?" (WhatsApp, phone, email) under the headline, plus the Odoo Ready Partner badge.
+- **Shorter and friendlier:** topic chips ("What should we look at first?", multi-select) replace the dropdown; only name and email
+  are required; company, phone and message are marked optional; "How did you hear about us?" was removed (the ad source is now
+  captured automatically). The button reads "Request my discovery call". Readable sentence-case labels, 17px inputs, 52px+ tap targets.
+- **Inline validation** for name and email, one submit only ("Sending…"), and values and chips are kept after a server error.
+  After a failed send, the page scrolls to the form (clear of the fixed nav).
+- **Ad attribution:** `main.js` stores utm_* / gclid / gbraid / wbraid from the landing URL for 30 days (this browser only).
+  The enquiry carries them in a hidden `tracking` field and sets `source` = `google-ads` for paid Google clicks. The lead email
+  shows them as "Came from (ad / campaign)".
+- **Conversion event:** a successful enquiry fires GA4 `generate_lead` (via the site's gtag), so it can be imported into Google Ads.
+- New topic value `einvoicing` ("Invoicing and e-invoicing"), which ties into the e-invoicing video.
+- Taste-skill inspector: the contact page went from 15 FAIL to 7. The remaining 7 come from site-wide brand elements
+  (monospace breadcrumbs and footer labels, the gold glow on the nav "Book a Call" button, nav/footer hairlines, no photography),
+  kept for consistency with the rest of the site.
+
+**Before uploading 1.4.0:** the theme no longer contains the Gmail app password. Add it to `wp-config.php` first:
+`define('TOLX_SMTP_PASS', 'xxxx xxxx xxxx xxxx');` (a NEW app password; the old one was shared in a zip and should be revoked).

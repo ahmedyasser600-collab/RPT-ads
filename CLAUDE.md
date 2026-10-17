@@ -3,6 +3,13 @@
 This repo holds two separate video projects: **RPT** (Italian bathroom-renovation reels: `reels/`, `campaigns/rpt-*`,
 `assets/`) and **TOLX** (UAE business-systems social videos: `campaigns/tolx-*`). Keep them separate.
 
+## Design taste (all projects, client request 17 Oct 2026)
+- For any web page, landing page, form or other public-facing UI, use the **taste skill** in `.claude/skills/taste-skill/`
+  (tasteskill v2, MIT, from github.com/Leonxlnx/taste-skill; read its `SKILL.md`). Follow its run: write the argument and
+  copy first, then build, gate with `scripts/lint.mjs` / `scripts/inspect.mjs`, look at the screenshots, then add motion.
+- An existing brand wins where it conflicts with a house rule (e.g. TOLX's gold and Chakra Petch): keep the brand asset,
+  apply every other rule, and say in the report which rules were set aside and why.
+
 ## TOLX website theme
 - Source in `campaigns/tolx-site-theme/tolx/` (WordPress), packaged zips in `dist/`. Keep the brand (black + gold, Chakra Petch /
   Share Tech Mono). Site positioning: **Odoo partner, diplomatic**: lead with Odoo implemented around

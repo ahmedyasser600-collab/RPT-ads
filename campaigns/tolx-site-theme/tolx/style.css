@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.3.4
+Version: 1.4.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3063,3 +3063,211 @@ main { display: block; }
 .cmplz-documents li:has(> a.cmplz-link:empty),
 .cmplz-documents a.cmplz-link:empty,
 .cmplz-links a.cmplz-link:empty { display: none !important; }
+
+/* ================================================================
+   1.4.0 — CONTACT PAGE (taste-skill pass)
+   ----------------------------------------------------------------
+   The form now sits in the first screen on a light panel, so it reads
+   as an invitation instead of more dark UI. Inside this section: flat
+   colour, no glows or gradients, sentence-case labels at a readable
+   size, running text in full ink, surfaces split by tone, not lines.
+   ================================================================ */
+.contact-v2 {
+  --c-panel: #F4F4F5;
+  --c-field: #FFFFFF;
+  --c-ink: #18181B;
+  --c-ink-2: #52525B;
+  --c-line: #D4D4D8;
+  --c-focus: #B8892C;
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 4vw, 56px) 0 clamp(80px, 9vw, 140px);
+}
+.contact-v2-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  grid-template-areas: "intro panel" "after panel";
+  grid-template-rows: auto 1fr;
+  column-gap: clamp(40px, 6vw, 96px);
+  row-gap: 56px;
+  align-items: start;
+}
+.contact-v2-intro { grid-area: intro; padding-top: 12px; }
+.contact-v2-panel { grid-area: panel; }
+.contact-v2-after { grid-area: after; }
+
+.contact-v2-title {
+  font-size: clamp(40px, 4.6vw, 66px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 24px;
+  max-width: 14ch;
+}
+.contact-v2-lead {
+  font-size: clamp(18px, 1.4vw, 20px);
+  line-height: 1.55;
+  color: var(--text);
+  max-width: 44ch;
+  margin: 0;
+}
+.contact-v2-h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 16px;
+}
+.contact-v2-steps {
+  list-style: decimal;
+  padding-left: 1.3em;
+  margin: 0 0 48px;
+  max-width: 46ch;
+}
+.contact-v2-steps li { font-size: 17px; line-height: 1.55; color: var(--text); margin-bottom: 12px; padding-left: 4px; }
+.contact-v2-steps li::marker { color: var(--gold); font-weight: 700; }
+.contact-v2-steps strong { font-weight: 600; }
+
+.contact-v2-direct { margin: 0 0 40px; display: grid; gap: 8px; }
+.contact-v2-direct a {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: #141417;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.contact-v2-direct a:hover { background: #1C1C20; transform: translateX(4px); }
+.contact-v2-direct svg { color: var(--gold); width: 20px; height: 20px; }
+.contact-v2-direct-sub { font-size: 14px; font-weight: 400; color: var(--text-sec); }
+
+.contact-v2-partner { display: flex; align-items: center; gap: 16px; color: var(--text); font-size: 16px; }
+.contact-v2-partner-badge { flex: none; background: #fff; border-radius: 10px; padding: 8px 12px; display: flex; }
+.contact-v2-partner-badge img { width: 96px; height: auto; }
+
+/* ---- The light form panel ---- */
+.contact-v2-panel {
+  background: var(--c-panel);
+  color: var(--c-ink);
+  border-radius: 20px;
+  padding: clamp(24px, 3.4vw, 48px);
+}
+.cform { display: grid; gap: 22px; }
+.cform fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.cform legend, .cform-field label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--c-ink);
+  margin-bottom: 10px;
+  padding: 0;
+  display: block;
+}
+.cform-opt { font-weight: 400; color: var(--c-ink-2); font-size: 14px; margin-left: 4px; }
+.cform-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.cform-chip { position: relative; cursor: pointer; }
+.cform-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.cform-chip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #E4E4E7;
+  color: var(--c-ink);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.cform-chip:hover span { background: #D4D4D8; }
+.cform-chip:active span { transform: scale(0.97); }
+.cform-chip input:checked + span { background: var(--c-ink); color: #fff; }
+.cform-chip input:checked + span::before {
+  content: '';
+  width: 12px; height: 7px;
+  border-left: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  transform: rotate(-45deg) translateY(-2px);
+}
+.cform-chip input:focus-visible + span { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+
+.cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cform-field { min-width: 0; }
+.cform-field input, .cform-field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 17px;
+  color: var(--c-ink);
+  background: var(--c-field);
+  border: 1px solid var(--c-line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  min-height: 52px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.cform-field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.cform-field input::placeholder, .cform-field textarea::placeholder { color: #8A8A93; }
+.cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--c-focus); box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.35); }
+.cform-field input[aria-invalid="true"] { border-color: #B42318; }
+.cform-field-msg { font-size: 14px; color: #B42318; margin-top: 6px; }
+
+.cform-submit {
+  width: 100%;
+  min-height: 56px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #09090B;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.cform-submit:hover { background: var(--gold-hover); }
+.cform-submit:active { transform: scale(0.99); }
+.cform-submit:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 3px; }
+.cform-submit[disabled] { opacity: 0.7; cursor: progress; }
+.cform-note { font-size: 14px; color: var(--c-ink-2); margin: -8px 0 0; text-align: center; }
+.cform-note a { color: var(--c-ink); text-decoration: underline; text-underline-offset: 3px; }
+.cform-error { background: #FEE4E2; color: #7A271A; border-radius: 10px; padding: 14px 16px; font-size: 16px; margin: 0; }
+
+.cform-done { padding: 24px 0; }
+.cform-done-mark { width: 56px; height: 56px; border-radius: 50%; background: var(--c-ink); color: var(--gold); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.cform-done h2 { font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 12px; color: var(--c-ink); }
+.cform-done p { font-size: 17px; color: var(--c-ink); margin: 0 0 10px; }
+.cform-done-alt a { color: var(--c-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- Entrance: parts of the section rise in turn (content stays visible without JS) ---- */
+html.js .contact-v2-intro > *, html.js .contact-v2-panel, html.js .contact-v2-after > * {
+  animation: tolxRiseIn 0.6s cubic-bezier(.2,.7,.2,1) both;
+}
+html.js .contact-v2-intro > :nth-child(2) { animation-delay: 0.07s; }
+html.js .contact-v2-panel { animation-delay: 0.14s; }
+html.js .contact-v2-after > :nth-child(n+2) { animation-delay: 0.21s; }
+@keyframes tolxRiseIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+.contact-v2-crumbs { padding-top: calc(var(--nav-h) + 20px); }
+#enquiry { scroll-margin-top: calc(var(--nav-h) + 16px); }
+@media (max-width: 900px) {
+  .contact-v2-grid { grid-template-columns: 1fr; grid-template-areas: "intro" "panel" "after"; grid-template-rows: auto; row-gap: 32px; }
+  .contact-v2-title { max-width: none; }
+  .contact-v2-after { padding-top: 16px; }
+}
+@media (max-width: 560px) {
+  .cform-row { grid-template-columns: 1fr; }
+  .cform-chips { gap: 6px; }
+  .cform-chip span { min-height: 40px; padding: 8px 12px; font-size: 14px; }
+  .contact-v2-panel { border-radius: 16px; margin: 0 -6px; }
+  .contact-v2-direct a { grid-template-columns: 24px 1fr; }
+  .contact-v2-direct-sub { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .contact-v2-intro > *, html.js .contact-v2-panel, html.js .contact-v2-after > * { animation: none; }
+}
