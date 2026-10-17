@@ -77,47 +77,27 @@ get_header(); ?>
             <p class="cform-error" role="alert"><?php echo esc_html($form_error); ?></p>
           <?php endif; ?>
 
-          <fieldset class="cform-topics">
-            <legend>What should we look at first? <span class="cform-opt">Pick any that apply</span></legend>
-            <div class="cform-tiles">
-              <?php
-              $picked_now = array_map('sanitize_key', (array) ($_POST['improve'] ?? []));
-              $topic_icons = ['crm' => 'order', 'revenue-assets' => 'inventory', 'einvoicing' => 'billing', 'workflows' => 'project', 'reporting' => 'dashboard', 'marketing' => 'growth', 'not-sure' => 'chat'];
-              foreach (tolx_contact_topics() as $key => $label) : ?>
-                <label class="cform-tile<?php echo $key === 'not-sure' ? ' cform-tile--wide' : ''; ?>">
-                  <input type="checkbox" name="improve[]" value="<?php echo esc_attr($key); ?>" <?php checked(in_array($key, $picked_now, true)); ?>>
-                  <span class="cform-tile-icon" aria-hidden="true"><?php tolx_icon($topic_icons[$key], 20); ?></span>
-                  <span class="cform-tile-text"><?php echo esc_html($label); ?></span>
-                </label>
-              <?php endforeach; ?>
-            </div>
-          </fieldset>
-
-          <div class="cform-row">
-            <div class="cform-field">
-              <label for="name">Your name</label>
-              <input type="text" id="name" name="tolx_name" autocomplete="name" required value="<?php echo esc_attr(tolx_input('tolx_name', 200)); ?>">
-            </div>
-            <div class="cform-field">
-              <label for="company">Company <span class="cform-opt">optional</span></label>
-              <input type="text" id="company" name="company" autocomplete="organization" value="<?php echo esc_attr(tolx_input('company', 200)); ?>">
-            </div>
-          </div>
-
-          <div class="cform-row">
-            <div class="cform-field">
-              <label for="email">Work email</label>
-              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required value="<?php echo esc_attr(tolx_input('email', 200)); ?>">
-            </div>
-            <div class="cform-field">
-              <label for="phone">Phone or WhatsApp <span class="cform-opt">optional</span></label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+971" value="<?php echo esc_attr(tolx_input('phone', 200)); ?>">
-            </div>
-          </div>
-
           <div class="cform-field">
-            <label for="message">Anything we should know? <span class="cform-opt">optional</span></label>
-            <textarea id="message" name="message" rows="2" placeholder="For example: we take about 40 orders a day on WhatsApp and lose track of follow-ups."><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="tolx_name" autocomplete="name" required value="<?php echo esc_attr(tolx_input('tolx_name', 200)); ?>">
+          </div>
+          <div class="cform-field">
+            <label for="email">Work email</label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required value="<?php echo esc_attr(tolx_input('email', 200)); ?>">
+          </div>
+          <div class="cform-field">
+            <label for="phone">Phone or WhatsApp <span class="cform-opt">optional</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+971" value="<?php echo esc_attr(tolx_input('phone', 200)); ?>">
+          </div>
+          <div class="cform-field">
+            <label for="improve">What should we look at first? <span class="cform-opt">optional</span></label>
+            <?php $picked_now = array_map('sanitize_key', (array) ($_POST['improve'] ?? [])); ?>
+            <select id="improve" name="improve[]">
+              <option value="">Choose a topic</option>
+              <?php foreach (tolx_contact_topics() as $key => $label) : ?>
+                <option value="<?php echo esc_attr($key); ?>" <?php selected(in_array($key, $picked_now, true)); ?>><?php echo esc_html($label); ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
 
           <div class="cform-consent-wrap">

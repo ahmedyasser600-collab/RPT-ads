@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.4.3
+Version: 1.4.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3155,73 +3155,23 @@ main { display: block; }
 }
 .contact-v2-panel-head { background: var(--gold); color: #09090B; padding: clamp(18px, 2vw, 24px) clamp(24px, 3.4vw, 40px); }
 .contact-v2-panel-head h2 { font-size: clamp(24px, 2.2vw, 30px); line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 6px; color: #09090B; }
-.contact-v2-panel-head p { font-size: 16px; margin: 0; color: #2A2005; font-weight: 500; }
+.contact-v2-panel-head p { font-size: 15px; margin: 0; color: #2A2005; font-weight: 500; }
 .contact-v2-panel-body { padding: clamp(20px, 2.4vw, 28px) clamp(24px, 3.4vw, 40px) clamp(24px, 3vw, 32px); }
 
-.cform { display: grid; gap: 16px; }
+.cform { display: grid; gap: 14px; }
 .cform fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .cform legend, .cform-field label {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   padding: 0;
   display: block;
 }
 .cform-opt { font-weight: 400; color: var(--text-sec); font-size: 14px; margin-left: 4px; }
-.cform-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.cform-tile {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 46px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: #1C1C21;
-  border: 1px solid #2E2E35;
-  color: #E4E4E7;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.25;
-  white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
-}
-.cform-tile--wide { grid-column: 1 / -1; }
-.cform-tile input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-/* The icon doubles as the tick: picked = a gold square with a check in its place. */
-.cform-tile-icon {
-  flex: none;
-  position: relative;
-  width: 22px; height: 22px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 6px;
-  color: var(--gold);
-  transition: background 0.15s ease;
-}
-.cform-tile-icon svg { width: 20px; height: 20px; transition: opacity 0.12s ease; }
-.cform-tile-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.cform-tile:hover { background: #222228; border-color: #44444C; color: #fff; }
-.cform-tile:active { transform: scale(0.985); }
-.cform-tile:has(input:checked) { background: rgba(212, 168, 67, 0.12); border-color: var(--gold); color: #fff; }
-.cform-tile input:checked ~ .cform-tile-icon { background: var(--gold); }
-.cform-tile input:checked ~ .cform-tile-icon svg { opacity: 0; }
-.cform-tile input:checked ~ .cform-tile-icon::after {
-  content: '';
-  position: absolute;
-  left: 8px; top: 4px;
-  width: 6px; height: 11px;
-  border-right: 2px solid #09090B;
-  border-bottom: 2px solid #09090B;
-  transform: rotate(45deg);
-}
-.cform-tile:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 2px; }
-
 .cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .cform-field { min-width: 0; }
-.cform-field input, .cform-field textarea {
+.cform-field input, .cform-field textarea, .cform-field select {
   width: 100%;
   font: inherit;
   font-size: 17px;
@@ -3229,14 +3179,25 @@ main { display: block; }
   background: #1C1C21;
   border: 1px solid #34343B;
   border-radius: 10px;
-  padding: 14px 16px;
-  min-height: 52px;
+  padding: 12px 14px;
+  min-height: 50px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .cform-field textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
 .cform-field input::placeholder, .cform-field textarea::placeholder { color: #7C7C86; }
-.cform-field input:hover, .cform-field textarea:hover { border-color: #4A4A52; }
-.cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--gold); background: #202026; box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.25); }
+.cform-field input:hover, .cform-field textarea:hover, .cform-field select:hover { border-color: #4A4A52; }
+.cform-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23D4A843' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+}
+.cform-field select:invalid, .cform-field select option[value=""] { color: #9A9AA3; }
+.cform-field select option { color: var(--text); background: #1C1C21; }
+.cform-field input:focus, .cform-field textarea:focus, .cform-field select:focus { outline: none; border-color: var(--gold); background: #202026; box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.25); }
 .cform-field input[aria-invalid="true"] { border-color: #F97066; }
 .cform-field-msg { font-size: 14px; color: #FDA29B; margin-top: 6px; }
 
@@ -3307,20 +3268,31 @@ html.js .contact-v2-after > :nth-child(n+2) { animation-delay: 0.21s; }
 .contact-v2-crumbs .tolx-breadcrumbs, .contact-v2-crumbs .tolx-breadcrumbs .container { padding: 0; margin: 0; max-width: none; }
 #enquiry { scroll-margin-top: calc(var(--nav-h) + 16px); }
 @media (max-width: 900px) {
-  .contact-v2-grid { grid-template-columns: 1fr; grid-template-areas: "intro" "panel" "after"; grid-template-rows: auto; row-gap: 32px; }
+  .contact-v2 { padding-top: calc(var(--nav-h) + 12px); }
+  .contact-v2-grid { grid-template-columns: 1fr; grid-template-areas: "panel" "intro" "after"; grid-template-rows: auto; row-gap: 40px; }
   .contact-v2-title { max-width: none; }
   .contact-v2-after { padding-top: 16px; }
 }
 @media (max-width: 560px) {
   .cform-row { grid-template-columns: 1fr; }
-  .cform-tiles { grid-template-columns: 1fr; gap: 6px; }
-  .cform-tile { min-height: 46px; padding: 10px 12px; }
-  .cform-topics legend .cform-opt { display: block; margin: 2px 0 0; }
   .contact-v2-panel { border-radius: 16px; margin: 0 -6px; }
-  .contact-v2-panel-head p { font-size: 15px; }
+  .contact-v2-panel-head { padding: 16px 20px; }
+  .contact-v2-panel-head h2 { font-size: 22px; margin-bottom: 4px; }
+  .contact-v2-panel-head p { font-size: 14px; }
+  .contact-v2-panel-body { padding: 18px 20px 22px; }
   .contact-v2-direct a { grid-template-columns: 24px 1fr; }
   .contact-v2-direct-sub { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   html.js .contact-v2-intro > *, html.js .contact-v2-panel, html.js .contact-v2-after > * { animation: none; }
+}
+/* Short phones (iPhone SE and similar): keep the whole form, button included, on the first screen. */
+@media (max-width: 560px) and (max-height: 720px) {
+  .contact-v2 { padding-top: calc(var(--nav-h) + 8px); }
+  .contact-v2-panel-head { padding: 12px 18px; }
+  .contact-v2-panel-head p { display: none; }
+  .contact-v2-panel-body { padding: 14px 18px 18px; }
+  .cform { gap: 10px; }
+  .cform-field input, .cform-field select { min-height: 44px; padding-top: 10px; padding-bottom: 10px; }
+  .cform-submit { min-height: 50px; }
 }

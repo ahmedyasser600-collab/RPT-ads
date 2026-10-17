@@ -129,3 +129,14 @@ Client: the visitor must tick that they agree to the privacy policy, or the form
   refuses any submission without it (so it also holds if JavaScript is off or the form is posted directly).
 - The saved enquiry and the lead email record it: "Consent: Agreed to the privacy policy (date and time, UTC)".
 - Because of the extra line, the button now sits about 60px below the first screen at 1440×900 (the tick box and all fields are visible).
+
+## 1.4.4 (17 Oct 2026): minimal form, first on the page
+Client: "the form [should] be minimalistic but also appear first in the page, the client do not need to scroll to find it".
+- Fields cut to: name, work email, phone or WhatsApp (optional), "What should we look at first?" as one compact dropdown
+  (optional), the privacy tick box, and the button. The topic tiles, company and message fields were removed.
+- On phones and tablets the form now comes first, right under the nav; the headline, next steps and contact options follow it.
+  On desktop the form stays at the top right beside the headline.
+- Measured (button bottom vs screen height), all visible with no scrolling: 1440×900, 1366×768, 1920×1080, 768×1024,
+  390×844 (iPhone), 360×740 (Android), 375×667 (iPhone SE, with tighter spacing on short phones).
+- Unchanged: required privacy consent (browser + server), inline validation, values kept after an error, ad attribution, the
+  GA4 generate_lead event, and email sending.
