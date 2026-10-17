@@ -118,3 +118,33 @@ if (!function_exists('tolx_retired_redirects')) {
     }
 }
 add_action('template_redirect', 'tolx_retired_redirects', 1);
+
+/* ============================================================
+   CACHING
+   ------------------------------------------------------------
+   1. Pages with forms are never served from a page cache. Their
+      security token (nonce) expires within a day, so a cached copy
+      makes every visitor's submission fail with "Security check failed".
+   2. When a new theme version goes live, clear the page caches once,
+      so logged-out visitors see it straight away (LiteSpeed, used by
+      Hostinger, plus the other common cache plugins if present).
+   A CDN (Hostinger CDN, Cloudflare) still has to be flushed in its own panel.
+   ============================================================ */
+add_action('template_redirect', function () {
+    if (is_page_template('page-contact.php') || is_page('contact') || is_page_template('page-scorecard.php')) {
+        if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
+        do_action('litespeed_control_set_nocache', 'TOLX form page: nonce must stay fresh');
+        nocache_headers();
+    }
+}, 0);
+
+add_action('init', function () {
+    $version = wp_get_theme(get_template())->get('Version');
+    if (get_option('tolx_theme_version') === $version) return;
+    update_option('tolx_theme_version', $version, false);
+    do_action('litespeed_purge_all');
+    if (function_exists('rocket_clean_domain')) rocket_clean_domain();
+    if (function_exists('w3tc_flush_all')) w3tc_flush_all();
+    if (function_exists('wp_cache_clear_cache')) wp_cache_clear_cache();
+    if (class_exists('autoptimizeCache')) autoptimizeCache::clearall();
+}, 20);

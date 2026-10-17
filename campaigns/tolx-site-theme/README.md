@@ -140,3 +140,12 @@ Client: "the form [should] be minimalistic but also appear first in the page, th
   390×844 (iPhone), 360×740 (Android), 375×667 (iPhone SE, with tighter spacing on short phones).
 - Unchanged: required privacy consent (browser + server), inline validation, values kept after an error, ad attribution, the
   GA4 generate_lead event, and email sending.
+
+## 1.4.5 (17 Oct 2026): caching
+Client: the new form only showed in the browser they installed from (logged in); other browsers kept the old page.
+That is the page cache: logged-in admins bypass it, visitors get the saved copy.
+- Contact and scorecard pages are now never page-cached (`DONOTCACHEPAGE`, LiteSpeed no-cache, no-cache headers). A cached
+  form carries an expired security token, so after about a day every visitor's submission failed with "Security check
+  failed". This may have cost real enquiries from the ads.
+- When a new theme version goes live, the theme clears the page caches once (LiteSpeed, WP Rocket, W3 Total Cache,
+  WP Super Cache, Autoptimize). A CDN (Hostinger CDN or Cloudflare) still needs flushing in its own panel.
