@@ -7,12 +7,12 @@ $form_sent = false; $form_error = false; $submission_result = null;
 if (!function_exists('tolx_contact_topics')) {
     function tolx_contact_topics() {
         return [
-            'crm'             => 'Orders and customer follow-up',
-            'revenue-assets'  => 'Stock and sales',
-            'einvoicing'      => 'Invoicing and e-invoicing',
-            'workflows'       => 'Team tasks and approvals',
-            'reporting'       => 'Reports and dashboards',
-            'marketing'       => 'Website and marketing',
+            'crm'             => 'Orders & follow-ups',
+            'revenue-assets'  => 'Stock & sales',
+            'einvoicing'      => 'E-invoicing & VAT',
+            'workflows'       => 'Team tasks & approvals',
+            'reporting'       => 'Reports & dashboards',
+            'marketing'       => 'Website & marketing',
             'not-sure'        => 'Not sure yet',
         ];
     }
@@ -76,12 +76,16 @@ get_header(); ?>
           <?php endif; ?>
 
           <fieldset class="cform-topics">
-            <legend>What should we look at first?</legend>
-            <div class="cform-chips">
-              <?php $picked_now = array_map('sanitize_key', (array) ($_POST['improve'] ?? [])); foreach (tolx_contact_topics() as $key => $label) : ?>
-                <label class="cform-chip">
+            <legend>What should we look at first? <span class="cform-opt">Pick any that apply</span></legend>
+            <div class="cform-tiles">
+              <?php
+              $picked_now = array_map('sanitize_key', (array) ($_POST['improve'] ?? []));
+              $topic_icons = ['crm' => 'order', 'revenue-assets' => 'inventory', 'einvoicing' => 'billing', 'workflows' => 'project', 'reporting' => 'dashboard', 'marketing' => 'growth', 'not-sure' => 'chat'];
+              foreach (tolx_contact_topics() as $key => $label) : ?>
+                <label class="cform-tile<?php echo $key === 'not-sure' ? ' cform-tile--wide' : ''; ?>">
                   <input type="checkbox" name="improve[]" value="<?php echo esc_attr($key); ?>" <?php checked(in_array($key, $picked_now, true)); ?>>
-                  <span><?php echo esc_html($label); ?></span>
+                  <span class="cform-tile-icon" aria-hidden="true"><?php tolx_icon($topic_icons[$key], 20); ?></span>
+                  <span class="cform-tile-text"><?php echo esc_html($label); ?></span>
                 </label>
               <?php endforeach; ?>
             </div>

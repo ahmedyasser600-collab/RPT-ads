@@ -111,3 +111,12 @@ Client: "it should be on brand but more highlighted" (the light panel read as of
   screen at 1440×900 and larger (fields visible but the button just below at 1366×768).
 - Email sending (`partials/leads.php`) is unchanged from the live site apart from the password placeholder and the two
   lead-email labels ("Source", "Came from (ad / campaign)").
+
+## 1.4.2 (17 Oct 2026): topic picker
+Client: the topic chips "can be better" (ragged pill cloud, "Not sure yet" orphaned).
+- Replaced with a grid of equal option tiles: two columns on desktop, one on phones, "Not sure yet" full width. Each tile has a
+  gold line icon and a one-line label; when picked, the icon turns into a gold tick box and the tile gets a gold edge and tint.
+  The legend now says "Pick any that apply".
+- Shorter labels so every tile stays on one line: Orders & follow-ups · Stock & sales · E-invoicing & VAT · Team tasks &
+  approvals · Reports & dashboards · Website & marketing · Not sure yet. The lead email shows the same labels.
+- The submit button still fits in the first screen at 1440×900.

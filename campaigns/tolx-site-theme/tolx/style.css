@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.4.1
+Version: 1.4.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3158,7 +3158,7 @@ main { display: block; }
 .contact-v2-panel-head p { font-size: 16px; margin: 0; color: #2A2005; font-weight: 500; }
 .contact-v2-panel-body { padding: clamp(20px, 2.4vw, 28px) clamp(24px, 3.4vw, 40px) clamp(24px, 3vw, 32px); }
 
-.cform { display: grid; gap: 18px; }
+.cform { display: grid; gap: 16px; }
 .cform fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .cform legend, .cform-field label {
   font-size: 16px;
@@ -3169,33 +3169,55 @@ main { display: block; }
   display: block;
 }
 .cform-opt { font-weight: 400; color: var(--text-sec); font-size: 14px; margin-left: 4px; }
-.cform-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.cform-chip { position: relative; cursor: pointer; }
-.cform-chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.cform-chip span {
-  display: inline-flex;
+.cform-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cform-tile {
+  position: relative;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: #222227;
+  gap: 12px;
+  min-height: 46px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #1C1C21;
+  border: 1px solid #2E2E35;
   color: #E4E4E7;
   font-size: 15px;
   font-weight: 500;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
-.cform-chip:hover span { background: #2D2D33; color: #fff; }
-.cform-chip:active span { transform: scale(0.97); }
-.cform-chip input:checked + span { background: var(--gold); color: #09090B; font-weight: 600; }
-.cform-chip input:checked + span::before {
+.cform-tile--wide { grid-column: 1 / -1; }
+.cform-tile input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+/* The icon doubles as the tick: picked = a gold square with a check in its place. */
+.cform-tile-icon {
+  flex: none;
+  position: relative;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  color: var(--gold);
+  transition: background 0.15s ease;
+}
+.cform-tile-icon svg { width: 20px; height: 20px; transition: opacity 0.12s ease; }
+.cform-tile-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.cform-tile:hover { background: #222228; border-color: #44444C; color: #fff; }
+.cform-tile:active { transform: scale(0.985); }
+.cform-tile:has(input:checked) { background: rgba(212, 168, 67, 0.12); border-color: var(--gold); color: #fff; }
+.cform-tile input:checked ~ .cform-tile-icon { background: var(--gold); }
+.cform-tile input:checked ~ .cform-tile-icon svg { opacity: 0; }
+.cform-tile input:checked ~ .cform-tile-icon::after {
   content: '';
-  width: 11px; height: 6px;
-  border-left: 2px solid #09090B;
+  position: absolute;
+  left: 8px; top: 4px;
+  width: 6px; height: 11px;
+  border-right: 2px solid #09090B;
   border-bottom: 2px solid #09090B;
-  transform: rotate(-45deg) translateY(-2px);
+  transform: rotate(45deg);
 }
-.cform-chip input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.cform-tile:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .cform-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .cform-field { min-width: 0; }
@@ -3211,7 +3233,7 @@ main { display: block; }
   min-height: 52px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
-.cform-field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.cform-field textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
 .cform-field input::placeholder, .cform-field textarea::placeholder { color: #7C7C86; }
 .cform-field input:hover, .cform-field textarea:hover { border-color: #4A4A52; }
 .cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--gold); background: #202026; box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.25); }
@@ -3264,8 +3286,9 @@ html.js .contact-v2-after > :nth-child(n+2) { animation-delay: 0.21s; }
 }
 @media (max-width: 560px) {
   .cform-row { grid-template-columns: 1fr; }
-  .cform-chips { gap: 6px; }
-  .cform-chip span { min-height: 40px; padding: 8px 12px; font-size: 14px; }
+  .cform-tiles { grid-template-columns: 1fr; gap: 6px; }
+  .cform-tile { min-height: 46px; padding: 10px 12px; }
+  .cform-topics legend .cform-opt { display: block; margin: 2px 0 0; }
   .contact-v2-panel { border-radius: 16px; margin: 0 -6px; }
   .contact-v2-panel-head p { font-size: 15px; }
   .contact-v2-direct a { grid-template-columns: 24px 1fr; }
