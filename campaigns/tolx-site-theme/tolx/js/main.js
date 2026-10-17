@@ -222,23 +222,25 @@ if (window.matchMedia('(pointer: fine)').matches) {
   const rules = [
     { el: form.querySelector('#name'), ok: v => v.trim().length > 0, msg: 'Please add your name.' },
     { el: form.querySelector('#email'), ok: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()), msg: 'Please add a valid email, like name@company.com.' },
+    { el: form.querySelector('#privacy_consent'), ok: (v, el) => el.checked, msg: 'Please tick the box to agree to our privacy policy.', box: true },
   ].filter(r => r.el);
+  const host = r => r.box ? r.el.closest('.cform-consent-wrap') : r.el.parentNode;
   const show = (r, bad) => {
-    let m = r.el.parentNode.querySelector('.cform-field-msg');
+    let m = host(r).querySelector('.cform-field-msg');
     if (bad) {
       r.el.setAttribute('aria-invalid', 'true');
-      if (!m) { m = document.createElement('p'); m.className = 'cform-field-msg'; m.id = r.el.id + '-msg'; r.el.parentNode.appendChild(m); r.el.setAttribute('aria-describedby', m.id); }
+      if (!m) { m = document.createElement('p'); m.className = 'cform-field-msg'; m.id = r.el.id + '-msg'; host(r).appendChild(m); r.el.setAttribute('aria-describedby', m.id); }
       m.textContent = r.msg;
     } else {
       r.el.removeAttribute('aria-invalid');
       if (m) m.remove();
     }
   };
-  rules.forEach(r => r.el.addEventListener('blur', () => { if (r.el.value) show(r, !r.ok(r.el.value)); }));
-  rules.forEach(r => r.el.addEventListener('input', () => { if (r.el.getAttribute('aria-invalid')) show(r, !r.ok(r.el.value)); }));
+  rules.forEach(r => { if (!r.box) r.el.addEventListener('blur', () => { if (r.el.value) show(r, !r.ok(r.el.value, r.el)); }); });
+  rules.forEach(r => r.el.addEventListener(r.box ? 'change' : 'input', () => { if (r.el.getAttribute('aria-invalid')) show(r, !r.ok(r.el.value, r.el)); }));
   form.addEventListener('submit', (e) => {
     let first = null;
-    rules.forEach(r => { const bad = !r.ok(r.el.value); show(r, bad); if (bad && !first) first = r.el; });
+    rules.forEach(r => { const bad = !r.ok(r.el.value, r.el); show(r, bad); if (bad && !first) first = r.el; });
     if (first) { e.preventDefault(); first.focus(); return; }
     const btn = form.querySelector('.cform-submit');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }

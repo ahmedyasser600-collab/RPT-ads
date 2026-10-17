@@ -120,3 +120,12 @@ Client: the topic chips "can be better" (ragged pill cloud, "Not sure yet" orpha
 - Shorter labels so every tile stays on one line: Orders & follow-ups · Stock & sales · E-invoicing & VAT · Team tasks &
   approvals · Reports & dashboards · Website & marketing · Not sure yet. The lead email shows the same labels.
 - The submit button still fits in the first screen at 1440×900.
+
+## 1.4.3 (17 Oct 2026): required privacy consent
+Client: the visitor must tick that they agree to the privacy policy, or the form must not send.
+- A required tick box above the button: "I agree to the privacy policy and to TOLX contacting me about my enquiry."
+  The privacy policy link opens in a new tab, so the form isn't lost.
+- Enforced twice: the browser blocks the send and shows "Please tick the box to agree to our privacy policy.", and the server
+  refuses any submission without it (so it also holds if JavaScript is off or the form is posted directly).
+- The saved enquiry and the lead email record it: "Consent: Agreed to the privacy policy (date and time, UTC)".
+- Because of the extra line, the button now sits about 60px below the first screen at 1440×900 (the tick box and all fields are visible).

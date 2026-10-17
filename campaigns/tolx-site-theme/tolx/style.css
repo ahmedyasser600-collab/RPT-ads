@@ -4,7 +4,7 @@ Theme URI: https://tolx.ae
 Author: Tolx
 Author URI: https://tolx.ae
 Description: Custom WordPress theme for Tolx — specialist Odoo implementation partner for EV charging operators, fleet management, and logistics companies in the UAE.
-Version: 1.4.2
+Version: 1.4.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tolx
@@ -3239,6 +3239,33 @@ main { display: block; }
 .cform-field input:focus, .cform-field textarea:focus { outline: none; border-color: var(--gold); background: #202026; box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.25); }
 .cform-field input[aria-invalid="true"] { border-color: #F97066; }
 .cform-field-msg { font-size: 14px; color: #FDA29B; margin-top: 6px; }
+
+.cform-consent { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 15px; line-height: 1.45; color: var(--text); }
+.cform-consent input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.cform-consent-box {
+  flex: none;
+  position: relative;
+  width: 22px; height: 22px;
+  margin-top: 1px;
+  border-radius: 6px;
+  background: #1C1C21;
+  border: 1.5px solid #52525B;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cform-consent:hover .cform-consent-box { border-color: #7C7C86; }
+.cform-consent input:checked + .cform-consent-box { background: var(--gold); border-color: var(--gold); }
+.cform-consent input:checked + .cform-consent-box::after {
+  content: '';
+  position: absolute;
+  left: 6px; top: 2px;
+  width: 6px; height: 11px;
+  border-right: 2px solid #09090B;
+  border-bottom: 2px solid #09090B;
+  transform: rotate(45deg);
+}
+.cform-consent input:focus-visible + .cform-consent-box { outline: 2px solid var(--gold); outline-offset: 2px; }
+.cform-consent input[aria-invalid="true"] + .cform-consent-box { border-color: #F97066; }
+.cform-consent-text a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 
 .cform-submit {
   width: 100%;

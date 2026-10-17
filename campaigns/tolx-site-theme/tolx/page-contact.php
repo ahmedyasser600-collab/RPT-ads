@@ -30,7 +30,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         $picked = array_intersect(array_keys(tolx_contact_topics()), array_map('sanitize_key', (array) ($_POST['improve'] ?? [])));
         $data['industry'] = implode(', ', array_map(function ($k) { return tolx_contact_topics()[$k]; }, $picked));
         $data['tracking'] = tolx_input('tracking', 500);
+        $data['consent'] = tolx_input('privacy_consent', 10) === 'yes' ? 'Agreed to the privacy policy (' . gmdate('Y-m-d H:i') . ' UTC)' : '';
         if (!$data['name'] || !is_email($data['email'])) $form_error = 'Please add your name and a valid email address.';
+        elseif (!$data['consent']) $form_error = 'Please tick the box to agree to our privacy policy, so we can reply to you.';
         else {
             $submission_result = tolx_save_submission('contact', $data);
             if (is_wp_error($submission_result)) $form_error = $submission_result->get_error_message();
@@ -118,8 +120,15 @@ get_header(); ?>
             <textarea id="message" name="message" rows="2" placeholder="For example: we take about 40 orders a day on WhatsApp and lose track of follow-ups."><?php echo esc_textarea(tolx_input('message', 5000)); ?></textarea>
           </div>
 
+          <div class="cform-consent-wrap">
+            <label class="cform-consent">
+              <input type="checkbox" id="privacy_consent" name="privacy_consent" value="yes" required <?php checked(tolx_input('privacy_consent', 10), 'yes'); ?>>
+              <span class="cform-consent-box" aria-hidden="true"></span>
+              <span class="cform-consent-text">I agree to the <a href="<?php echo home_url('/privacy-policy/'); ?>" target="_blank" rel="noopener">privacy policy</a> and to TOLX contacting me about my enquiry.</span>
+            </label>
+          </div>
+
           <button type="submit" class="cform-submit">Request my discovery call</button>
-          <p class="cform-note">We use your details only to reply to you. <a href="<?php echo home_url('/privacy-policy/'); ?>">Privacy policy</a></p>
         </form>
       <?php endif; ?>
       </div>
