@@ -5,7 +5,8 @@ description: Pre-launch legal and privacy review for websites, landing pages, we
 
 # Launch legal check
 
-1. Read `docs/website-launch-legal-checklist.md` in this repo; it is the checklist.
+1. Read the checklist: `docs/website-launch-legal-checklist.md` in the project if it exists (projects may extend it),
+   otherwise `checklist.md` in this skill's own folder.
 2. Inspect the real code, and where possible the rendered page (its network requests and storage), for every row. Use grep for
    font hosts, tracker names, `localStorage`/`document.cookie`, sign-up or upload handlers, mail functions and checkout code.
    Look in theme/app code and note which plugins or tag managers could add more.
