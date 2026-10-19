@@ -183,28 +183,46 @@ if (window.matchMedia('(pointer: fine)').matches) {
   setTimeout(() => mo.disconnect(), 8000);
 })();
 
-// Ad attribution: remember the campaign tags / Google Ads click id from the
-// landing URL (for 30 days, in this browser only) so an enquiry made a few
-// pages later still says which ad or campaign brought the visitor.
+// Ad attribution. The campaign tags / Google Ads click id in the landing URL are
+// always used for an enquiry made on that same page (nothing is stored). They
+// are only REMEMBERED (30 days, this browser only) once the visitor has given
+// marketing consent in the cookie banner (Complianz), so no identifier is saved
+// in the browser without consent.
 (function () {
   const KEY = 'tolxAttribution';
-  const params = new URLSearchParams(location.search);
   const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'];
-  const found = {};
-  keys.forEach(k => { const v = params.get(k); if (v) found[k] = v.slice(0, 120); });
-  try {
-    if (Object.keys(found).length) {
-      found.landing = location.pathname.slice(0, 120);
-      localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), v: found }));
-    }
-  } catch (e) {}
+  const params = new URLSearchParams(location.search);
+  const fromUrl = {};
+  keys.forEach(k => { const v = params.get(k); if (v) fromUrl[k] = v.slice(0, 120); });
+  if (Object.keys(fromUrl).length) fromUrl.landing = location.pathname.slice(0, 120);
+
+  const hasMarketingConsent = () => {
+    try { return typeof window.cmplz_has_consent === 'function' && window.cmplz_has_consent('marketing') === true; }
+    catch (e) { return false; }
+  };
+  const remember = () => {
+    if (!Object.keys(fromUrl).length || !hasMarketingConsent()) return;
+    try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), v: fromUrl })); } catch (e) {}
+  };
+  const forget = () => { try { localStorage.removeItem(KEY); } catch (e) {} };
+  remember();
+  // Consent given (or withdrawn) after the page loaded.
+  document.addEventListener('cmplz_status_change', (e) => {
+    const d = e && e.detail || {};
+    if (d.category === 'marketing') { if (d.value === 'allow') remember(); else forget(); }
+  });
+  document.addEventListener('cmplz_fire_categories', remember);
+  document.addEventListener('cmplz_revoke', forget);
+
   const form = document.querySelector('form.cform');
   if (!form) return;
-  let saved = null;
-  try {
-    const raw = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (raw && Date.now() - raw.t < 30 * 864e5) saved = raw.v;
-  } catch (e) {}
+  let saved = Object.keys(fromUrl).length ? fromUrl : null;
+  if (!saved && hasMarketingConsent()) {
+    try {
+      const raw = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (raw && Date.now() - raw.t < 30 * 864e5) saved = raw.v;
+    } catch (e) {}
+  }
   if (!saved) return;
   const tracking = form.querySelector('input[name="tracking"]');
   const source = form.querySelector('input[name="source"]');

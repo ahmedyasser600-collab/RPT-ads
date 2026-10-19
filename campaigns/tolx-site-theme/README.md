@@ -149,3 +149,9 @@ That is the page cache: logged-in admins bypass it, visitors get the saved copy.
   failed". This may have cost real enquiries from the ads.
 - When a new theme version goes live, the theme clears the page caches once (LiteSpeed, WP Rocket, W3 Total Cache,
   WP Super Cache, Autoptimize). A CDN (Hostinger CDN or Cloudflare) still needs flushing in its own panel.
+
+## 1.4.6 (19 Oct 2026): launch legal check
+Audit against the six legal risks in AI-built apps (see `legal-check-2026-10-19.md`).
+- Ad attribution is now stored only after marketing consent in Complianz, and erased when consent is withdrawn. Without consent,
+  the click id is still used for an enquiry made on the landing page itself, but nothing is stored.
+- The enquiry confirmation email names the sender (TOLX, Dubai, United Arab Emirates, tolx.ae).

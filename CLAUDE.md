@@ -10,6 +10,11 @@ This repo holds two separate video projects: **RPT** (Italian bathroom-renovatio
 - An existing brand wins where it conflicts with a house rule (e.g. TOLX's gold and Chakra Petch): keep the brand asset,
   apply every other rule, and say in the report which rules were set aside and why.
 
+## Launch legal check (all web projects, client request 19 Oct 2026)
+- Before reporting any website, page, form, sign-up, checkout, email or tracking change as done, run the
+  **launch-legal-check** skill (`.claude/skills/launch-legal-check/`) against `docs/website-launch-legal-checklist.md`
+  and write the `legal-check-YYYY-MM-DD.md` report next to the project. It is a technical review, not legal advice.
+
 ## TOLX website theme
 - Source in `campaigns/tolx-site-theme/tolx/` (WordPress), packaged zips in `dist/`. Keep the brand (black + gold, Chakra Petch /
   Share Tech Mono). Site positioning: **Odoo partner, diplomatic**: lead with Odoo implemented around

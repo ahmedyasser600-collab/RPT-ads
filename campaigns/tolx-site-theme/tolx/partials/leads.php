@@ -100,7 +100,7 @@ function tolx_contact_confirmation_body($data, $has_pdf) {
     if ($has_pdf) array_push($lines, '', 'Our company profile is attached, so you can see how we work in the meantime.');
     elseif (TOLX_PROFILE_PDF_URL) array_push($lines, '', 'Our company profile: ' . TOLX_PROFILE_PDF_URL);
     if (!empty($data['message'])) array_push($lines, '', 'Your message:', $data['message']);
-    array_push($lines, '', 'If it is urgent, message us on WhatsApp: https://wa.me/971509860063 or call +971 50 986 0063.', '', 'TOLX', 'tolx.ae');
+    array_push($lines, '', 'If it is urgent, message us on WhatsApp: https://wa.me/971509860063 or call +971 50 986 0063.', '', 'TOLX', 'Dubai, United Arab Emirates', 'tolx.ae');
     return implode("\n", $lines);
 }
 function tolx_lead_subject($kind, $data, $id) {
